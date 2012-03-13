@@ -1,0 +1,13 @@
+Nerds is aN enginE foR tile-baseD gameS.
+
+=== How to "Play" ===
+
+	+ GNU/Linux:
+	
+		1. Open the terminal.
+		
+		2. Move to this folder.
+		
+		3. Execute "python engine/main.py"
+		
+		4. Enjoy!
