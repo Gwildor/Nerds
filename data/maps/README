@@ -1,0 +1,56 @@
+Here be all yerr map files.
+
+=== Instructions on map files ===
+
+	* All files should have .map as extension.
+	
+	* The default map, which gets loaded instead when a map file which the engine attempts to load is not found,
+		should be named "main.map". This map also gets loaded if no "new game start map" is specified in the general
+		config of your game. When you are making a game with one large (semi-)open world which connets to other maps
+		such as buildings etc., then this world map should be the one which is named main.map (although this is not
+		mandatory, just a general guideline for clearness).
+		
+=== Map files syntax ===
+
+{ // general map info, as of this moment this is not used yet by the engine, but it might get later
+pref_name: value
+pref_name_2: value
+}
+
+[ // new tile
+pref_name: value
+pref_name_2: value
+]
+
+[ // new tile
+pref_name: value
+pref_name_2: value
+]
+
+General note: all empty lines are ignore, so you an add as many whitelines as you want.
+
+=== Map file example ===
+
+{
+name: An awesome map!
+assume_center_pos: false
+}
+
+[
+pos_x: -16
+pos_y: -16
+width: 32
+height: 32
+src: grass.png
+walkable: true
+]
+
+[
+pos_x: 0
+pos_y: 0
+centered_pos: true
+width: 32
+height: 32
+src: tree.png
+walkable: false
+]
