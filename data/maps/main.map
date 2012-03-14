@@ -1,0 +1,14 @@
+{
+assume_center_pos: false
+}
+
+[
+pos_x: 0
+pos_y: 0
+width: 32
+height: 32
+repeat_x: 20
+repeat_y: 15
+src: grass_by_zooboingdotcom.png
+walkable: true
+]
