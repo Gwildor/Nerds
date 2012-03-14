@@ -28,6 +28,19 @@ class map:
 					vals = line.split(':', 1)
 					vals[0] = vals[0].strip()
 					vals[1] = vals[1].strip()
+					
+					"""
+					assume_center_pos
+					walkable: true
+					"""
+					if vals[0] in ['pos_x', 'pos_y', 'width', 'height', 'repeat_x', 'repeat_y']:
+						vals[1] = int(vals[1])
+					elif vals[0] in ['assume_center_pos', 'walkable']:
+						if vals[1] == 'true':
+							vals[1] = True
+						else:
+							vals[1] = False
+					
 					#print(vals)
 					if tile_mode:
 						self.tiles[x][vals[0]] = vals[1]
