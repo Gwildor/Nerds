@@ -12,41 +12,38 @@ Here be all yerr map files.
 		
 === Map files syntax ===
 
-{ # general map info, as of this moment this is not used yet by the engine, but it might get later
+# general map info, as of this moment this is not used yet by the engine, but it might get later
 pref_name: value
 pref_name_2: value
-}
+~
 
-[ # new tile
+# new tile
 pref_name: value
 pref_name_2: value
-]
+~
 
-[ # new tile
+# new tile
 pref_name: value
 pref_name_2: value
-]
+~
 
 General note: all empty lines are ignore, so you an add as many whitelines as you want.
 Comments are made by using #
+All blocks are divided by ~, the first block holds general map info and settings. If you have no general info or
+settings, just start the file with a ~
 
 === Map file example ===
 
-{
 name: An awesome map!
 assume_center_pos: false
-}
-
-[
+~
 pos_x: -16
 pos_y: -16
 width: 32
 height: 32
 src: grass.png
 walkable: true
-]
-
-[
+~
 pos_x: 0
 pos_y: 0
 centered_pos: true
@@ -54,4 +51,4 @@ width: 32
 height: 32
 src: tree.png
 walkable: false
-]
+~
