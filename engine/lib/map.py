@@ -22,17 +22,37 @@ class map:
 						tile_mode = True
 					else:
 						print(self.tiles[x])
+						
+						if 'repeat_x' in self.tiles[x] or 'repeat_y' in self.tiles[x]:
+							if 'repeat_x' in self.tiles[x]:
+								repeat_x = self.tiles[x]['repeat_x']
+							else:
+								repeat_x = 1
+							if 'repeat_y' in self.tiles[x]:
+								repeat_y = self.tiles[x]['repeat_y']
+							else:
+								repeat_y = 1
+							
+							original = self.tiles[x]
+							for i in range(repeat_x):
+								for j in range(repeat_y):
+									if i == 0 and j == 0: # tile we already have
+										continue
+									x += 1
+									new = original.copy()
+									new['pos_x'] = original['pos_x'] + (i * original['width'])
+									new['pos_y'] = original['pos_y'] + (j * original['height'])
+									self.tiles.append(new)
+									print(str(i)+', '+str(j)+' ', self.tiles[x])
+						
 						x += 1
+						
 					self.tiles.append({})
 				else: # settings
 					vals = line.split(':', 1)
 					vals[0] = vals[0].strip()
 					vals[1] = vals[1].strip()
 					
-					"""
-					assume_center_pos
-					walkable: true
-					"""
 					if vals[0] in ['pos_x', 'pos_y', 'width', 'height', 'repeat_x', 'repeat_y']:
 						vals[1] = int(vals[1])
 					elif vals[0] in ['assume_center_pos', 'walkable']:
