@@ -1,13 +1,13 @@
 name: Main map!
 assume_center_pos: false
  ~
- 
+ # this is a comment
 pos_x: 0
 pos_y: 0
 width: 32
 height: 32
 repeat_x: 2
 repeat_y: 2
-src: grass_by_zooboingdotcom.png
+src: grass_by_zooboingdotcom.png # this is also a comment
 walkable: true
 ~

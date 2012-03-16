@@ -12,11 +12,17 @@ class map:
 		f = open(prefix+'data/maps/'+name+'.map', 'r') # open map
 		
 		for line in f.readlines(): # loop through file
+			if '#' in line: # comment found
+				parts = line.split('#', 1)
+				#print(parts)
+				line = parts[0]
 			line = line.strip()
 			x = 0
+			
 			if line != '':
 				#print(line, sep = '', end = '\n') # echo whole file
 				if line[0:1] == '~':
+					
 					if not tile_mode:
 						print(self.general)
 						tile_mode = True
@@ -26,10 +32,12 @@ class map:
 						if 'repeat_x' in self.tiles[x] or 'repeat_y' in self.tiles[x]:
 							if 'repeat_x' in self.tiles[x]:
 								repeat_x = self.tiles[x]['repeat_x']
+								del self.tiles[x]['repeat_x'] # not needed to have those in memory anymore
 							else:
 								repeat_x = 1
 							if 'repeat_y' in self.tiles[x]:
 								repeat_y = self.tiles[x]['repeat_y']
+								del self.tiles[x]['repeat_y']
 							else:
 								repeat_y = 1
 							
@@ -48,7 +56,9 @@ class map:
 						x += 1
 						
 					self.tiles.append({})
+					
 				else: # settings
+				
 					vals = line.split(':', 1)
 					vals[0] = vals[0].strip()
 					vals[1] = vals[1].strip()
@@ -60,7 +70,7 @@ class map:
 							vals[1] = True
 						else:
 							vals[1] = False
-					
+
 					#print(vals)
 					if tile_mode:
 						self.tiles[x][vals[0]] = vals[1]
@@ -69,3 +79,6 @@ class map:
 
 
 		f.close()
+		
+	def draw_map(self, x, y, gameW = 640, gameH = 480):
+		pass
