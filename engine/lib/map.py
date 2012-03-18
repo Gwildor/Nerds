@@ -42,6 +42,7 @@ class map:
 								repeat_y = 1
 							
 							original = self.tiles[x]
+							#print(original)
 							for i in range(repeat_x):
 								for j in range(repeat_y):
 									if i == 0 and j == 0: # tile we already have
@@ -81,20 +82,8 @@ class map:
 		f.close()
 		self.tiles.pop()
 		
-	def tile_within_square(self, tile, nw, sw, se, ne):
-		if (tile['pos_y'] + tile['height']) >= nw['y'] and tile['pos_y'] <= sw['y'] and (tile['pos_x'] + tile['height']) >= nw['x'] and tile['pos_x'] <= ne['x']:
+	def tile_within_square(self, tile, nw, se):
+		if (tile['pos_y'] + tile['height']) >= nw['y'] and tile['pos_y'] <= se['y'] and (tile['pos_x'] + tile['height']) >= nw['x'] and tile['pos_x'] <= se['x']:
 			return True
 		else:
 			return False
-		
-	def draw_map(self, x, y, gameW = 640, gameH = 480):
-		nw = {'x': (x - (gameW / 2)), 'y': (y - (gameH / 2))}
-		sw = {'x': (x - (gameW / 2)), 'y': (y + (gameH / 2))}
-		se = {'x': (x + (gameW / 2)), 'y': (y + (gameH / 2))}
-		ne = {'x': (x + (gameW / 2)), 'y': (y - (gameH / 2))}
-		
-		for tile in self.tiles: # loop our tiles
-			if self.tile_within_square(tile, nw, sw, se, ne):
-				#print(tile)
-				pass
-		
