@@ -24,10 +24,10 @@ class map:
 				if line[0:1] == '~':
 					
 					if not tile_mode:
-						print(self.general)
+						#print(self.general)
 						tile_mode = True
 					else:
-						print(self.tiles[x])
+						#print(self.tiles[x])
 						
 						if 'repeat_x' in self.tiles[x] or 'repeat_y' in self.tiles[x]:
 							if 'repeat_x' in self.tiles[x]:
@@ -51,7 +51,7 @@ class map:
 									new['pos_x'] = original['pos_x'] + (i * original['width'])
 									new['pos_y'] = original['pos_y'] + (j * original['height'])
 									self.tiles.append(new)
-									print(str(i)+', '+str(j)+' ', self.tiles[x])
+									#print(str(i)+', '+str(j)+' ', self.tiles[x])
 						
 						x += 1
 						
@@ -79,6 +79,22 @@ class map:
 
 
 		f.close()
+		self.tiles.pop()
+		
+	def tile_within_square(self, tile, nw, sw, se, ne):
+		if (tile['pos_y'] + tile['height']) >= nw['y'] and tile['pos_y'] <= sw['y'] and (tile['pos_x'] + tile['height']) >= nw['x'] and tile['pos_x'] <= ne['x']:
+			return True
+		else:
+			return False
 		
 	def draw_map(self, x, y, gameW = 640, gameH = 480):
-		pass
+		nw = {'x': (x - (gameW / 2)), 'y': (y - (gameH / 2))}
+		sw = {'x': (x - (gameW / 2)), 'y': (y + (gameH / 2))}
+		se = {'x': (x + (gameW / 2)), 'y': (y + (gameH / 2))}
+		ne = {'x': (x + (gameW / 2)), 'y': (y - (gameH / 2))}
+		
+		for tile in self.tiles: # loop our tiles
+			if self.tile_within_square(tile, nw, sw, se, ne):
+				#print(tile)
+				pass
+		
