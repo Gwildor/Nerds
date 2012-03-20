@@ -1,21 +1,22 @@
-import pygame, sys, os
+import pygame, sys, os, time
 sys.path.append('../lib/')
 from pygame.locals import *
 from map import *
 
 def draw_map(map_obj, x, y, gameW = 640, gameH = 480):
+	
 	nw = {'x': (x - (gameW / 2)), 'y': (y - (gameH / 2))}
 	sw = {'x': (x - (gameW / 2)), 'y': (y + (gameH / 2))}
 	se = {'x': (x + (gameW / 2)), 'y': (y + (gameH / 2))}
 	ne = {'x': (x + (gameW / 2)), 'y': (y - (gameH / 2))}
 
-	screen.fill(000)
+	screen.fill((0, 0, 0))
 	for tile in map_obj.tiles: # loop our tiles
 		if map_obj.tile_within_square(tile, nw, se):
 			#print(tile)
 			if tile['src'] not in images:
 				images[tile['src']] = pygame.image.load('../../data/tiles/'+tile['src'])
-			screen.blit(images[tile['src']], (tile['pos_x'] + x + gameW / 2, tile['pos_y'] + y + gameH / 2))
+			screen.blit(images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
 	pygame.display.flip()
 
 map = map('main', '../../')
@@ -28,12 +29,71 @@ screen = pygame.display.get_surface()
 images = {}
 
 x = 0
+y = 0
+speed = 5
+multiplier = 1
+up = False
+down = False
+left = False
+right = False
+no_key_yet = True
 
 while True:
+	
+	if no_key_yet:
+		font = pygame.font.Font(None, 20)
+		text = font.render('Controls:', True, (255, 255, 255))
+		screen.blit(text, (50, 50))
+		text = font.render('- Arrow keys to move', True, (255, 255, 255))
+		screen.blit(text, (50, 80))
+		text = font.render('- Plus and minus to increase move speed', True, (255, 255, 255))
+		screen.blit(text, (50, 100))
+		text = font.render('- Page up and down to jump North and South', True, (255, 255, 255))
+		screen.blit(text, (50, 120))
+		text = font.render('Press any key to continue', True, (255, 255, 255))
+		screen.blit(text, (50, 150))
+	else:
+		draw_map(map, x, y)
+
 	for event in pygame.event.get():
+		#print(event)
 		if event.type == QUIT:
 			sys.exit(0)
-		else:
-			print(event)
-			draw_map(map, x, 0)
-			x += 1
+		elif event.type == KEYDOWN:
+			no_key_yet = False
+			if event.key == 273: # up
+				up = True
+			if event.key == 274: # down
+				down = True
+			if event.key == 275: # right
+				right = True
+			if event.key == 276: # left
+				left = True
+			if event.key == 270 or event.key == 61: # plus sign
+				multiplier += 1
+			if (event.key == 269 or event.key == 45) and multiplier > 1: # minus sign
+				multiplier -= 1
+			if event.key == 280: # page up
+				y -= 400
+			if event.key == 281: # page down
+				y += 400
+		elif event.type == KEYUP:
+			if event.key == 273: # up
+				up = False
+			if event.key == 274: # down
+				down = False
+			if event.key == 275: # right
+				right = False
+			if event.key == 276: # left
+				left = False
+
+	if up:
+		y -= speed * multiplier
+	if down:
+		y += speed * multiplier
+	if right:
+		x += speed * multiplier
+	if left:
+		x -= speed * multiplier
+	
+	time.sleep((1.0 / 60))

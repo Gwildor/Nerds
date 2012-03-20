@@ -7,7 +7,7 @@ pos_x: -320
 pos_y: -240
 width: 32
 height: 32
-repeat_x: 20
+repeat_x: 25
 repeat_y: 15
 src: grass_by_zooboingdotcom.jpg # this is also a comment
 walkable: true
@@ -18,5 +18,13 @@ pos_y: 0
 width:40
 height:31
 src:rock.png
+walkable: false
+~
+
+pos_x: -150
+pos_y: -50
+width: 34
+height: 108
+src: tree.png
 walkable: false
 ~
