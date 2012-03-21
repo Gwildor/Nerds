@@ -8,6 +8,8 @@ class map:
 
 	def load_map(self, name, prefix = '../'):
 		#print(name)
+		self.tiles = []
+		self.general = {}
 		tile_mode = False
 		f = open(prefix+'data/maps/'+name+'.map', 'r') # open map
 		k = 0

@@ -28,3 +28,11 @@ height: 108
 src: tree.png
 walkable: false
 ~
+
+pos_x: 150
+pos_y: -150
+width: 34
+height: 108
+src: tree.png
+walkable: false
+~

@@ -42,16 +42,18 @@ while True:
 	
 	if no_key_yet:
 		font = pygame.font.Font(None, 20)
-		text = font.render('Controls:', True, (255, 255, 255))
-		screen.blit(text, (50, 50))
-		text = font.render('- Arrow keys to move', True, (255, 255, 255))
-		screen.blit(text, (50, 80))
-		text = font.render('- Plus and minus to increase move speed', True, (255, 255, 255))
-		screen.blit(text, (50, 100))
-		text = font.render('- Page up and down to jump North and South', True, (255, 255, 255))
-		screen.blit(text, (50, 120))
 		text = font.render('Press any key to continue', True, (255, 255, 255))
+		screen.blit(text, (50, 50))
+		text = font.render('Controls:', True, (255, 255, 255))
+		screen.blit(text, (50, 80))
+		text = font.render('- Arrow keys to move', True, (255, 255, 255))
+		screen.blit(text, (50, 110))
+		text = font.render('- Plus and minus to increase move speed', True, (255, 255, 255))
+		screen.blit(text, (50, 130))
+		text = font.render('- Page up and down to jump North and South', True, (255, 255, 255))
 		screen.blit(text, (50, 150))
+		text = font.render('- F5 to reload the map from map file', True, (255, 255, 255))
+		screen.blit(text, (50, 170))
 	else:
 		draw_map(map, x, y)
 
@@ -77,6 +79,8 @@ while True:
 				y -= 400
 			if event.key == 281: # page down
 				y += 400
+			if event.key == 286: # F5
+				map.load_map('main', '../../')
 		elif event.type == KEYUP:
 			if event.key == 273: # up
 				up = False
