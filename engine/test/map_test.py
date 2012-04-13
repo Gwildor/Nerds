@@ -23,8 +23,8 @@ map = map('main', '../../')
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
-pygame.display.set_caption('Map view') 
-screen = pygame.display.get_surface()  
+pygame.display.set_caption('Map view')
+screen = pygame.display.get_surface()
 
 images = {}
 
@@ -100,4 +100,4 @@ while True:
 	if left:
 		x -= speed * multiplier
 	
-	time.sleep((1.0 / 60))
+	time.sleep((1.0 / 50))

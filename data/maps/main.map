@@ -1,38 +1,364 @@
-name: Main map!
-assume_center_pos: false
 ~
 
- # this is a comment
-pos_x: -320
-pos_y: -240
-width: 32
-height: 32
-repeat_x: 25
-repeat_y: 15
-src: grass_by_zooboingdotcom.jpg # this is also a comment
-walkable: true
+#
+# PATH
+#
+pos_x: 20
+pos_y: -360
+width: 40
+height: 40
+repeat_y: 9
+src: path_w.jpg
+~
+pos_x: 60
+pos_y: -600
+width: 40
+height: 40
+repeat_y: 6
+src: path_w.jpg
+~
+pos_x: 60
+pos_y: -360
+width: 40
+height: 40
+repeat_y: 22
+src: path_c.jpg
+~
+pos_x: 100
+pos_y: -600
+width: 40
+height: 40
+repeat_y: 6
+src: path_c.jpg
+~
+pos_x: 100
+pos_y: -320
+width: 40
+height: 40
+repeat_y: 21
+src: path_e.jpg
+~
+pos_x: 140
+pos_y: -600
+width: 40
+height: 40
+repeat_y: 6
+src: path_e.jpg
 ~
 
-pos_x: 0
+# top of right straigth path
+pos_x: 60
+pos_y: -640
+width: 40
+height: 40
+src: path_nw.jpg
+~
+pos_x: 100
+pos_y: -640
+width: 40
+height: 40
+src: path_n.jpg
+~
+pos_x: 140
+pos_y: -640
+width: 40
+height: 40
+src: path_ne.jpg
+~
+#end of top
+
+# corner in straight right path
+pos_x: 20
+pos_y: -400
+width: 40
+height: 40
+src: path_nw.jpg
+~
+pos_x: 100
+pos_y: -360
+width: 40
+height: 40
+src: junction_se.jpg
+~
+pos_x: 60
+pos_y: -400
+width: 40
+height: 40
+src: junction_nw.jpg
+~
+pos_x: 140
+pos_y: -360
+width: 40
+height: 40
+src: path_se.jpg
+~
+# end corner
+
+pos_x: 20
 pos_y: 0
-width:40
-height:31
-src:rock.png
-walkable: false
+width: 40
+height: 40
+src: junction_nw.jpg
+~
+pos_x: 20
+pos_y: 40
+width: 40
+height: 40
+src: junction_sw.jpg
+~
+pos_x: 20
+pos_y: 80
+width: 40
+height: 40
+src: path_w.jpg
+repeat_y: 6
 ~
 
-pos_x: -150
-pos_y: -50
-width: 34
-height: 108
-src: tree.png
-walkable: false
+# open area below right path
+pos_x: 20
+pos_y: 320
+width: 40
+height: 40
+src: junction_nw.jpg
+~
+pos_x: -20
+pos_y: 320
+width: 40
+height: 40
+src: path_nw.jpg
+~
+pos_x: -20
+pos_y: 360
+width: 40
+height: 40
+src: junction_nw.jpg
+~
+pos_x: 20
+pos_y: 360
+width: 40
+height: 40
+repeat_y: 4
+src: path_c.jpg
+~
+pos_x: -140
+pos_y: 360
+width: 40
+height: 40
+repeat_x: 3
+src: path_n.jpg
+~
+pos_x: -180
+pos_y: 360
+width: 40
+height: 40
+src: path_nw.jpg
+~
+pos_x: -140
+pos_y: 400
+width: 40
+height: 40
+repeat_y: 3
+src: path_c.jpg
+~
+pos_x: -100
+pos_y: 400
+width: 40
+height: 40
+repeat_y: 2
+repeat_x: 3
+src: path_c.jpg
+~
+pos_x: -180
+pos_y: 400
+width: 40
+height: 40
+repeat_y: 3
+src: path_w.jpg
+~
+pos_x: -180
+pos_y: 520
+width: 40
+height: 40
+src: path_sw.jpg
+~
+pos_x: -140
+pos_y: 520
+width: 40
+height: 40
+src: path_s.jpg
+~
+pos_x: -100
+pos_y: 520
+width: 40
+height: 40
+src: path_se.jpg
+~
+pos_x: -100
+pos_y: 480
+width: 40
+height: 40
+src: junction_se.jpg
+~
+pos_x: -60
+pos_y: 480
+width: 40
+height: 40
+src: path_s.jpg
+~
+pos_x: -20
+pos_y: 480
+width: 40
+height: 40
+src: junction_sw.jpg
+~
+pos_x: -20
+pos_y: 520
+width: 40
+height: 40
+src: path_sw.jpg
+~
+pos_x: 20
+pos_y: 520
+width: 40
+height: 40
+repeat_x: 2
+src: path_s.jpg
+~
+pos_x: 100
+pos_y: 520
+width: 40
+height: 40
+src: path_se.jpg
 ~
 
-pos_x: 150
-pos_y: -150
-width: 34
-height: 108
-src: tree.png
-walkable: false
+# horizontal narrow path
+pos_x: -340
+pos_y: 0
+width: 40
+height: 40
+repeat_x: 9
+src: path_n.jpg
+~
+pos_x: -300
+pos_y: 40
+width: 40
+height: 40
+repeat_x: 8
+src: path_s.jpg
+~
+pos_x: -380
+pos_y: 0
+width: 40
+height: 40
+src: path_nw.jpg
+~
+pos_x: -340
+pos_y: 40
+width: 40
+height: 40
+src: junction_se.jpg
+~
+pos_x: -380
+pos_y: 40
+width: 40
+height: 40
+repeat_y: 5
+src: path_w.jpg
+~
+pos_x: -340
+pos_y: 80
+width: 40
+height: 40
+repeat_y: 5
+src: path_e.jpg
+~
+pos_x: -380
+pos_y: 240
+width: 40
+height: 40
+src: junction_nw.jpg
+~
+pos_x: -340
+pos_y: 280
+width: 40
+height: 40
+src: path_se.jpg
+~
+pos_x: -500
+pos_y: 240
+width: 40
+height: 40
+repeat_x: 3
+src: path_n.jpg
+~
+pos_x: -540
+pos_y: 280
+width: 40
+height: 40
+repeat_x: 5
+src: path_s.jpg
+~
+pos_x: -540
+pos_y: 240
+width: 40
+height: 40
+src: junction_ne.jpg
+~
+pos_x: -580
+pos_y: 280
+width: 40
+height: 40
+src: path_sw.jpg
+~
+pos_x: -580
+pos_y: 120
+width: 40
+height: 40
+repeat_y: 4
+src: path_w.jpg
+~
+pos_x: -540
+pos_y: 80
+width: 40
+height: 40
+repeat_y: 4
+src: path_e.jpg
+~
+pos_x: -580
+pos_y: 80
+width: 40
+height: 40
+src: junction_sw.jpg
+~
+pos_x: -540
+pos_y: 40
+width: 40
+height: 40
+src: path_ne.jpg
+~
+pos_x: -620
+pos_y: 80
+width: 40
+height: 40
+src: path_sw.jpg
+~
+pos_x: -580
+pos_y: 40
+width: 40
+height: 40
+src: junction_ne.jpg
+~
+pos_x: -620
+pos_y: -80
+width: 40
+height: 40
+repeat_y: 4
+src: path_w.jpg
+~
+pos_x: -580
+pos_y: -80
+width: 40
+height: 40
+repeat_y: 3
+src: path_e.jpg
 ~
