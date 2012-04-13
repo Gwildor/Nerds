@@ -35,6 +35,25 @@ class map:
 					else:
 						#print(str(k), self.tiles[k])
 						
+						if 'src' not in self.images:
+							self.images[self.tiles[k]['src']] = pygame.image.load('../../data/tiles/'+self.tiles[k]['src'])
+							
+						#
+						# DEFAULT VALUES
+						#
+						
+						if 'width' not in self.tiles[k]:
+							self.tiles[k]['width'] = self.images[self.tiles[k]['src']].get_width()
+							
+						if 'height' not in self.tiles[k]:
+							self.tiles[k]['height'] = self.images[self.tiles[k]['src']].get_height()
+							
+							
+							
+						#
+						# repeat_x and repeat_y
+						#
+						
 						if 'repeat_x' in self.tiles[k] or 'repeat_y' in self.tiles[k]:
 							if 'repeat_x' in self.tiles[k]:
 								repeat_x = self.tiles[k]['repeat_x']
@@ -105,7 +124,5 @@ class map:
 		for tile in self.tiles: # loop our tiles
 			if self.tile_within_square(tile, nw, se):
 				#print(tile)
-				if tile['src'] not in self.images:
-					self.images[tile['src']] = pygame.image.load('../../data/tiles/'+tile['src'])
 				screen.blit(self.images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
 		pygame.display.flip()
