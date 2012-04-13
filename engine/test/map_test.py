@@ -2,31 +2,13 @@ import pygame, sys, os, time
 sys.path.append('../lib/')
 from pygame.locals import *
 from map import *
-
-def draw_map(map_obj, x, y, gameW = 640, gameH = 480):
 	
-	nw = {'x': (x - (gameW / 2)), 'y': (y - (gameH / 2))}
-	sw = {'x': (x - (gameW / 2)), 'y': (y + (gameH / 2))}
-	se = {'x': (x + (gameW / 2)), 'y': (y + (gameH / 2))}
-	ne = {'x': (x + (gameW / 2)), 'y': (y - (gameH / 2))}
-
-	screen.fill((0, 0, 0))
-	for tile in map_obj.tiles: # loop our tiles
-		if map_obj.tile_within_square(tile, nw, se):
-			#print(tile)
-			if tile['src'] not in images:
-				images[tile['src']] = pygame.image.load('../../data/tiles/'+tile['src'])
-			screen.blit(images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
-	pygame.display.flip()
-
-map = map('main', '../../')
-
 pygame.init()
 window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Map view')
 screen = pygame.display.get_surface()
 
-images = {}
+map = map('main', '../../')
 
 x = 0
 y = 0
@@ -55,7 +37,7 @@ while True:
 		text = font.render('- F5 to reload the map from map file', True, (255, 255, 255))
 		screen.blit(text, (50, 170))
 	else:
-		draw_map(map, x, y)
+		map.draw_map(screen, x, y)
 
 	for event in pygame.event.get():
 		#print(event)
