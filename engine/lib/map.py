@@ -48,6 +48,9 @@ class map:
 						if 'height' not in self.tiles[k]:
 							self.tiles[k]['height'] = self.images[self.tiles[k]['src']].get_height()
 							
+						if 'walkable' not in self.tiles[k]:
+							self.tiles[k]['walkable'] = True
+							
 							
 							
 						#

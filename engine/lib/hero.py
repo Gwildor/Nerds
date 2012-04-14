@@ -36,3 +36,11 @@ class hero:
 		self.images['main']['w']['s'].append(sheet_surface.subsurface(Rect(((14 * 9), 0), (14, 21)) ))
 		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 10), 0), (14, 21)) ))
 		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 11), 0), (14, 21)) ))
+
+	def hittest(self, dx, dy, **objects):
+		if not options.get('map'):
+			map = false
+		else:
+			map = options.get('map')
+			
+		
