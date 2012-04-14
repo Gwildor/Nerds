@@ -14,7 +14,8 @@ class hero:
 		images['main'][val]['m'] = []
 	
 	def __init__(self, sheet = 'main.png', prefix = '../'):
-		self.load_sheet(sheet, prefix)
+		if sheet:
+			self.load_sheet(sheet, prefix)
 		
 	def load_sheet(self, sheet, prefix = '../'):
 		sheet_surface = pygame.image.load('../../data/chars/hero/'+sheet)
@@ -39,7 +40,7 @@ class hero:
 
 	def hittest(self, dx, dy, **objects):
 		if not options.get('map'):
-			map = false
+			map = False
 		else:
 			map = options.get('map')
 			

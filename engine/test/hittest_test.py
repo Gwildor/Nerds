@@ -2,14 +2,15 @@ import pygame, sys, os, time
 sys.path.append('../lib/')
 from pygame.locals import *
 from hero import *
+from map import *
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Hittest testing')
 screen = pygame.display.get_surface()
 
-hero = hero
-map = map
+hero = hero(False)
+map = map(False)
 
 body = pygame.Surface((32, 32))
 body.fill((255, 0, 0))
@@ -21,9 +22,10 @@ hero.images['main']['e']['s'].append(body)
 
 rect = pygame.Surface((32, 32))
 rect.fill((255, 255, 255))
+
 map.images['rect'] = rect
 
-map.tiles[0] = {'src': 'rect', 'pos_x': -50, 'pos_y': -50}
+map.tiles.append({'src': 'rect', 'pos_x': -50, 'pos_y': -50, 'width': 32, 'height': 32, 'walkable': False})
 
 up = False
 down = False

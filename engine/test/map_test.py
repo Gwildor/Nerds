@@ -37,7 +37,9 @@ while True:
 		text = font.render('- F5 to reload the map from map file', True, (255, 255, 255))
 		screen.blit(text, (50, 170))
 	else:
+		screen.fill((0, 0, 0))
 		map.draw_map(screen, x, y)
+		pygame.display.flip()
 
 	for event in pygame.event.get():
 		#print(event)

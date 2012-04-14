@@ -8,7 +8,8 @@ class map:
 	
 	def __init__(self, name = 'main', prefix = '../'):
 		#print(name)
-		self.load_map(name, prefix)
+		if name:
+			self.load_map(name, prefix)
 
 	def load_map(self, name, prefix = '../'):
 		#print(name)
@@ -123,9 +124,7 @@ class map:
 		se = {'x': (x + (gameW / 2)), 'y': (y + (gameH / 2))}
 		ne = {'x': (x + (gameW / 2)), 'y': (y - (gameH / 2))}
 
-		screen.fill((0, 0, 0))
 		for tile in self.tiles: # loop our tiles
 			if self.tile_within_square(tile, nw, se):
 				#print(tile)
 				screen.blit(self.images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
-		pygame.display.flip()
