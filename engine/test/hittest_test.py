@@ -19,6 +19,10 @@ hero.images['main']['s']['s'].append(body)
 hero.images['main']['n']['s'].append(body)
 hero.images['main']['w']['s'].append(body)
 hero.images['main']['e']['s'].append(body)
+hero.images['main']['s']['m'].append(body)
+hero.images['main']['n']['m'].append(body)
+hero.images['main']['w']['m'].append(body)
+hero.images['main']['e']['m'].append(body)
 
 rect = pygame.Surface((32, 32))
 rect.fill((255, 255, 255))
@@ -40,14 +44,18 @@ while True:
 	map.draw_map(screen, 0, 0)
 	
 	if hero.moving:
+		dx = 0
+		dy = 0
 		if hero.dir == 'n':
-			hero.y -= 4
+			dy = -4
 		if hero.dir == 's':
-			hero.y += 4
+			dy = 4
 		if hero.dir == 'e':
-			hero.x += 4
+			dx = 4
 		if hero.dir == 'w':
-			hero.x -= 4
+			dx = -4
+	
+		hero.hittest(dx, dy, map = map)
 
 	screen.blit(hero.images['main'][hero.dir]['s'][0], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 	
