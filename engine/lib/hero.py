@@ -56,45 +56,45 @@ class hero:
 		else:
 			y_negative = False
 		
+		ori_x = hero.x
+		ori_y = hero.y
+		pos_x = ori_x
+		pos_y = ori_y
 		
 		ax = 0
-		ay = 0			
 		while ax <= dx:
-			print('x: '+str(ax))
+			#print('x: '+str(ax))
 			
+			ay = 0
 			while ay <= dy:
-				print('y: '+str(ay))
+				#print('y: '+str(ay))
+				print('x,y: '+str(ax)+','+str(ay)+' - pos_x,y: '+str(pos_x)+','+str(pos_y)+' - ori_x,y: '+str(ori_x)+','+str(ori_y))
+				
+				hero.x = pos_x
+				hero.y = pos_y
 				
 				if x_negative:
-					pos_x = hero.x - ax
+					pos_x = ori_x - ax
 				else:
-					pos_x = hero.x + ax
+					pos_x = ori_x + ax
 					
 				if y_negative:
-					pos_y = hero.y - ay
+					pos_y = ori_y - ay
 				else:
-					pos_y = hero.y + ay
+					pos_y = ori_y + ay
 					
 				if map:
 					
 					for tile in map.tiles:
-						if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images['main'][self.dir]['m'][0].get_width()), 'y': (pos_y + self.images['main'][self.dir]['m'][0].get_height())}):
-							hero.x = pos_x
-							hero.y = pos_y
-							return 0
+						if not tile['walkable']:
+							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images['main'][self.dir]['m'][0].get_width()), 'y': (pos_y + self.images['main'][self.dir]['m'][0].get_height())}, 1):
+								return 0
 							
 				ay += 1
 				
 			ax += 1
-				
-		if x_negative:
-			hero.x -= dx
-		else:
-			hero.x += dx
-		
-		if y_negative:
-			hero.y -= dy
-		else:
-			hero.y += dy
+			
+		hero.x = pos_x
+		hero.y = pos_y
 			
 		print('...')

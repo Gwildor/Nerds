@@ -111,8 +111,8 @@ class map:
 		self.tiles.pop()
 		#print(self.tiles)
 		
-	def tile_within_square(self, tile, nw, se):
-		if (tile['pos_y'] + tile['height']) >= nw['y'] and tile['pos_y'] <= se['y'] and (tile['pos_x'] + tile['height']) >= nw['x'] and tile['pos_x'] <= se['x']:
+	def tile_within_square(self, tile, nw, se, offset = 0):
+		if (tile['pos_y'] + tile['height']) >= (nw['y'] + offset) and tile['pos_y'] <= (se['y'] - offset) and (tile['pos_x'] + tile['height']) >= (nw['x'] + offset) and tile['pos_x'] <= (se['x'] - offset):
 			return True
 		else:
 			return False
