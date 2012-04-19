@@ -18,7 +18,7 @@ class hero:
 			self.load_sheet(sheet, prefix)
 		
 	def load_sheet(self, sheet, prefix = '../'):
-		sheet_surface = pygame.image.load('../../data/chars/hero/'+sheet)
+		sheet_surface = pygame.image.load('../../data/char/hero/'+sheet)
 		sheet_surface.convert_alpha()
 		
 		#pygame.Rect((left, top), (width, height)): return Rect
@@ -43,9 +43,6 @@ class hero:
 			map = False
 		else:
 			map = objects.get('map')
-			
-		hero.x += dx
-		hero.y += dy
 		
 		if dx < 0:
 			x_negative = True
@@ -62,11 +59,11 @@ class hero:
 		
 		ax = 0
 		ay = 0			
-		while (ax - 1) < dx:
-			#print('x: '+str(ax))
+		while ax <= dx:
+			print('x: '+str(ax))
 			
-			while (ay - 1) < dy:
-				#print('y: '+str(ay))
+			while ay <= dy:
+				print('y: '+str(ay))
 				
 				if x_negative:
 					pos_x = hero.x - ax
@@ -76,19 +73,28 @@ class hero:
 				if y_negative:
 					pos_y = hero.y - ay
 				else:
-					pos_y = hero.y + ax
+					pos_y = hero.y + ay
 					
 				if map:
 					
 					for tile in map.tiles:
 						if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images['main'][self.dir]['m'][0].get_width()), 'y': (pos_y + self.images['main'][self.dir]['m'][0].get_height())}):
-							hero.x = pos_x - 1
-							hero.y = pos_y - 1
+							hero.x = pos_x
+							hero.y = pos_y
 							return 0
 							
 				ay += 1
 				
 			ax += 1
 				
-				
-		#print('...')
+		if x_negative:
+			hero.x -= dx
+		else:
+			hero.x += dx
+		
+		if y_negative:
+			hero.y -= dy
+		else:
+			hero.y += dy
+			
+		print('...')
