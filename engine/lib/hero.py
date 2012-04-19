@@ -38,11 +38,21 @@ class hero:
 		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 10), 0), (14, 21)) ))
 		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 11), 0), (14, 21)) ))
 
-	def hittest(self, dx, dy, **objects):
-		if not objects.get('map'):
+	def hittest(self, **args):
+		if not args.get('dx'):
+			dx = 0
+		else:
+			dx = args.get('dx')
+			
+		if not args.get('dy'):
+			dy = 0
+		else:
+			dy = args.get('dy')
+		
+		if not args.get('map'):
 			map = False
 		else:
-			map = objects.get('map')
+			map = args.get('map')
 		
 		if dx < 0:
 			x_negative = True
@@ -68,7 +78,7 @@ class hero:
 			ay = 0
 			while ay <= dy:
 				#print('y: '+str(ay))
-				print('x,y: '+str(ax)+','+str(ay)+' - pos_x,y: '+str(pos_x)+','+str(pos_y)+' - ori_x,y: '+str(ori_x)+','+str(ori_y))
+				#print('x,y: '+str(ax)+','+str(ay)+' - pos_x,y: '+str(pos_x)+','+str(pos_y)+' - ori_x,y: '+str(ori_x)+','+str(ori_y))
 				
 				hero.x = pos_x
 				hero.y = pos_y
@@ -88,13 +98,14 @@ class hero:
 					for tile in map.tiles:
 						if not tile['walkable']:
 							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images['main'][self.dir]['m'][0].get_width()), 'y': (pos_y + self.images['main'][self.dir]['m'][0].get_height())}, 1):
-								return 0
+								return True
 							
 				ay += 1
 				
 			ax += 1
 			
+		#print('...')
 		hero.x = pos_x
 		hero.y = pos_y
-			
-		print('...')
+		
+		return False

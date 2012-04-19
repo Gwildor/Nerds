@@ -60,7 +60,7 @@ while True:
 		if hero.dir == 'w':
 			dx = -4
 	
-		hero.hittest(dx, dy, map = map)
+		hero.hittest(dx = dx, dy = dy, map = map)
 
 	screen.blit(hero.images['main'][hero.dir]['s'][0], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 	
