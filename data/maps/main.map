@@ -1,6 +1,16 @@
 ~
 
 #
+# GRASS
+#
+pos_x: -700
+pos_y: -700
+repeat_y: 35
+repeat_x: 30
+src: grass.jpg
+~
+
+#
 # PATH
 #
 pos_x: 20
@@ -253,4 +263,76 @@ pos_x: -580
 pos_y: -80
 repeat_y: 3
 src: path_e.jpg
+~
+pos_x: -620
+pos_y: -120
+src: path_nw.jpg
+~
+pos_x: -580
+pos_y: -120
+src: path_ne.jpg
+~
+
+#
+# FENCE
+#
+pos_x: -369
+pos_y: -380
+src: fence_pole_s.png
+~
+pos_x: -367
+pos_y: -335
+src: fence_ns.png
+~
+pos_x: -367
+pos_y: -295
+src: fence_ns.png
+~
+pos_x: -375
+pos_y: -250
+src: fence_corner_w_n.png
+~
+pos_x: -415
+pos_y: -243
+src: fence_we.png
+~
+pos_x: -455
+pos_y: -250
+src: fence_corner_e_s.png
+~
+pos_x: -447
+pos_y: -175
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: -135
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: -95
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: -55
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: -15
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: 25
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: 65
+src: fence_ns.png
+~
+pos_x: -447
+pos_y: 105
+src: fence_ns.png
+~
+pos_x: -450
+pos_y: 150
+src: fence_pole_n.png
 ~
