@@ -1,0 +1,41 @@
+def_w: 14
+def_h: 21
+def_pos_y: 0
+def_src: main.png
+~
+s:
+	*
+		pos_x: 0
+	*
+		pos_x: 14
+	+
+		pos_x: 28
+	*
+~
+n:
+	*
+		pos_x: 42
+	*
+		pos_x: 56
+	+
+		pos_x: 70
+	*
+~
+e:
+	*
+		pos_x: 84
+	*
+		pos_x: 98
+	+
+		pos_x: 112
+	*
+~
+w:
+	*
+		pos_x: 126
+	*
+		pos_x: 140
+	+
+		pos_x: 154
+	*
+~

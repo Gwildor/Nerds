@@ -1,28 +1,63 @@
 import pygame
 from pygame.locals import *
 
-class hero:
+class char:
 	x = 0
 	y = 0
 	dir = 's'
 	moving = False
 	images = {}
-	images['main'] = {}
-	for val in ['s', 'n', 'e', 'w']:
-		images['main'][val] = {}
-		images['main'][val]['s'] = []
-		images['main'][val]['m'] = []
+	general = {}
+	frames = {}
 	
-	def __init__(self, sheet = 'main.png', prefix = '../'):
-		if sheet:
-			self.load_sheet(sheet, prefix)
+	def __init__(self, file = 'hero/main/main', prefix = '../'):
+		if file:
+			self.load_file(file, prefix)
 		
-	def load_sheet(self, sheet, prefix = '../'):
-		sheet_surface = pygame.image.load('../../data/char/hero/'+sheet)
-		sheet_surface.convert_alpha()
+	def load_file(self, file, prefix = '../'):
+		"""frames['main'] = {}
+		for val in ['s', 'n', 'e', 'w']:
+			frames['main'][val] = {}
+			frames['main'][val]['s'] = []
+			frames['main'][val]['m'] = []"""
+		
+		self.frames[file] = {}
+		self.general = {}
+		
+		f = open(prefix+'data/char/'+file+'.char', 'r') # open file
+		
+		for line in f.readlines(): # loop through file
+			if '#' in line: # comment found
+				parts = line.split('#', 1)
+				#print(parts)
+				line = parts[0]
+			line = line.strip()
+			
+			if line != '':
+				#print(line, sep = '', end = '\n') # echo whole file
+				
+				if line == '~':
+					pass
+					
+				elif line == '*':
+					pass
+					
+				elif line == '+':
+					pass
+					
+				elif line == 'n:' or line == 's:' or line == 'w:' or line == 'e:':
+					pass
+					
+				else: # properties and values
+		
+		
+		f.close()
+		
+		#sheet_surface = pygame.image.load('../../data/char/hero/'+sheet)
+		#sheet_surface.convert_alpha()
 		
 		#pygame.Rect((left, top), (width, height)): return Rect
-		self.images['main']['s']['s'].append(sheet_surface.subsurface(Rect(((14 * 0), 0), (14, 21)) ))
+		"""self.images['main']['s']['s'].append(sheet_surface.subsurface(Rect(((14 * 0), 0), (14, 21)) ))
 		self.images['main']['s']['m'].append(sheet_surface.subsurface(Rect(((14 * 1), 0), (14, 21)) ))
 		self.images['main']['s']['m'].append(sheet_surface.subsurface(Rect(((14 * 2), 0), (14, 21)) ))
 		
@@ -36,7 +71,7 @@ class hero:
 		
 		self.images['main']['w']['s'].append(sheet_surface.subsurface(Rect(((14 * 9), 0), (14, 21)) ))
 		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 10), 0), (14, 21)) ))
-		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 11), 0), (14, 21)) ))
+		self.images['main']['w']['m'].append(sheet_surface.subsurface(Rect(((14 * 11), 0), (14, 21)) ))"""
 
 	def hittest(self, **args):
 		if not args.get('dx'):
@@ -66,8 +101,8 @@ class hero:
 		else:
 			y_negative = False
 		
-		ori_x = hero.x
-		ori_y = hero.y
+		ori_x = self.x
+		ori_y = self.y
 		pos_x = ori_x
 		pos_y = ori_y
 		
@@ -80,8 +115,8 @@ class hero:
 				#print('y: '+str(ay))
 				#print('x,y: '+str(ax)+','+str(ay)+' - pos_x,y: '+str(pos_x)+','+str(pos_y)+' - ori_x,y: '+str(ori_x)+','+str(ori_y))
 				
-				hero.x = pos_x
-				hero.y = pos_y
+				self.x = pos_x
+				self.y = pos_y
 				
 				if x_negative:
 					pos_x = ori_x - ax
@@ -97,7 +132,7 @@ class hero:
 					
 					for tile in map.tiles:
 						if not tile['walkable']:
-							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images['main'][self.dir]['m'][0].get_width()), 'y': (pos_y + self.images['main'][self.dir]['m'][0].get_height())}, 1):
+							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames['main'][self.dir]['m'][0]].get_width()), 'y': (pos_y + self.images[self.frames['main'][self.dir]['m'][0]].get_height())}, 1):
 								return True
 							
 				ay += 1
@@ -105,7 +140,7 @@ class hero:
 			ax += 1
 			
 		#print('...')
-		hero.x = pos_x
-		hero.y = pos_y
+		self.x = pos_x
+		self.y = pos_y
 		
 		return False

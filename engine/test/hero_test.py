@@ -1,14 +1,14 @@
 import pygame, sys, os, time
 sys.path.append('../lib/')
 from pygame.locals import *
-from hero import *
+from char import *
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Hero testing')
 screen = pygame.display.get_surface()
 
-hero = hero('main.png', '../../')
+hero = char('hero/main/main', '../../')
 
 up = False
 down = False
@@ -47,10 +47,10 @@ while True:
 			if hero.dir == 'w':
 				hero.x -= 2
 				
-			screen.blit(hero.images['main'][hero.dir]['m'][frame], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+			screen.blit(hero.images[hero.frames['main'][hero.dir]['m'][frame]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 		else:
 			counter = 0
-			screen.blit(hero.images['main'][hero.dir]['s'][0], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+			screen.blit(hero.images[hero.frames['main'][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 			
 		pygame.display.flip()
 		

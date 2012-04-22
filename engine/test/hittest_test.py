@@ -1,7 +1,7 @@
 import pygame, sys, os, time
 sys.path.append('../lib/')
 from pygame.locals import *
-from hero import *
+from char import *
 from map import *
 
 pygame.init()
@@ -9,20 +9,28 @@ window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Hittest testing')
 screen = pygame.display.get_surface()
 
-hero = hero(False)
+hero = char(False)
 map = map(False)
 
 body = pygame.Surface((32, 32))
 body.fill((255, 0, 0))
 
-hero.images['main']['s']['s'].append(body)
-hero.images['main']['n']['s'].append(body)
-hero.images['main']['w']['s'].append(body)
-hero.images['main']['e']['s'].append(body)
-hero.images['main']['s']['m'].append(body)
-hero.images['main']['n']['m'].append(body)
-hero.images['main']['w']['m'].append(body)
-hero.images['main']['e']['m'].append(body)
+hero.frames['main'] = {}
+for val in ['s', 'n', 'e', 'w']:
+	hero.frames['main'][val] = {}
+	hero.frames['main'][val]['s'] = []
+	hero.frames['main'][val]['m'] = []
+
+hero.images['rect'] = body
+
+hero.images['main']['s']['s'].append('rect')
+hero.images['main']['n']['s'].append('rect')
+hero.images['main']['w']['s'].append('rect')
+hero.images['main']['e']['s'].append('rect')
+hero.images['main']['s']['m'].append('rect')
+hero.images['main']['n']['m'].append('rect')
+hero.images['main']['w']['m'].append('rect')
+hero.images['main']['e']['m'].append('rect')
 
 rect = pygame.Surface((32, 32))
 rect.fill((255, 255, 255))
@@ -62,7 +70,7 @@ while True:
 	
 		hero.hittest(dx = dx, dy = dy, map = map)
 
-	screen.blit(hero.images['main'][hero.dir]['s'][0], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+	screen.blit(hero.images[hero.frames['main'][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 	
 	pygame.display.flip()
 		
