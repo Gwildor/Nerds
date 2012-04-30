@@ -24,7 +24,8 @@ class char:
 		self.frames[file] = {}
 		self.general = {}
 		
-		curdir = ''
+		curdir  = ''
+		curmove = ''
 		
 		f = open(prefix+'data/char/'+file+'.char', 'r') # open file
 		
@@ -42,13 +43,20 @@ class char:
 					pass
 					
 				elif line == '*':
-					pass
+					if curmove == 'g':
+						curmove = 's'
+					else:
+						if curmove == 's':
+							curmove = 'm'
+						
+						
 					
 				elif line == '+':
 					pass
 					
 				elif line == 'n:' or line == 's:' or line == 'w:' or line == 'e:':
-					curdir = line[:-1]
+					curdir  = line[:-1]
+					curmove = 'g'
 					self.frames[file][curdir] = {'s': [], 'm': []}
 					
 				else: # properties and values
