@@ -24,6 +24,8 @@ class char:
 		self.frames[file] = {}
 		self.general = {}
 		
+		curdir = ''
+		
 		f = open(prefix+'data/char/'+file+'.char', 'r') # open file
 		
 		for line in f.readlines(): # loop through file
@@ -46,9 +48,28 @@ class char:
 					pass
 					
 				elif line == 'n:' or line == 's:' or line == 'w:' or line == 'e:':
-					pass
+					curdir = line[:-1]
+					self.frames[file][curdir] = {'s': [], 'm': []}
 					
 				else: # properties and values
+					
+					vals = line.split(':', 1)
+					vals[0] = vals[0].strip()
+					vals[1] = vals[1].strip()
+					
+					if vals[0] in ['def_w', 'def_h', 'def_pos_y', 'def_pos_x', 'pos_x', 'pos_y']:
+						vals[1] = int(vals[1])
+					elif vals[0] in ['']:
+						if vals[1] == 'true':
+							vals[1] = True
+						else:
+							vals[1] = False
+
+					#print(vals)
+					if curdir == '':
+						self.general[vals[0]] = vals[1]
+					else:
+						pass
 		
 		
 		f.close()
