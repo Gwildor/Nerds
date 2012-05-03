@@ -47,10 +47,10 @@ while True:
 			if hero.dir == 'w':
 				hero.x -= 2
 				
-			screen.blit(hero.images[hero.frames['main'][hero.dir]['m'][frame]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+			screen.blit(hero.images[hero.frames[hero.state][hero.dir]['m'][frame]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 		else:
 			counter = 0
-			screen.blit(hero.images[hero.frames['main'][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+			screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 			
 		pygame.display.flip()
 		
