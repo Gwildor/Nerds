@@ -15,22 +15,14 @@ map = map(False)
 body = pygame.Surface((32, 32))
 body.fill((255, 0, 0))
 
-hero.frames['main'] = {}
+hero.frames[''] = {}
 for val in ['s', 'n', 'e', 'w']:
-	hero.frames['main'][val] = {}
-	hero.frames['main'][val]['s'] = []
-	hero.frames['main'][val]['m'] = []
+	hero.frames[''][val] = {}
+	hero.frames[''][val]['s'] = ['rect']
+	hero.frames[''][val]['m'] = ['rect']
 
+print(hero.frames)
 hero.images['rect'] = body
-
-hero.images['main']['s']['s'].append('rect')
-hero.images['main']['n']['s'].append('rect')
-hero.images['main']['w']['s'].append('rect')
-hero.images['main']['e']['s'].append('rect')
-hero.images['main']['s']['m'].append('rect')
-hero.images['main']['n']['m'].append('rect')
-hero.images['main']['w']['m'].append('rect')
-hero.images['main']['e']['m'].append('rect')
 
 rect = pygame.Surface((32, 32))
 rect.fill((255, 255, 255))
@@ -70,7 +62,7 @@ while True:
 	
 		hero.hittest(dx = dx, dy = dy, map = map)
 
-	screen.blit(hero.images[hero.frames['main'][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+	screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 	
 	pygame.display.flip()
 		
