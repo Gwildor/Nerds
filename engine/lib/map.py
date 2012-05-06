@@ -37,7 +37,7 @@ class map:
 						#print(str(k), self.tiles[k])
 						
 						if self.tiles[k]['src'] not in self.images:
-							self.images[self.tiles[k]['src']] = pygame.image.load('../../data/tiles/'+self.tiles[k]['src'])
+							self.images[self.tiles[k]['src']] = pygame.image.load(prefix+'data/tiles/'+self.tiles[k]['src'])
 							
 						#
 						# DEFAULT VALUES
