@@ -21,7 +21,7 @@ for val in ['s', 'n', 'e', 'w']:
 	hero.frames[''][val]['s'] = ['rect']
 	hero.frames[''][val]['m'] = ['rect']
 
-print(hero.frames)
+#print(hero.frames)
 hero.images['rect'] = body
 
 rect = pygame.Surface((32, 32))

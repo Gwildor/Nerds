@@ -130,6 +130,11 @@ class char:
 			dy = 0
 		else:
 			dy = args.get('dy')
+			
+		if not args.get('move'):
+			move = True
+		else:
+			move = args.get('move')
 		
 		if not args.get('map'):
 			map = False
@@ -162,8 +167,9 @@ class char:
 				#print('y: '+str(ay))
 				#print('x,y: '+str(ax)+','+str(ay)+' - pos_x,y: '+str(pos_x)+','+str(pos_y)+' - ori_x,y: '+str(ori_x)+','+str(ori_y))
 				
-				self.x = pos_x
-				self.y = pos_y
+				if move:
+					self.x = pos_x
+					self.y = pos_y
 				
 				if x_negative:
 					pos_x = ori_x - ax
@@ -187,7 +193,8 @@ class char:
 			ax += 1
 			
 		#print('...')
-		self.x = pos_x
-		self.y = pos_y
+		if move:
+			self.x = pos_x
+			self.y = pos_y
 		
 		return False
