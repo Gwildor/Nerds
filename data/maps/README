@@ -6,7 +6,7 @@ Here be all yerr map files.
 	
 	* The default map, which gets loaded instead when a map file which the engine attempts to load is not found,
 		should be named "main.map". This map also gets loaded if no "new game start map" is specified in the general
-		config of your game. When you are making a game with one large (semi-)open world which connets to other maps
+		config of your game. When you are making a game with one large (semi-)open world which connects to other maps
 		such as buildings etc., then this world map should be the one which is named main.map (although this is not
 		mandatory, just a general guideline for clearness).
 		
@@ -27,7 +27,7 @@ pref_name: value
 pref_name_2: value
 ~
 
-General note: all empty lines are ignore, so you an add as many whitelines as you want.
+General note: all empty lines are ignored, so you can add as many whitelines as you want. Same goes for trailing whitespace.
 Comments are made by using #
 All blocks are divided by ~, the first block holds general map info and settings. If you have no general info or
 settings, just start the file with a ~
