@@ -1,3 +1,5 @@
+debug = True
+
 import pygame, sys, os, time
 sys.path.append('engine/lib/')
 sys.path.append('lib/')
@@ -11,7 +13,11 @@ pygame.display.set_caption('Nerds\' main screen')
 screen = pygame.display.get_surface()
 
 hero = char()
+if debug:
+	hero.debug = True
 map = map()
+if debug:
+	map.debug = True
 
 up = False
 down = False
@@ -27,7 +33,7 @@ while True:
 	screen.fill((0, 0, 0))
 	
 	counter += 1
-	if (counter % 20) == 0:
+	if (counter % 15) == 0:
 		if frame == 0:
 			frame = 1
 		else:

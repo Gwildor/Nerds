@@ -5,6 +5,7 @@ class map:
 	tiles = []
 	general = {}
 	images = {}
+	debug = False
 	
 	def __init__(self, name = 'main', prefix = '../'):
 		#print(name)
@@ -118,7 +119,7 @@ class map:
 			return False
 			
 	def draw_map(self, screen, x, y, gameW = 640, gameH = 480):
-	
+
 		nw = {'x': (x - (gameW / 2)), 'y': (y - (gameH / 2))}
 		sw = {'x': (x - (gameW / 2)), 'y': (y + (gameH / 2))}
 		se = {'x': (x + (gameW / 2)), 'y': (y + (gameH / 2))}
@@ -128,3 +129,5 @@ class map:
 			if self.tile_within_square(tile, nw, se):
 				#print(tile)
 				screen.blit(self.images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
+				if self.debug:
+					pygame.draw.rect(screen, (255, 0, 0), (((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)), (tile['width'], tile['height'])), 2)

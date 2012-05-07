@@ -6,6 +6,7 @@ class char:
 	y = 0
 	dir = 's'
 	moving = False
+	debug = False
 	images = {}
 	general = {}
 	frames = {}
