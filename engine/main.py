@@ -1,4 +1,4 @@
-debug = True
+debug = False
 
 import pygame, sys, os, time
 sys.path.append('engine/lib/')
@@ -38,7 +38,7 @@ while True:
 			frame = 1
 		else:
 			frame = 0
-	
+
 	if hero.moving:
 		dx = 0
 		dy = 0
@@ -52,7 +52,11 @@ while True:
 			dx = -4
 	
 		hero.hittest(dx = dx, dy = dy, map = map)
+		#hero.hittest(dx = dx, dy = dy, map = map, screen = screen, gameW = gameW, gameH = gameH)
 	
+	#map.draw_map(screen, 0, 0)
+	#screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+	#uncomment these lines and comment out the lines below to switch between scrolling background and solid
 	map.draw_map(screen, hero.x, hero.y)
 
 	if hero.moving:

@@ -276,6 +276,11 @@ src: path_ne.jpg
 #
 # FENCE
 #
+pos_x: -200
+pos_y: -200
+src: fence_pole_s.png
+walkable: false
+~
 pos_x: -369
 pos_y: -380
 src: fence_pole_s.png

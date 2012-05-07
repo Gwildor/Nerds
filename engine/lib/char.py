@@ -187,6 +187,8 @@ class char:
 					for tile in map.tiles:
 						if not tile['walkable']:
 							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.state][self.dir]['m'][0]].get_width()), 'y': (pos_y + self.images[self.frames[self.state][self.dir]['m'][0]].get_height())}, 1):
+								if self.debug and args.get('screen'):
+									pygame.draw.rect(args.get('screen'), (0, 0, 255), (((tile['pos_x'] + (args.get('gameW') / 2) - map.pos_x), (tile['pos_y'] + (args.get('gameH') / 2) - map.pos_y)), (tile['width'], tile['height'])), 2)
 								return True
 							
 				ay += 1

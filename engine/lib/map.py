@@ -6,6 +6,8 @@ class map:
 	general = {}
 	images = {}
 	debug = False
+	pos_x = 0
+	pos_y = 0
 	
 	def __init__(self, name = 'main', prefix = '../'):
 		#print(name)
@@ -113,12 +115,16 @@ class map:
 		#print(self.tiles)
 		
 	def tile_within_square(self, tile, nw, se, offset = 0):
-		if (tile['pos_y'] + tile['height']) >= (nw['y'] + offset) and tile['pos_y'] <= (se['y'] - offset) and (tile['pos_x'] + tile['height']) >= (nw['x'] + offset) and tile['pos_x'] <= (se['x'] - offset):
+		if (tile['pos_y'] + tile['height']) >= (nw['y'] + offset) and tile['pos_y'] <= (se['y'] - offset) and (tile['pos_x'] + tile['width']) >= (nw['x'] + offset) and tile['pos_x'] <= (se['x'] - offset):
+			#if offset > 0:
+				#print(tile, nw, se)
 			return True
 		else:
 			return False
 			
 	def draw_map(self, screen, x, y, gameW = 640, gameH = 480):
+		self.pos_x = x
+		self.pos_y = y
 
 		nw = {'x': (x - (gameW / 2)), 'y': (y - (gameH / 2))}
 		sw = {'x': (x - (gameW / 2)), 'y': (y + (gameH / 2))}
