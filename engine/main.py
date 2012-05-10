@@ -1,8 +1,8 @@
 debug = False
 
 import pygame, sys, os, time
-sys.path.append('engine/lib/')
-sys.path.append('lib/')
+sys.path.append(os.path.join('engine', 'lib', ''))
+sys.path.append(os.path.join('lib', ''))
 from pygame.locals import *
 from char import *
 from map import *

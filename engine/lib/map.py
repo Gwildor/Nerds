@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys, os
 from pygame.locals import *
 
 class map:
@@ -9,17 +9,17 @@ class map:
 	pos_x = 0
 	pos_y = 0
 	
-	def __init__(self, name = 'main', prefix = '../'):
+	def __init__(self, name = 'main', prefix = os.path.join('..', '')):
 		#print(name)
 		if name:
 			self.load_map(name, prefix)
 
-	def load_map(self, name, prefix = '../'):
+	def load_map(self, name, prefix = os.path.join('..', '')):
 		#print(name)
 		self.tiles = []
 		self.general = {}
 		tile_mode = False
-		f = open(prefix+'data/maps/'+name+'.map', 'r') # open map
+		f = open(prefix+os.path.join('data', 'maps', '')+name+'.map', 'r') # open map
 		k = 0
 		
 		for line in f.readlines(): # loop through file
@@ -40,7 +40,7 @@ class map:
 						#print(str(k), self.tiles[k])
 						
 						if self.tiles[k]['src'] not in self.images:
-							self.images[self.tiles[k]['src']] = pygame.image.load(prefix+'data/tiles/'+self.tiles[k]['src'])
+							self.images[self.tiles[k]['src']] = pygame.image.load(prefix+os.path.join('data', 'tiles', '')+self.tiles[k]['src'])
 							
 						#
 						# DEFAULT VALUES

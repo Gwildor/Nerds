@@ -1,5 +1,5 @@
 import pygame, sys, os, time
-sys.path.append('../lib/')
+sys.path.append(os.path.join('..', 'lib', ''))
 from pygame.locals import *
 from char import *
 from map import *
@@ -15,11 +15,7 @@ map = map(False)
 body = pygame.Surface((32, 32))
 body.fill((255, 0, 0))
 
-hero.frames[''] = {}
-for val in ['s', 'n', 'e', 'w']:
-	hero.frames[''][val] = {}
-	hero.frames[''][val]['s'] = ['rect']
-	hero.frames[''][val]['m'] = ['rect']
+hero.frames[''] = {'n': {'s': ['rect'], 'm': ['rect']}, 'w': {'s': ['rect'], 'm': ['rect']}, 'e': {'s': ['rect'], 'm': ['rect']}, 's': {'s': ['rect'], 'm': ['rect']}}
 
 #print(hero.frames)
 hero.images['rect'] = body

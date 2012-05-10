@@ -1,5 +1,5 @@
 import pygame, sys, os, time
-sys.path.append('../lib/')
+sys.path.append(os.path.join('..', 'lib', ''))
 from pygame.locals import *
 from map import *
 	
@@ -8,7 +8,7 @@ window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Map view')
 screen = pygame.display.get_surface()
 
-map = map('main', '../../')
+map = map('main', os.path.join('..', '..', ''))
 
 x = 0
 y = 0

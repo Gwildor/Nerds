@@ -26,7 +26,7 @@ More will follow.
 
 ##Known issues
 
-* Doesn't work on Windows or other operating systems using anything but a / to divide folders.
+* Main character for know only works with 1 standing still frame and 2 moving frames. This is simply incomplete functionality.
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.

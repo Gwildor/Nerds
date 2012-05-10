@@ -1,5 +1,5 @@
 import pygame, sys, os, time
-sys.path.append('../lib/')
+sys.path.append(os.path.join('..', 'lib', ''))
 from pygame.locals import *
 from char import *
 
@@ -8,7 +8,7 @@ window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Hero testing')
 screen = pygame.display.get_surface()
 
-hero = char('hero/main/main', '../../')
+hero = char(os.path.join('hero', 'main', 'main'), os.path.join('..', '..', ''))
 
 up = False
 down = False

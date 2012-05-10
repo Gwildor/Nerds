@@ -12,11 +12,11 @@ class char:
 	frames = {}
 	state = ''
 	
-	def __init__(self, file = 'hero/main/main', prefix = '../'):
+	def __init__(self, file = os.path.join('hero', 'main', 'main'), prefix = os.path.join('..', '')):
 		if file:
 			self.load_file(file, prefix)
 		
-	def load_file(self, file, prefix = '../'):
+	def load_file(self, file, prefix = os.path.join('..', '')):
 
 		self.frames[file] = {}
 		self.general = {}
@@ -27,7 +27,7 @@ class char:
 		curmove = ''
 		folder  = os.path.split(file)
 		
-		f = open(prefix+'data/char/'+file+'.char', 'r') # open file
+		f = open(prefix+os.path.join('data', 'char', '')+file+'.char', 'r') # open file
 		
 		for line in f.readlines(): # loop through file
 			if '#' in line: # comment found
@@ -75,7 +75,7 @@ class char:
 						
 						if savestring not in self.images:
 							if temp['src'] not in self.images:
-								image = pygame.image.load(prefix+'data/char/'+folder[0]+'/'+temp['src'])
+								image = pygame.image.load(prefix+os.path.join('data', 'char', '')+folder[0]+os.sep+temp['src'])
 								image.convert_alpha()
 								self.images[temp['src']] = image
 								
