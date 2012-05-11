@@ -17,8 +17,6 @@ right = False
 no_key_yet = True
 gameW = 640
 gameH = 480
-counter = 0
-frame = 0
 
 while True:
 	
@@ -30,13 +28,7 @@ while True:
 	else:
 
 		screen.fill((0, 0, 0))
-		counter += 1
-		if (counter % 20) == 0:
-			if frame == 0:
-				frame = 1
-			else:
-				frame = 0
-		
+
 		if hero.moving:
 			if hero.dir == 'n':
 				hero.y -= 2
@@ -47,11 +39,8 @@ while True:
 			if hero.dir == 'w':
 				hero.x -= 2
 				
-			screen.blit(hero.images[hero.frames[hero.state][hero.dir]['m'][frame]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
-		else:
-			counter = 0
-			screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
-			
+		hero.draw_char(screen, gameW = gameW, gameH = gameH)
+		
 		pygame.display.flip()
 		
 	for event in pygame.event.get():

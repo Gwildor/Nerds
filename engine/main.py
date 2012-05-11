@@ -25,19 +25,10 @@ left = False
 right = False
 gameW = 640
 gameH = 480
-counter = 0
-frame = 0
 
 while True:
 
 	screen.fill((0, 0, 0))
-	
-	counter += 1
-	if (counter % 15) == 0:
-		if frame == 0:
-			frame = 1
-		else:
-			frame = 0
 
 	if hero.moving:
 		dx = 0
@@ -55,15 +46,10 @@ while True:
 		#hero.hittest(dx = dx, dy = dy, map = map, screen = screen, gameW = gameW, gameH = gameH)
 	
 	#map.draw_map(screen, 0, 0)
-	#screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+	#hero.draw_char(screen, gameW = gameW, gameH = gameH)
 	#uncomment these lines and comment out the lines below to switch between scrolling background and solid
 	map.draw_map(screen, hero.x, hero.y)
-
-	if hero.moving:
-		screen.blit(hero.images[hero.frames[hero.state][hero.dir]['m'][frame]], ((gameW / 2), ((gameH / 2))))
-	else:
-		counter = 0
-		screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((gameW / 2), ((gameH / 2))))
+	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
 	
 	pygame.display.flip()
 		

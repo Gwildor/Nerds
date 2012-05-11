@@ -13,6 +13,7 @@ class char:
 	images = {}
 	general = {}
 	frames = {}
+	framecount = {}
 	file = ''
 	state = ''
 	
@@ -23,6 +24,7 @@ class char:
 	def load_file(self, file, prefix = os.path.join('..', '')):
 
 		self.frames[file] = {}
+		self.framecount[file] = {}
 		self.general = {}
 		self.file = file
 		temp = {}
@@ -87,6 +89,7 @@ class char:
 							#pygame.Rect((left, top), (width, height)): return Rect
 						
 						self.frames[file][curdir][curmove].append(savestring)
+						self.framecount[file][curdir][curmove] += 1
 					
 						temp = {}
 					
@@ -101,6 +104,7 @@ class char:
 					curdir  = line[:-1]
 					curmove = 'g'
 					self.frames[file][curdir] = {'s': [], 'm': []}
+					self.framecount[file][curdir] = {'s': 0, 'm': 0}
 					
 				else: # properties and values
 					
@@ -122,17 +126,22 @@ class char:
 					else:
 						temp[vals[0]] = vals[1]
 		
-		
 		f.close()
 		
 	def draw_char(self, screen, **args):
 		if not args.get('x'):
-			x = self.x
+			if not args.get('gameW'):
+				x = self.x
+			else:
+				x = self.x + (args.get('gameW') / 2)
 		else:
 			x = args.get('x')
 			
 		if not args.get('y'):
-			y = self.y
+			if not args.get('gameH'):
+				y = self.y
+			else:
+				y = self.y + (args.get('gameH') / 2)
 		else:
 			y = args.get('y')
 			
@@ -145,18 +154,16 @@ class char:
 		else:
 			self.state = 's'
 			
-		if self.ticks == 20: # hardcoded number for now
-			#if self.frame == self.framecount[self.file][self.dir][self.state]:
-				#self.frame = 0
-			#else:
-			self.frame += 1
+		if self.ticks % 20 == 0: # hardcoded number for now
+			if self.frame + 1 == self.framecount[self.file][self.dir][self.state]:
+				self.frame = 0
+			else:
+				self.frame += 1
 			
 		screen.blit(self.images[self.frames[self.file][self.dir][self.state][self.frame]], (x, y))
 		
 		self.olddir = self.dir
 		self.ticks += 1
-			
-			
 
 	def hittest(self, **args):
 		if not args.get('dx'):

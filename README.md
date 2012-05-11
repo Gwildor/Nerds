@@ -25,8 +25,7 @@ More will follow.
 * Enjoy!
 
 ##Known issues
-
-* Main character for know only works with 1 standing still frame and 2 moving frames. This is simply incomplete functionality.
+_None at the moment. Just keeping this header as a placeholder for now._
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.
