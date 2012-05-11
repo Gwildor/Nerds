@@ -5,11 +5,15 @@ class char:
 	x = 0
 	y = 0
 	dir = 's'
+	olddir = 's'
+	ticks = 0
+	frame = 0
 	moving = False
 	debug = False
 	images = {}
 	general = {}
 	frames = {}
+	file = ''
 	state = ''
 	
 	def __init__(self, file = os.path.join('hero', 'main', 'main'), prefix = os.path.join('..', '')):
@@ -20,7 +24,7 @@ class char:
 
 		self.frames[file] = {}
 		self.general = {}
-		self.state = file
+		self.file = file
 		temp = {}
 		
 		curdir  = ''
@@ -120,6 +124,39 @@ class char:
 		
 		
 		f.close()
+		
+	def draw_char(self, screen, **args):
+		if not args.get('x'):
+			x = self.x
+		else:
+			x = args.get('x')
+			
+		if not args.get('y'):
+			y = self.y
+		else:
+			y = args.get('y')
+			
+		if (self.moving and self.state == 's') or (not self.moving and self.state == 'm') or (self.dir != self.olddir):
+			self.frame = 0
+			self.ticks = 0
+			
+		if self.moving:
+			self.state = 'm'
+		else:
+			self.state = 's'
+			
+		if self.ticks == 20: # hardcoded number for now
+			#if self.frame == self.framecount[self.file][self.dir][self.state]:
+				#self.frame = 0
+			#else:
+			self.frame += 1
+			
+		screen.blit(self.images[self.frames[self.file][self.dir][self.state][self.frame]], (x, y))
+		
+		self.olddir = self.dir
+		self.ticks += 1
+			
+			
 
 	def hittest(self, **args):
 		if not args.get('dx'):
@@ -186,7 +223,7 @@ class char:
 					
 					for tile in map.tiles:
 						if not tile['walkable']:
-							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.state][self.dir]['m'][0]].get_width()), 'y': (pos_y + self.images[self.frames[self.state][self.dir]['m'][0]].get_height())}, 1):
+							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir]['m'][0]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir]['m'][0]].get_height())}, 1):
 								if self.debug and args.get('screen'):
 									pygame.draw.rect(args.get('screen'), (0, 0, 255), (((tile['pos_x'] + (args.get('gameW') / 2) - map.pos_x), (tile['pos_y'] + (args.get('gameH') / 2) - map.pos_y)), (tile['width'], tile['height'])), 2)
 								return True
