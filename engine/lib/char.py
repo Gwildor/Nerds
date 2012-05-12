@@ -4,6 +4,7 @@ from pygame.locals import *
 class char:
 	x = 0
 	y = 0
+	speed = 2
 	dir = 's'
 	olddir = 's'
 	ticks = 0
@@ -129,21 +130,22 @@ class char:
 		f.close()
 		
 	def draw_char(self, screen, **args):
-		if not args.get('x'):
-			if not args.get('gameW'):
+		if 'x' in args:
+			x = args['x']
+		else:
+			if 'gameW' in args:
+				x = self.x + (args['gameW'] / 2)
+			else:
 				x = self.x
-			else:
-				x = self.x + (args.get('gameW') / 2)
-		else:
-			x = args.get('x')
 			
-		if not args.get('y'):
-			if not args.get('gameH'):
-				y = self.y
-			else:
-				y = self.y + (args.get('gameH') / 2)
+		if 'y' in args:
+			y = args['y']
 		else:
-			y = args.get('y')
+			if 'gameH' in args:
+				y = self.y + (args['gameH'] / 2)
+			else:
+				y = self.y
+
 			
 		if (self.moving and self.state == 's') or (not self.moving and self.state == 'm') or (self.dir != self.olddir):
 			self.frame = 0
@@ -166,25 +168,25 @@ class char:
 		self.ticks += 1
 
 	def hittest(self, **args):
-		if not args.get('dx'):
+		if 'dx' in args:
+			dx = args['dx']
+		else:
 			dx = 0
-		else:
-			dx = args.get('dx')
 			
-		if not args.get('dy'):
+		if 'dy' in args:
+			dy = args['dy']
+		else:
 			dy = 0
-		else:
-			dy = args.get('dy')
 			
-		if not args.get('move'):
+		if 'move' in args:
+			move = args['move']
+		else:
 			move = True
-		else:
-			move = args.get('move')
 		
-		if not args.get('map'):
-			map = False
+		if 'map' in args:
+			map = args['map']
 		else:
-			map = args.get('map')
+			map = False
 		
 		if dx < 0:
 			x_negative = True
@@ -231,8 +233,8 @@ class char:
 					for tile in map.tiles:
 						if not tile['walkable']:
 							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir]['m'][0]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir]['m'][0]].get_height())}, 1):
-								if self.debug and args.get('screen'):
-									pygame.draw.rect(args.get('screen'), (0, 0, 255), (((tile['pos_x'] + (args.get('gameW') / 2) - map.pos_x), (tile['pos_y'] + (args.get('gameH') / 2) - map.pos_y)), (tile['width'], tile['height'])), 2)
+								if self.debug and 'screen' in args:
+									pygame.draw.rect(args['screen'], (0, 0, 255), (((tile['pos_x'] + (args['gameW'] / 2) - map.pos_x), (tile['pos_y'] + (args['gameH'] / 2) - map.pos_y)), (tile['width'], tile['height'])), 2)
 								return True
 							
 				ay += 1
@@ -245,3 +247,37 @@ class char:
 			self.y = pos_y
 		
 		return False
+		
+	def move_to(self, **args):
+
+		if 'x' in args:
+			x = args['x']
+		else:
+			x = self.x
+			
+		if 'y' in args:
+			y = args['y']
+		else:
+			y = self.y
+		
+		if x == self.x and y == self.y:
+			self.moving = False
+			return True
+		else:
+			self.moving = True
+			# calc here how far we are from the target and use it in ifs and hittests
+			
+			if self.x < x:#- self.speed:# and not self.hittest(x = self.x + 1, y = self.y, map = map, move = False):
+				self.dir = 'e'
+				self.hittest(dx = self.speed)
+			elif self.x > x:
+				self.dir = 'w'
+				self.hittest(dx = -self.speed)
+			elif self.y < y:
+				self.dir = 's'
+				self.hittest(dy = self.speed)
+			else:
+				self.dir = 'n'
+				self.hittest(dy = -self.speed)
+				
+			return False

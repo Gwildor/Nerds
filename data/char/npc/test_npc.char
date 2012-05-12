@@ -1,0 +1,47 @@
+def_w: 14
+def_h: 19
+def_pos_y: 0
+def_src: test_npc.png
+~
+s:
+	*
+		pos_x: 0
+	*
+		pos_x: 14
+	+
+		pos_x: 28
+	*
+~
+w:
+	*
+		pos_x: 42
+		width: 12
+	*
+		pos_x: 54
+		width: 12
+	+
+		pos_x: 66
+		width: 12
+	*
+~
+n:
+	*
+		pos_x: 78
+	*
+		pos_x: 92
+	+
+		pos_x: 106
+	*
+~
+e:
+	*
+		pos_x: 120
+		width: 12
+	*
+		pos_x: 132
+		width: 12
+	+
+		pos_x: 144
+		width: 12
+	*
+~
