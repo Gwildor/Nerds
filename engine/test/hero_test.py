@@ -9,6 +9,7 @@ pygame.display.set_caption('Hero testing')
 screen = pygame.display.get_surface()
 
 hero = char(os.path.join('hero', 'main', 'main'), os.path.join('..', '..', ''))
+#hero = char(os.path.join('npc', 'test_npc'), os.path.join('..', '..', ''))
 
 up = False
 down = False
