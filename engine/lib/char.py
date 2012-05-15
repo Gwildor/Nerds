@@ -259,25 +259,70 @@ class char:
 			y = args['y']
 		else:
 			y = self.y
+			
+		if 'map' in args:
+			map = args['map']
+		else:
+			map = False
 		
-		if x == self.x and y == self.y:
+		if x - self.speed <= self.x and y - self.speed <= self.y and x + self.speed >= self.x and y + self.speed >= self.y:
 			self.moving = False
 			return True
 		else:
 			self.moving = True
 			# calc here how far we are from the target and use it in ifs and hittests
 			
-			if self.x < x:#- self.speed:# and not self.hittest(x = self.x + 1, y = self.y, map = map, move = False):
-				self.dir = 'e'
-				self.hittest(dx = self.speed)
-			elif self.x > x:
-				self.dir = 'w'
-				self.hittest(dx = -self.speed)
-			elif self.y < y:
-				self.dir = 's'
-				self.hittest(dy = self.speed)
-			else:
-				self.dir = 'n'
-				self.hittest(dy = -self.speed)
+			if self.x < x - self.speed:
+				#print('e')
+				if not self.hittest(dx = 1, map = map, move = False):
+					self.dir = 'e'
+					self.hittest(dx = self.speed, map = map)
+				elif not self.hittest(dy = 1, map = map, move = False):
+					self.dir = 's'
+					self.hittest(dy = self.speed, map = map)
+				elif not self.hittest(dy = -1, map = map, move = False):
+					self.dir = 'n'
+					self.hittest(dy = -self.speed, map = map)
+				else:
+					self.moving = False
+			elif self.x > x + self.speed:
+				#print('w')
+				if not self.hittest(dx = -1, map = map, move = False):
+					self.dir = 'w'
+					self.hittest(dx = -self.speed, map = map)
+				elif not self.hittest(dy = 1, map = map, move = False):
+					self.dir = 's'
+					self.hittest(dy = self.speed, map = map)
+				elif not self.hittest(dy = -1, map = map, move = False):
+					self.dir = 'n'
+					self.hittest(dy = -self.speed, map = map)
+				else:
+					self.moving = False
+			elif self.y < y - self.speed:
+				#print('s')
+				if not self.hittest(dy = 1, map = map, move = False):
+					self.dir = 's'
+					self.hittest(dy = self.speed, map = map)
+				elif not self.hittest(dx = 1, map = map, move = False):
+					self.dir = 'e'
+					self.hittest(dx = self.speed, map = map)
+				elif not self.hittest(dx = -1, map = map, move = False):
+					self.dir = 'w'
+					self.hittest(dx = -self.speed, map = map)
+				else:
+					self.moving = False
+			elif self.y > y + self.speed:
+				#print('n')
+				if not self.hittest(dy = -1, map = map, move = False):
+					self.dir = 'n'
+					self.hittest(dy = -self.speed, map = map)
+				elif not self.hittest(dx = 1, map = map, move = False):
+					self.dir = 'e'
+					self.hittest(dx = self.speed, map = map)
+				elif not self.hittest(dx = -1, map = map, move = False):
+					self.dir = 'w'
+					self.hittest(dx = -self.speed, map = map)
+				else:
+					self.moving = False
 				
 			return False
