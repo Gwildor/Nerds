@@ -10,6 +10,7 @@ class char:
 	ticks = 0
 	frame = 0
 	moving = False
+	talking = False
 	debug = False
 	images = {}
 	general = {}
@@ -264,13 +265,16 @@ class char:
 			map = args['map']
 		else:
 			map = False
+			
+		dx = x - self.x
+		dy = y - self.y
 		
 		if x - self.speed <= self.x and y - self.speed <= self.y and x + self.speed >= self.x and y + self.speed >= self.y:
+		#if dx < self.speed and 
 			self.moving = False
 			return True
 		else:
 			self.moving = True
-			# calc here how far we are from the target and use it in ifs and hittests
 			
 			if self.x < x - self.speed:
 				#print('e')
@@ -326,3 +330,37 @@ class char:
 					self.moving = False
 				
 			return False
+			
+	def talk(self, targets):
+		self.moving = False
+		self.talking = True
+			
+		for target in targets:
+			if self.dir == 'n':
+				if self.hittest(dy = -1, npcs = [target], move = False):
+					target.dir = 's'
+					target.moving = False
+					target.talking = True
+					target.listen(speaker = self)
+					return
+			elif self.dir == 's':
+				if self.hittest(dy = 1, npcs = [target], move = False):
+					target.dir = 'n'
+					target.moving = False
+					target.talking = True
+					target.listen(speaker = self)
+					return
+			elif self.dir == 'w':
+				if self.hittest(dx = -1, npcs = [target], move = False):
+					target.dir = 'e'
+					target.moving = False
+					target.talking = True
+					target.listen(speaker = self)
+					return
+			elif self.dir == 'e':
+				if self.hittest(dx = 1, npcs = [target], move = False):
+					target.dir = 'w'
+					target.moving = False
+					target.talking = True
+					target.listen(speaker = self)
+					return
