@@ -28,20 +28,30 @@ while True:
 		font = pygame.font.Font(None, 20)
 		text = font.render('Press any key to continue', True, (255, 255, 255))
 		screen.blit(text, (50, 50))
+		text = font.render('Controls:', True, (255, 255, 255))
+		screen.blit(text, (50, 80))
+		text = font.render('- Arrow keys to move', True, (255, 255, 255))
+		screen.blit(text, (50, 110))
+		text = font.render('- Space or enter to interact', True, (255, 255, 255))
+		screen.blit(text, (50, 130))
 		
 	else:
 
 		screen.fill((0, 0, 0))
 
 		if hero.moving:
+			dx = 0
+			dy = 0
 			if hero.dir == 'n':
-				hero.y -= 2
+				dy = -2
 			if hero.dir == 's':
-				hero.y += 2
+				dy = 2
 			if hero.dir == 'e':
-				hero.x += 2
+				dx = 2
 			if hero.dir == 'w':
-				hero.x -= 2
+				dx = -2
+				
+			hero.hittest(dx = dx, dy = dy, npcs = npcs)
 				
 		hero.draw_char(screen, gameW = gameW, gameH = gameH)
 		for npc in npcs:

@@ -16,6 +16,7 @@ body = pygame.Surface((32, 32))
 body.fill((255, 0, 0))
 
 hero.frames[''] = {'n': {'s': ['rect'], 'm': ['rect']}, 'w': {'s': ['rect'], 'm': ['rect']}, 'e': {'s': ['rect'], 'm': ['rect']}, 's': {'s': ['rect'], 'm': ['rect']}}
+hero.state = 'm'
 
 #print(hero.frames)
 hero.images['rect'] = body
@@ -58,7 +59,7 @@ while True:
 	
 		hero.hittest(dx = dx, dy = dy, map = map)
 
-	screen.blit(hero.images[hero.frames[hero.state][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
+	screen.blit(hero.images[hero.frames[hero.file][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
 	
 	pygame.display.flip()
 		

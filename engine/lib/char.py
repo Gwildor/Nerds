@@ -188,6 +188,11 @@ class char:
 			map = args['map']
 		else:
 			map = False
+			
+		if 'npcs' in args:
+			npcs = args['npcs']
+		else:
+			npcs = False
 		
 		if dx < 0:
 			x_negative = True
@@ -233,10 +238,29 @@ class char:
 					
 					for tile in map.tiles:
 						if not tile['walkable']:
-							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir]['m'][0]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir]['m'][0]].get_height())}, 1):
+							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height())}, 1):
 								if self.debug and 'screen' in args:
 									pygame.draw.rect(args['screen'], (0, 0, 255), (((tile['pos_x'] + (args['gameW'] / 2) - map.pos_x), (tile['pos_y'] + (args['gameH'] / 2) - map.pos_y)), (tile['width'], tile['height'])), 2)
 								return True
+								
+				if npcs:
+					
+					for npc in npcs:
+						#self.images[self.frames[self.file][self.dir]['m'][0]].get_width())
+						#self.images[self.frames[self.file][self.dir][self.state][self.frame]]
+						
+						#if (tile['pos_y'] + tile['height']) >= (nw['y'] + offset)     
+						if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height()) >= (pos_y + 1):
+							
+							#and tile['pos_y'] <= (se['y'] - offset)
+							if npc.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1):
+								
+								#and (tile['pos_x'] + tile['width']) >= (nw['x'] + offset)
+								if (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width()) >= (pos_x + 1):
+									
+									#and tile['pos_x'] <= (se['x'] - offset):
+									if npc.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
+										return True
 							
 				ay += 1
 				
