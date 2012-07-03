@@ -331,36 +331,40 @@ class char:
 				
 			return False
 			
-	def talk(self, targets):
-		self.moving = False
-		self.talking = True
+	def interact(self, **args):
+		start_talk = False
+		
+		if 'npcs' in args:
+			npcs = args['npcs']
+		else:
+			npcs = False
 			
-		for target in targets:
-			if self.dir == 'n':
-				if self.hittest(dy = -1, npcs = [target], move = False):
-					target.dir = 's'
-					target.moving = False
-					target.talking = True
-					target.listen(speaker = self)
-					return
-			elif self.dir == 's':
-				if self.hittest(dy = 1, npcs = [target], move = False):
-					target.dir = 'n'
-					target.moving = False
-					target.talking = True
-					target.listen(speaker = self)
-					return
-			elif self.dir == 'w':
-				if self.hittest(dx = -1, npcs = [target], move = False):
-					target.dir = 'e'
-					target.moving = False
-					target.talking = True
-					target.listen(speaker = self)
-					return
-			elif self.dir == 'e':
-				if self.hittest(dx = 1, npcs = [target], move = False):
-					target.dir = 'w'
-					target.moving = False
-					target.talking = True
-					target.listen(speaker = self)
-					return
+		if npcs:
+			for npc in npcs:
+				if self.dir == 'n':
+					if self.hittest(dy = -1, npcs = [npc], move = False):
+						npc.dir = 's'
+						start_talk = False
+				elif self.dir == 's':
+					if self.hittest(dy = 1, npcs = [npc], move = False):
+						npc.dir = 'n'
+						start_talk = False
+				elif self.dir == 'w':
+					if self.hittest(dx = -1, npcs = [npc], move = False):
+						npc.dir = 'e'
+						start_talk = False
+				elif self.dir == 'e':
+					if self.hittest(dx = 1, npcs = [npc], move = False):
+						npc.dir = 'w'
+						start_talk = False
+					
+		if start_talk:
+			npc.moving = False
+			npc.talking = True
+			self.moving = False
+			self.talking = True
+			npc.listen(speaker = self)
+			return
+			
+	def listen(self, **args):
+		pass

@@ -66,7 +66,7 @@ while True:
 				if event.key == K_LEFT: # left
 					hero.dir = 'w'
 				if event.key == K_RETURN or event.key == K_SPACE:
-					hero.talk(npcs)
+					hero.interact(npcs = npcs)
 			no_key_yet = False
 		elif event.type == KEYUP:
 			if (event.key == K_UP and hero.dir == 'n') or (event.key == K_DOWN and hero.dir == 's') or (event.key == K_RIGHT and hero.dir == 'e') or (event.key == K_LEFT and hero.dir == 'w'):
