@@ -24,18 +24,13 @@ while True:
 	
 	if no_key_yet:
 		font = pygame.font.Font(None, 20)
-		text = font.render('Press any key to continue', True, (255, 255, 255))
-		screen.blit(text, (50, 50))
-		text = font.render('Controls:', True, (255, 255, 255))
-		screen.blit(text, (50, 80))
-		text = font.render('- Arrow keys to move', True, (255, 255, 255))
-		screen.blit(text, (50, 110))
-		text = font.render('- Plus and minus to increase move speed', True, (255, 255, 255))
-		screen.blit(text, (50, 130))
-		text = font.render('- Page up and down to jump North and South', True, (255, 255, 255))
-		screen.blit(text, (50, 150))
-		text = font.render('- F5 to reload the map from map file', True, (255, 255, 255))
-		screen.blit(text, (50, 170))
+		screen.blit(font.render('Press any key to continue', True, (255, 255, 255)), (50, 50))
+		screen.blit(font.render('Controls:', True, (255, 255, 255)), (50, 80))
+		screen.blit(font.render('- Arrow keys to move', True, (255, 255, 255)), (50, 110))
+		screen.blit(font.render('- Plus and minus to increase move speed', True, (255, 255, 255)), (50, 130))
+		screen.blit(font.render('- Page up and down to jump North and South', True, (255, 255, 255)), (50, 150))
+		screen.blit(font.render('- F5 to reload the map from map file', True, (255, 255, 255)), (50, 170))
+		
 	else:
 		screen.fill((0, 0, 0))
 		map.draw_map(screen, x, y)

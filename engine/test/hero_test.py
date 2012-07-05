@@ -23,8 +23,7 @@ while True:
 	
 	if no_key_yet:
 		font = pygame.font.Font(None, 20)
-		text = font.render('Press any key to continue', True, (255, 255, 255))
-		screen.blit(text, (50, 50))
+		screen.blit(font.render('Press any key to continue', True, (255, 255, 255)), (50, 50))
 		
 	else:
 

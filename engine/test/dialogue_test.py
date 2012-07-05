@@ -1,4 +1,4 @@
-import pygame, sys, os, time
+import pygame, sys, os, time, math
 sys.path.append(os.path.join('..', 'lib', ''))
 from pygame.locals import *
 from char import *
@@ -39,6 +39,11 @@ while True:
 	else:
 
 		screen.fill((0, 0, 0))
+		
+		#screen.blit(font.render('Hero.x: '+str(hero.x)+', Hero.y: '+str(hero.y), True, (255, 255, 255)), (15, 15))
+		#screen.blit(font.render('Npc.x: '+str(npcs[0].x)+', Npc.y: '+str(npcs[0].y), True, (255, 255, 255)), (15, 30))
+		#screen.blit(font.render('Distance: '+str(pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) ), True, (255, 255, 255)), (15, 45))
+		
 
 		if hero.moving:
 			dx = 0
@@ -79,10 +84,15 @@ while True:
 
 			if dialogue['phrase'] == '':
 				dialogues.remove(dialogue)
+			elif pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) > 30:
+				dialogue['speaker'].listen(speaker = hero)
+				dialogues.remove(dialogue)
 			else:
 				
 				pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 + 10), (gameW - 20), (gameH / 3 - 20)), 2)
+				pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 - 20), 80, 31), 2)
 				screen.blit(font.render(dialogue['phrase'], True, (255, 255, 255)), (15, (gameH / 3 * 2 + 15)))
+				screen.blit(font.render(dialogue['speaker'].name, True, (255, 255, 255)), (15, (gameH / 3 * 2 - 15)))
 				
 				if dialogue['phrase'] == 'Hi there!' and dialogue['speaker'].name == 'John Doe':
 					max_phrases = 2
