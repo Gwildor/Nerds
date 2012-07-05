@@ -2,6 +2,7 @@ import pygame, os
 from pygame.locals import *
 
 class char:
+	name = ''
 	x = 0
 	y = 0
 	speed = 2
@@ -245,22 +246,9 @@ class char:
 								
 				if npcs:
 					
-					for npc in npcs:
-						#self.images[self.frames[self.file][self.dir]['m'][0]].get_width())
-						#self.images[self.frames[self.file][self.dir][self.state][self.frame]]
-						
-						#if (tile['pos_y'] + tile['height']) >= (nw['y'] + offset)     
-						if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height()) >= (pos_y + 1):
-							
-							#and tile['pos_y'] <= (se['y'] - offset)
-							if npc.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1):
-								
-								#and (tile['pos_x'] + tile['width']) >= (nw['x'] + offset)
-								if (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width()) >= (pos_x + 1):
-									
-									#and tile['pos_x'] <= (se['x'] - offset):
-									if npc.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
-										return True
+					for npc in npcs:    
+						if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height()) >= (pos_y + 1) and npc.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1) and (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width()) >= (pos_x + 1) and npc.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
+							return True
 							
 				ay += 1
 				
@@ -356,39 +344,78 @@ class char:
 			return False
 			
 	def interact(self, **args):
-		start_talk = False
+		# Interaction id's:
+		# 1: dialogue
+		
+		
+		talk = False
 		
 		if 'npcs' in args:
 			npcs = args['npcs']
 		else:
 			npcs = False
-			
+
 		if npcs:
 			for npc in npcs:
 				if self.dir == 'n':
 					if self.hittest(dy = -1, npcs = [npc], move = False):
 						npc.dir = 's'
-						start_talk = False
+						talk = True
+						break
 				elif self.dir == 's':
 					if self.hittest(dy = 1, npcs = [npc], move = False):
 						npc.dir = 'n'
-						start_talk = False
+						talk = True
+						break
 				elif self.dir == 'w':
 					if self.hittest(dx = -1, npcs = [npc], move = False):
 						npc.dir = 'e'
-						start_talk = False
+						talk = True
+						break
 				elif self.dir == 'e':
 					if self.hittest(dx = 1, npcs = [npc], move = False):
 						npc.dir = 'w'
-						start_talk = False
+						talk = True
+						break
 					
-		if start_talk:
-			npc.moving = False
-			npc.talking = True
-			self.moving = False
-			self.talking = True
-			npc.listen(speaker = self)
-			return
+		if talk:
+			talk = False
+			return npc.listen(speaker = self)
+		#elif:
+		#elif:
+		else: # no interactions what so ever
+			return [False]
 			
 	def listen(self, **args):
-		pass
+
+		if 'speaker' in args:
+			speaker = args['speaker']
+		else:
+			speaker = self
+
+		if 'phrase' in args:
+			phrase = args['phrase']
+		else:
+			phrase = False
+			
+		if not phrase or not speaker.talking:
+			if not speaker.talking:
+				speaker.moving = False
+				speaker.talking = True
+			else:
+				speaker.talking = False
+			
+			if not self.talking:
+				self.moving = False
+				self.talking = True
+				return [True, 1, self, 'Hi there!']
+			else:
+				self.talking = False
+				return [True, 1, self, '']
+				
+		else:
+			if phrase == 'Hello.':
+				return [True, 1, self, 'How are you doing?']
+			if phrase == 'Jello.':
+				return [True, 1, self, 'I like jello!']
+		
