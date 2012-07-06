@@ -1,8 +1,8 @@
-import pygame, os
+import pygame, os, re
 from pygame.locals import *
 
 class char:
-	name = ''
+	name = 'hi'
 	x = 0
 	y = 0
 	speed = 2
@@ -17,6 +17,7 @@ class char:
 	general = {}
 	frames = {}
 	framecount = {}
+	dialogue = {}
 	file = ''
 	state = ''
 	
@@ -32,6 +33,7 @@ class char:
 		self.file = file
 		temp = {}
 		
+		dia     = False
 		curdir  = ''
 		curmove = ''
 		folder  = os.path.split(file)
@@ -39,6 +41,13 @@ class char:
 		f = open(prefix+os.path.join('data', 'char', '')+file+'.char', 'r') # open file
 		
 		for line in f.readlines(): # loop through file
+
+			r = re.match('(^\t+)', line)
+			if r is None:
+				tab_count = 0
+			else:
+				tab_count = len(r.group(1))
+				
 			if '#' in line: # comment found
 				parts = line.split('#', 1)
 				#print(parts)
@@ -46,7 +55,10 @@ class char:
 			line = line.strip()
 			
 			if line != '':
-				#print(line, sep = '', end = '\n') # echo whole file
+				#print(line) # echo whole file
+				
+				if line == ':': # start of dialogue
+					dia = True
 				
 				if line == '~':
 					pass
@@ -104,31 +116,74 @@ class char:
 						
 
 				elif line == 'n:' or line == 's:' or line == 'w:' or line == 'e:':
-					curdir  = line[:-1]
+					curdir  = line[:1]
 					curmove = 'g'
 					self.frames[file][curdir] = {'s': [], 'm': []}
 					self.framecount[file][curdir] = {'s': 0, 'm': 0}
 					
-				else: # properties and values
+				elif line[:1] == '+' and dia:
+					if tab_count == len(self.dialogue[curdianame]):
+						self.dialogue[curdianame].append([])
+						curoption.append(0)
+						
+					self.dialogue[curdianame][tab_count].append([])
 					
-					vals = line.split(':', 1)
-					vals[0] = vals[0].strip()
-					vals[1] = vals[1].strip()
-					
-					if vals[0] in ['def_w', 'def_h', 'def_pos_y', 'def_pos_x', 'pos_x', 'pos_y', 'width', 'height']:
-						vals[1] = int(vals[1])
-					elif vals[0] in ['']:
-						if vals[1] == 'true':
-							vals[1] = True
-						else:
-							vals[1] = False
-
-					#print(vals)
-					if curdir == '':
-						self.general[vals[0]] = vals[1]
+					if tab_count == 0:
+						select = 0
 					else:
-						temp[vals[0]] = vals[1]
+						select = (curoption[(tab_count - 1)] - 1)
+						
+					self.dialogue[curdianame][tab_count][select].append(line[1:])
+					self.dialogue[curdianame][tab_count][select].append([])
+
+					#print(self.dialogue)
+
+				elif line[:1] == '-' and dia:
+					#print('---')
+					#print(tab_count)
+					#print(curoption)
+					#print(self.dialogue[curdianame][tab_count])
+					#print('---')
+					
+					if tab_count == 0:
+						select = 0
+					else:
+						select = (curoption[(tab_count - 1)] - 1)
+					
+					self.dialogue[curdianame][tab_count][select][1].append(line[1:])
+					
+					curoption[tab_count] += 1
+
+				else: # properties and values
+
+					if dia:
+						vals = line.split(':', 1)
+						curdianame = vals[0]
+						self.dialogue[curdianame] = []
+						curoption = []
+						
+					else:
+					
+						vals = line.split(':', 1)
+						vals[0] = vals[0].strip()
+						vals[1] = vals[1].strip()
+						
+						if vals[0] in ['def_w', 'def_h', 'def_pos_y', 'def_pos_x', 'pos_x', 'pos_y', 'width', 'height']:
+							vals[1] = int(vals[1])
+						elif vals[0] in ['']:
+							if vals[1] == 'true':
+								vals[1] = True
+							else:
+								vals[1] = False
+
+						#print(vals)
+						if curdir == '':
+							self.general[vals[0]] = vals[1]
+						else:
+							temp[vals[0]] = vals[1]
+						
 		
+		#print(self.dialogue)
 		f.close()
 		
 	def draw_char(self, screen, **args):

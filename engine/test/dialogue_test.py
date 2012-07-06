@@ -68,6 +68,8 @@ while True:
 			if dialogue['phrase'] != '' and confirm_phrase:
 				confirm_phrase = False
 				
+				interaction = [False]
+				
 				if selected_phrase == 1:
 					interaction = dialogue['speaker'].listen(speaker = hero, phrase = 'Hello.')
 				if selected_phrase == 2:
@@ -84,7 +86,7 @@ while True:
 
 			if dialogue['phrase'] == '':
 				dialogues.remove(dialogue)
-			elif pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) > 30:
+			elif pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) > 30 or selected_phrase == 0:
 				dialogue['speaker'].listen(speaker = hero)
 				dialogues.remove(dialogue)
 			else:
@@ -125,6 +127,8 @@ while True:
 					selected_phrase -= 1
 				if event.key == K_KP2 and hero.talking and selected_phrase < max_phrases:
 					selected_phrase += 1
+				if event.key == K_DELETE and hero.talking:
+					selected_phrase = 0
 				if event.key == K_RETURN or event.key == K_SPACE or event.key == K_KP_ENTER:
 					if hero.talking:
 						confirm_phrase = True

@@ -45,3 +45,26 @@ e:
 		width: 12
 	*
 ~
+:
++Hi there!
+-Hello.
+	+How are you doing?
+	-Bad.
+		+That's too bad.
+	-Fine.
+		+Sounds like you're bored.
+	-Great.
+		+That's great to hear!
+-Bye
+	+Are you going again?
+	-Yes.
+		+Awh.
+	-No.
+		+Good!
+~
+
+#{'': [
+#[["Hi there!", ["Hello.", "Bye."]]],
+#[["How are you doing?", ["Bad", "Fine", "Great"]], ["Are you going again?", ["Yes.", "No."]]],
+#[["That's too bad.", []], ["Sounds like you're bored.", []], ["That's great to hear!", []], ["Awh.", []], ["Good!", []]]
+#]}
