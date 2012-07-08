@@ -53,6 +53,26 @@ e:
 		+That's too bad.
 	-Fine.
 		+Sounds like you're bored.
+		-You're right.
+			+Want to play a game?
+			-Sure.
+				+Go hide. I will look for you I guess.
+				-You just want me to be gone.
+					+You got me, sorry.
+			-Not really.
+				+Oh ok.
+		-I'm not bored.
+			+Alright, I'll leave you to it then.
+			-Ok maybe I am bored.
+				+Want to play a game?
+				-Sure.
+					+Go hide. I will look for you I guess.
+					-You just want me to be gone.
+						+You got me, sorry.
+				-Not really.
+					+Oh ok.
+			-Alright.
+				+Bye.
 	-Great.
 		+That's great to hear!
 -Bye

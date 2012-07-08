@@ -24,9 +24,7 @@ gameW = 640
 gameH = 480
 dialogues = []
 font = pygame.font.Font(None, 20)
-selected_phrase = 0
-max_phrases = 0
-confirm_phrase = False
+dialogue_action = ''
 
 while True:
 	
@@ -65,45 +63,45 @@ while True:
 			
 		for dialogue in dialogues:
 			
-			if dialogue['phrase'] != '' and confirm_phrase:
-				confirm_phrase = False
-				
-				interaction = [False]
-				
-				if selected_phrase == 1:
-					interaction = dialogue['speaker'].listen(speaker = hero, phrase = 'Hello.')
-				if selected_phrase == 2:
-					interaction = dialogue['speaker'].listen(speaker = hero, phrase = 'Jello.')
-				
-				dialogues.remove(dialogue)	
+			if dialogue['phrase'] != [] and dialogue_action != '':
+			
+				if dialogue_action == 'cancel' or (dialogue_action == 'confirm' and len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]) == 0):
+					dialogue_action = 'remove'
+				elif dialogue_action == 'confirm':
+
+					dialogue['phrase'][0] += 1
+					dialogue['phrase'][1] = dialogue['selected']
+					dialogue['selected'] = dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]
+							
+				elif dialogue_action == 'up' and dialogue['selected'] > dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]:
+					dialogue['selected'] -= 1
+				elif dialogue_action == 'down' and dialogue['selected'] < (len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]) + dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2] - 1):
+					dialogue['selected'] += 1
 					
-				if interaction[0]:
-					if interaction[1] == 1:
-						selected_phrase = 1
-						dialogues.append({'speaker': interaction[2], 'phrase': interaction[3]})
-				
+				if dialogue_action != 'remove':
+					dialogue_action = ''
 				
 
-			if dialogue['phrase'] == '':
+			if dialogue['phrase'] == []:
 				dialogues.remove(dialogue)
-			elif pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) > 30 or selected_phrase == 0:
-				dialogue['speaker'].listen(speaker = hero)
+			elif pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) > 30 or dialogue_action == 'remove':
+				dialogue['speaker'].toggle_dialogue(speaker = hero)
 				dialogues.remove(dialogue)
+				dialogue_action = ''
 			else:
 				
 				pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 + 10), (gameW - 20), (gameH / 3 - 20)), 2)
 				pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 - 20), 80, 31), 2)
-				screen.blit(font.render(dialogue['phrase'], True, (255, 255, 255)), (15, (gameH / 3 * 2 + 15)))
+				screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][0], True, (255, 255, 255)), (15, (gameH / 3 * 2 + 15)))
 				screen.blit(font.render(dialogue['speaker'].name, True, (255, 255, 255)), (15, (gameH / 3 * 2 - 15)))
 				
-				if dialogue['phrase'] == 'Hi there!' and dialogue['speaker'].name == 'John Doe':
-					max_phrases = 2
-					screen.blit(font.render('Hello.', True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 15)))
-					screen.blit(font.render('Jello.', True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 35)))
-					if selected_phrase == 1:
-						pygame.draw.rect(screen, (255, 255, 0), (10, 410, (gameW - 20), 25), 2)
-					if selected_phrase == 2:
-						pygame.draw.rect(screen, (255, 255, 0), (10, 430, (gameW - 20), 25), 2)
+				if (len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]) > 0):
+					pygame.draw.rect(screen, (255, 255, 0), (10, (405 + ((dialogue['selected'] - dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2])  * 20)), (gameW - 20), 25), 2)
+					y = 0
+					for answer in dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]:
+						screen.blit(font.render(answer, True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10 + (y * 20))))
+						y += 1
+						
 		
 		pygame.display.flip()
 		
@@ -123,21 +121,20 @@ while True:
 					hero.dir = 'e'
 				if event.key == K_LEFT: # left
 					hero.dir = 'w'
-				if event.key == K_KP8 and hero.talking and selected_phrase > 1:
-					selected_phrase -= 1
-				if event.key == K_KP2 and hero.talking and selected_phrase < max_phrases:
-					selected_phrase += 1
+				if event.key == K_KP8 and hero.talking:
+					dialogue_action = 'up'
+				if event.key == K_KP2 and hero.talking:
+					dialogue_action = 'down'
 				if event.key == K_DELETE and hero.talking:
-					selected_phrase = 0
+					dialogue_action = 'cancel'
 				if event.key == K_RETURN or event.key == K_SPACE or event.key == K_KP_ENTER:
 					if hero.talking:
-						confirm_phrase = True
+						dialogue_action = 'confirm'
 					else:
 						interaction = hero.interact(npcs = npcs)
 						if interaction[0]:
 							if interaction[1] == 1:
-								selected_phrase = 1
-								dialogues.append({'speaker': interaction[2], 'phrase': interaction[3]})
+								dialogues.append({'speaker': interaction[2], 'phrase': interaction[3], 'selected': 0})
 						
 			no_key_yet = False
 		elif event.type == KEYUP:

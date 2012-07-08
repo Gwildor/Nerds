@@ -9,6 +9,7 @@ These few features are currently implemented:
 * Map renderer based on text files with very easy syntax.
 * Character renderer based on slightly harder syntax.
 * Character movement and hittest.
+* Dialogue between hero and npc's with easy syntax and option-choosing by the hero.
 
 More will follow.
 
@@ -25,7 +26,7 @@ More will follow.
 * Enjoy!
 
 ##Known issues
-_None at the moment. Just keeping this header as a placeholder for now._
+* Simply because it's bit of an incomplete feature, the amount of options the hero can choose from while in dialogue is limited to three.
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.

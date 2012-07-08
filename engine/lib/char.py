@@ -132,11 +132,12 @@ class char:
 						select = 0
 					else:
 						select = (curoption[(tab_count - 1)] - 1)
+						if select == -1:
+							select = 0
 						
 					self.dialogue[curdianame][tab_count][select].append(line[1:])
 					self.dialogue[curdianame][tab_count][select].append([])
-
-					#print(self.dialogue)
+					self.dialogue[curdianame][tab_count][select].append(curoption[tab_count])
 
 				elif line[:1] == '-' and dia:
 					#print('---')
@@ -435,42 +436,24 @@ class char:
 					
 		if talk:
 			talk = False
-			return npc.listen(speaker = self)
+			return npc.toggle_dialogue(speaker = self)
 		#elif:
 		#elif:
 		else: # no interactions what so ever
 			return [False]
 			
-	def listen(self, **args):
+	def toggle_dialogue(self, **args):
 
-		if 'speaker' in args:
-			speaker = args['speaker']
+		if not args['speaker'].talking:
+			args['speaker'].moving = False
+			args['speaker'].talking = True
 		else:
-			speaker = self
-
-		if 'phrase' in args:
-			phrase = args['phrase']
-		else:
-			phrase = False
-			
-		if not phrase or not speaker.talking:
-			if not speaker.talking:
-				speaker.moving = False
-				speaker.talking = True
-			else:
-				speaker.talking = False
-			
-			if not self.talking:
-				self.moving = False
-				self.talking = True
-				return [True, 1, self, 'Hi there!']
-			else:
-				self.talking = False
-				return [True, 1, self, '']
-				
-		else:
-			if phrase == 'Hello.':
-				return [True, 1, self, 'How are you doing?']
-			if phrase == 'Jello.':
-				return [True, 1, self, 'I like jello!']
+			args['speaker'].talking = False
 		
+		if not self.talking:
+			self.moving = False
+			self.talking = True
+			return [True, 1, self, [0, 0]]
+		else:
+			self.talking = False
+			return [True, 1, self, []]
