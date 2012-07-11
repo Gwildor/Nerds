@@ -26,7 +26,7 @@ More will follow.
 * Enjoy!
 
 ##Known issues
-* Simply because it's bit of an incomplete feature, the amount of options the hero can choose from while in dialogue is limited to three.
+_None known._
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.
