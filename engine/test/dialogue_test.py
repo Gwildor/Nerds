@@ -63,19 +63,30 @@ while True:
 			
 		for dialogue in dialogues:
 			
+			if 'min_option' not in dialogue or dialogue['min_option'] == -1:
+				dialogue['min_option'] = dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]
+				
+			if 'option_count' not in dialogue or dialogue['option_count'] == -1:
+				dialogue['option_count'] = len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1])
+			
 			if dialogue['phrase'] != [] and dialogue_action != '':
 			
-				if dialogue_action == 'cancel' or (dialogue_action == 'confirm' and len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]) == 0):
+				if dialogue_action == 'cancel' or (dialogue_action == 'confirm' and dialogue['option_count'] == 0):
 					dialogue_action = 'remove'
 				elif dialogue_action == 'confirm':
 
-					dialogue['phrase'][0] += 1
-					dialogue['phrase'][1] = dialogue['selected']
-					dialogue['selected'] = dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]
+					try:
+						dialogue['phrase'][0] += 1
+						dialogue['phrase'][1] = dialogue['selected']
+						dialogue['selected'] = dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]
+						dialogue['min_option'] = dialogue['selected']
+						dialogue['option_count'] = len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1])
+					except IndexError:
+						dialogue_action = 'remove'
 							
-				elif dialogue_action == 'up' and dialogue['selected'] > dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]:
+				elif dialogue_action == 'up' and dialogue['selected'] > dialogue['min_option']:
 					dialogue['selected'] -= 1
-				elif dialogue_action == 'down' and dialogue['selected'] < (len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]) + dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2] - 1):
+				elif dialogue_action == 'down' and dialogue['selected'] < (dialogue['option_count'] + dialogue['min_option'] - 1):
 					dialogue['selected'] += 1
 					
 				if dialogue_action != 'remove':
@@ -95,12 +106,27 @@ while True:
 				screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][0], True, (255, 255, 255)), (15, (gameH / 3 * 2 + 15)))
 				screen.blit(font.render(dialogue['speaker'].name, True, (255, 255, 255)), (15, (gameH / 3 * 2 - 15)))
 				
-				if (len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]) > 0):
-					pygame.draw.rect(screen, (255, 255, 0), (10, (405 + ((dialogue['selected'] - dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2])  * 20)), (gameW - 20), 25), 2)
-					y = 0
-					for answer in dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]:
-						screen.blit(font.render(answer, True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10 + (y * 20))))
-						y += 1
+				if (dialogue['option_count'] > 0):
+					
+					if dialogue['option_count'] <= 3 or (dialogue['selected'] - dialogue['min_option']) <= 1:
+						pygame.draw.rect(screen, (255, 255, 0), (10, (405 + ((dialogue['selected'] - dialogue['min_option'])  * 20)), (gameW - 20), 25), 2)
+						for index, answer in enumerate(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]):
+							screen.blit(font.render(answer, True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10 + (index * 20))))
+							if index == 2:
+								break
+					else:
+
+						if (dialogue['selected'] + 1) == dialogue['option_count']:
+							pygame.draw.rect(screen, (255, 255, 0), (10, 445, (gameW - 20), 25), 2)
+							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 2)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10)))
+							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 30)))
+							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][dialogue['selected']], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 50)))
+						else:
+							pygame.draw.rect(screen, (255, 255, 0), (10, 425, (gameW - 20), 25), 2)
+							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10)))
+							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][dialogue['selected']], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 30)))
+							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] + 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 50)))
+							
 						
 		
 		pygame.display.flip()
