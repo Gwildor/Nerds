@@ -294,7 +294,27 @@ class char:
 				if map:
 					
 					for tile in map.tiles:
-						if not tile['walkable']:
+						if tile['walkable']:
+							if 'door' in tile:
+								if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height())}, 1):
+									parts = tile['door'].split(' ')
+									map.load_map(parts[0])
+									if len(parts) == 2:
+										cords = parts[1].split(',')
+										self.x = int(cords[0])
+										self.y = int(cords[1])
+									else:
+										if 'start_pos_x' in map.general:
+											self.x = map.general['start_pos_x']
+										else:
+											self.x = 0
+											
+										if 'start_pos_y' in map.general:
+											self.y = map.general['start_pos_y']
+										else:
+											self.y = 0
+											
+						else:
 							if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height())}, 1):
 								if self.debug and 'screen' in args:
 									pygame.draw.rect(args['screen'], (0, 0, 255), (((tile['pos_x'] + (args['gameW'] / 2) - map.pos_x), (tile['pos_y'] + (args['gameH'] / 2) - map.pos_y)), (tile['width'], tile['height'])), 2)

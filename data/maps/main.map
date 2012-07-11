@@ -356,3 +356,18 @@ pos_y: 150
 src: fence_pole_n.png
 walkable: false
 ~
+
+#
+# BUILDINGS
+#
+pos_x: -53
+pos_y: -10
+src: house_door_1.png
+walkable: true
+door: house_1
+~
+pos_x: -70
+pos_y: -50
+src: house_1.png
+walkable: false
+~
