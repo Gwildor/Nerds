@@ -25,6 +25,7 @@ left = False
 right = False
 gameW = 640
 gameH = 480
+font = pygame.font.Font(None, 20)
 
 while True:
 
@@ -50,6 +51,9 @@ while True:
 	#uncomment these lines and comment out the lines below to switch between scrolling background and solid
 	map.draw_map(screen, hero.x, hero.y)
 	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
+	
+	if debug:
+		screen.blit(font.render('Hero.x: '+str(hero.x)+', Hero.y: '+str(hero.y), True, (255, 255, 255)), (15, 15))
 	
 	pygame.display.flip()
 		

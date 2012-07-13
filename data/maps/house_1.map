@@ -1,5 +1,11 @@
+start_cords: -4,16
 ~
 
+pos_x: -5
+pos_y: 40
+size: 20x10
+door: main -52,8
+~
 pos_x: -60
 pos_y: -100
 src: house_1_interior.png

@@ -35,22 +35,39 @@ class map:
 					
 					if not tile_mode:
 						#print(self.general)
+						
+						if 'start_cords' in self.general:
+							cords = self.general['start_cords'].split(',')
+							self.general['start_pos_x'] = int(cords[0])
+							self.general['start_pos_y'] = int(cords[1])
+							
 						tile_mode = True
 					else:
 						#print(str(k), self.tiles[k])
 						
-						if self.tiles[k]['src'] not in self.images:
+						if 'src' in self.tiles[k] and self.tiles[k]['src'] not in self.images:
 							self.images[self.tiles[k]['src']] = pygame.image.load(prefix+os.path.join('data', 'tiles', '')+self.tiles[k]['src'])
+						
+						if 'size' in self.tiles[k]:
+							parts = self.tiles[k]['size'].split('x')
+							self.tiles[k]['width'] = int(parts[0])
+							self.tiles[k]['height'] = int(parts[1])
 							
 						#
 						# DEFAULT VALUES
 						#
 						
 						if 'width' not in self.tiles[k]:
-							self.tiles[k]['width'] = self.images[self.tiles[k]['src']].get_width()
+							if 'src' in self.tiles[k]:
+								self.tiles[k]['width'] = self.images[self.tiles[k]['src']].get_width()
+							else:
+								self.tiles[k]['width'] = 0
 							
 						if 'height' not in self.tiles[k]:
-							self.tiles[k]['height'] = self.images[self.tiles[k]['src']].get_height()
+							if 'src' in self.tiles[k]:
+								self.tiles[k]['height'] = self.images[self.tiles[k]['src']].get_height()
+							else:
+								self.tiles[k]['height'] = 0
 							
 						if 'walkable' not in self.tiles[k]:
 							self.tiles[k]['walkable'] = True
@@ -134,6 +151,7 @@ class map:
 		for tile in self.tiles: # loop our tiles
 			if self.tile_within_square(tile, nw, se):
 				#print(tile)
-				screen.blit(self.images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
+				if 'src' in tile:
+					screen.blit(self.images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
 				if self.debug:
 					pygame.draw.rect(screen, (255, 0, 0), (((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)), (tile['width'], tile['height'])), 2)
