@@ -3,356 +3,282 @@
 #
 # GRASS
 #
-pos_x: -700
-pos_y: -700
-repeat_y: 35
-repeat_x: 30
+pos: -700,-700
+repeat: 35x30
 src: grass.jpg
 ~
 
 #
 # PATH
 #
-pos_x: 20
-pos_y: -360
+pos: 20,-360
 repeat_y: 9
 src: path_w.jpg
 ~
-pos_x: 60
-pos_y: -600
+pos: 60,-600
 repeat_y: 6
 src: path_w.jpg
 ~
-pos_x: 60
-pos_y: -360
+pos: 60,-360
 repeat_y: 22
 src: path_c.jpg
 ~
-pos_x: 100
-pos_y: -600
+pos: 100,-600
 repeat_y: 6
 src: path_c.jpg
 ~
-pos_x: 100
-pos_y: -320
+pos: 100,-320
 repeat_y: 21
 src: path_e.jpg
 ~
-pos_x: 140
-pos_y: -600
+pos: 140,-600
 repeat_y: 6
 src: path_e.jpg
 ~
 
 # top of right straigth path
-pos_x: 60
-pos_y: -640
+pos: 60,-640
 src: path_nw.jpg
 ~
-pos_x: 100
-pos_y: -640
+pos: 100,-640
 src: path_n.jpg
 ~
-pos_x: 140
-pos_y: -640
+pos: 140,-640
 src: path_ne.jpg
 ~
 #end of top
 
 # corner in straight right path
-pos_x: 20
-pos_y: -400
+pos: 20,-400
 src: path_nw.jpg
 ~
-pos_x: 100
-pos_y: -360
+pos: 100,-360
 src: junction_se.jpg
 ~
-pos_x: 60
-pos_y: -400
+pos: 60,-400
 src: junction_nw.jpg
 ~
-pos_x: 140
-pos_y: -360
+pos: 140,-360
 src: path_se.jpg
 ~
 # end corner
 
-pos_x: 20
-pos_y: 0
+pos: 20,0
 src: junction_nw.jpg
 ~
-pos_x: 20
-pos_y: 40
+pos: 20,40
 src: junction_sw.jpg
 ~
-pos_x: 20
-pos_y: 80
+pos: 20,80
 src: path_w.jpg
 repeat_y: 6
 ~
 
 # open area below right path
-pos_x: 20
-pos_y: 320
+pos: 20,320
 src: junction_nw.jpg
 ~
-pos_x: -20
-pos_y: 320
+pos: -20,320
 src: path_nw.jpg
 ~
-pos_x: -20
-pos_y: 360
+pos: -20,360
 src: junction_nw.jpg
 ~
-pos_x: 20
-pos_y: 360
+pos: 20,360
 repeat_y: 4
 src: path_c.jpg
 ~
-pos_x: -140
-pos_y: 360
+pos: -140,360
 repeat_x: 3
 src: path_n.jpg
 ~
-pos_x: -180
-pos_y: 360
+pos: -180,360
 src: path_nw.jpg
 ~
-pos_x: -140
-pos_y: 400
+pos: -140,400
 repeat_y: 3
 src: path_c.jpg
 ~
-pos_x: -100
-pos_y: 400
+pos: -100,400
 repeat_y: 2
 repeat_x: 3
 src: path_c.jpg
 ~
-pos_x: -180
-pos_y: 400
+pos: -180,400
 repeat_y: 3
 src: path_w.jpg
 ~
-pos_x: -180
-pos_y: 520
+pos: -180,520
 src: path_sw.jpg
 ~
-pos_x: -140
-pos_y: 520
+pos: -140,520
 src: path_s.jpg
 ~
-pos_x: -100
-pos_y: 520
+pos: -100,520
 src: path_se.jpg
 ~
-pos_x: -100
-pos_y: 480
+pos: -100,480
 src: junction_se.jpg
 ~
-pos_x: -60
-pos_y: 480
+pos: -60,480
 src: path_s.jpg
 ~
-pos_x: -20
-pos_y: 480
+pos: -20,480
 src: junction_sw.jpg
 ~
-pos_x: -20
-pos_y: 520
+pos: -20,520
 src: path_sw.jpg
 ~
-pos_x: 20
-pos_y: 520
+pos: 20,520
 repeat_x: 2
 src: path_s.jpg
 ~
-pos_x: 100
-pos_y: 520
+pos: 100,520
 src: path_se.jpg
 ~
 
 # horizontal narrow path
-pos_x: -340
-pos_y: 0
+pos: -340,0
 repeat_x: 9
 src: path_n.jpg
 ~
-pos_x: -300
-pos_y: 40
+pos: -300,40
 repeat_x: 8
 src: path_s.jpg
 ~
-pos_x: -380
-pos_y: 0
+pos: -380,0
 src: path_nw.jpg
 ~
-pos_x: -340
-pos_y: 40
+pos: -340,40
 src: junction_se.jpg
 ~
-pos_x: -380
-pos_y: 40
+pos: -380,40
 repeat_y: 5
 src: path_w.jpg
 ~
-pos_x: -340
-pos_y: 80
+pos: -340,80
 repeat_y: 5
 src: path_e.jpg
 ~
-pos_x: -380
-pos_y: 240
+pos: -380,240
 src: junction_nw.jpg
 ~
-pos_x: -340
-pos_y: 280
+pos: -340,280
 src: path_se.jpg
 ~
-pos_x: -500
-pos_y: 240
+pos: -500,240
 repeat_x: 3
 src: path_n.jpg
 ~
-pos_x: -540
-pos_y: 280
+pos: -540,280
 repeat_x: 5
 src: path_s.jpg
 ~
-pos_x: -540
-pos_y: 240
+pos: -540,240
 src: junction_ne.jpg
 ~
-pos_x: -580
-pos_y: 280
+pos: -580,280
 src: path_sw.jpg
 ~
-pos_x: -580
-pos_y: 120
+pos: -580,120
 repeat_y: 4
 src: path_w.jpg
 ~
-pos_x: -540
-pos_y: 80
+pos: -540,80
 repeat_y: 4
 src: path_e.jpg
 ~
-pos_x: -580
-pos_y: 80
+pos: -580,80
 src: junction_sw.jpg
 ~
-pos_x: -540
-pos_y: 40
+pos: -540,40
 src: path_ne.jpg
 ~
-pos_x: -620
-pos_y: 80
+pos: -620,80
 src: path_sw.jpg
 ~
-pos_x: -580
-pos_y: 40
+pos: -580,40
 src: junction_ne.jpg
 ~
-pos_x: -620
-pos_y: -80
+pos: -620,-80
 repeat_y: 4
 src: path_w.jpg
 ~
-pos_x: -580
-pos_y: -80
+pos: -580,-80
 repeat_y: 3
 src: path_e.jpg
 ~
-pos_x: -620
-pos_y: -120
+pos: -620,-120
 src: path_nw.jpg
 ~
-pos_x: -580
-pos_y: -120
+pos: -580,-120
 src: path_ne.jpg
 ~
 
 #
 # FENCE
 #
-pos_x: -200
-pos_y: -200
+pos: -200,-200
 src: fence_pole_s.png
 walkable: false
 ~
-pos_x: -369
-pos_y: -380
+pos: -369,-380
 src: fence_pole_s.png
 walkable: false
 ~
-pos_x: -367
-pos_y: -335
+pos: -367,-335
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -367
-pos_y: -295
+pos: -367,-295
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -375
-pos_y: -250
+pos: -375,-250
 src: fence_corner_w_n.png
 walkable: false
 ~
-pos_x: -415
-pos_y: -243
+pos: -415,-243
 src: fence_we.png
 walkable: false
 ~
-pos_x: -455
-pos_y: -250
+pos: -455,-250
 src: fence_corner_e_s.png
 walkable: false
 ~
-pos_x: -447
-pos_y: -175
+pos: -447,-175
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: -135
+pos: -447,-135
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: -95
+pos: -447,-95
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: -55
+pos: -447,-55
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: -15
+pos: -447,-15
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: 25
+pos: -447,25
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: 65
+pos: -447,65
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -447
-pos_y: 105
+pos: -447,105
 src: fence_ns.png
 walkable: false
 ~
-pos_x: -450
-pos_y: 150
+pos: -450,150
 src: fence_pole_n.png
 walkable: false
 ~
@@ -360,13 +286,11 @@ walkable: false
 #
 # BUILDINGS
 #
-pos_x: -53
-pos_y: -10
+pos: -53,-10
 size: 14x15
 door: house_1
 ~
-pos_x: -70
-pos_y: -50
+pos: -70,-50
 src: house_w_door_1.png
 walkable: false
 ~

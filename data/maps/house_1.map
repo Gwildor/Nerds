@@ -1,13 +1,50 @@
-start_cords: -4,16
+start_cords: 60,116
 ~
 
-pos_x: -5
-pos_y: 40
-size: 20x10
+pos: 0,0
+repeat: 160x18
+src: house/floor.png
+~
+pos: 0,-32
+repeat_x: 160
+src: house/wall.png
+walkable: false
+~
+pos: 26,42
+src: house/carpet.png
+~
+pos: 50,144
+size: 32x16
 door: main -52,8
 ~
-pos_x: -60
-pos_y: -100
-src: house_1_interior.png
-walkable: true
+pos: 50,128
+src: house/doormat.png
+~
+pos: 52,56
+src: house/table.png
+walkable: false
+~
+pos: 84,56
+src: house/chair.png
+walkable: false
+~
+pos: 84,72
+src: house/chair.png
+walkable: false
+~
+pos: -1,0
+size: 1x144
+walkable: false
+~
+pos: 161,0
+size: 1x144
+walkable: false
+~
+pos: 0,144
+size: 50x1
+walkable: false
+~
+pos: 83,144
+size: 78x1
+walkable: false
 ~

@@ -40,6 +40,7 @@ class map:
 							cords = self.general['start_cords'].split(',')
 							self.general['start_pos_x'] = int(cords[0])
 							self.general['start_pos_y'] = int(cords[1])
+							del self.general['start_cords']
 							
 						tile_mode = True
 					else:
@@ -52,6 +53,23 @@ class map:
 							parts = self.tiles[k]['size'].split('x')
 							self.tiles[k]['width'] = int(parts[0])
 							self.tiles[k]['height'] = int(parts[1])
+							del self.tiles[k]['size']
+							
+						if 'cords' in self.tiles[k]:
+							self.tiles[k]['pos'] = self.tiles[k]['cords']
+							del self.tiles[k]['cords']
+							
+						if 'pos' in self.tiles[k]:
+							cords = self.tiles[k]['pos'].split(',')
+							self.tiles[k]['pos_x'] = int(cords[0])
+							self.tiles[k]['pos_y'] = int(cords[1])
+							del self.tiles[k]['pos']
+							
+						if 'repeat' in self.tiles[k]:
+							parts = self.tiles[k]['repeat'].split('x')
+							self.tiles[k]['repeat_x'] = int(parts[0])
+							self.tiles[k]['repeat_y'] = int(parts[1])
+							del self.tiles[k]['repeat']
 							
 						#
 						# DEFAULT VALUES

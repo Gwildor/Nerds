@@ -8,7 +8,9 @@ window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Map view')
 screen = pygame.display.get_surface()
 
-map = map('main', os.path.join('..', '..', ''))
+map_name = 'house_1'
+
+map = map(map_name, os.path.join('..', '..', ''))
 
 x = 0
 y = 0
@@ -59,7 +61,7 @@ while True:
 			if event.key == 281: # page down
 				y += 400
 			if event.key == 286: # F5
-				map.load_map('main', '../../')
+				map.load_map(map_name, os.path.join('..', '..', ''))
 		elif event.type == KEYUP:
 			if event.key == 273: # up
 				up = False
