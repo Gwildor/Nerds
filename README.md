@@ -9,6 +9,7 @@ These few features are currently implemented:
 * Map renderer based on text files with very easy syntax.
 * Character renderer based on slightly harder syntax.
 * Character movement and hittest.
+* Easy path creation for basic npc movement.
 * Dialogue between hero and npc's with easy syntax and option-choosing by the hero.
 
 More will follow.

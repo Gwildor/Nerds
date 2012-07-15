@@ -8,7 +8,7 @@ window = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('Map view')
 screen = pygame.display.get_surface()
 
-map_name = 'house_1'
+map_name = 'main'
 
 map = map(map_name, os.path.join('..', '..', ''))
 
@@ -21,6 +21,7 @@ down = False
 left = False
 right = False
 no_key_yet = True
+font = pygame.font.Font(None, 20)
 
 while True:
 	
@@ -36,6 +37,9 @@ while True:
 	else:
 		screen.fill((0, 0, 0))
 		map.draw_map(screen, x, y)
+		screen.blit(font.render('x: '+str(x)+', y: '+str(y), True, (255, 255, 255)), (15, 15))
+		pygame.draw.line(screen, (255, 255, 255), (320, 0), (320, 480))
+		pygame.draw.line(screen, (255, 255, 255), (0, 240), (640, 240))
 		pygame.display.flip()
 
 	for event in pygame.event.get():

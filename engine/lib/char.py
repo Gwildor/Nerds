@@ -18,6 +18,7 @@ class char:
 	frames = {}
 	framecount = {}
 	dialogue = {}
+	ai = []
 	file = ''
 	state = ''
 	
@@ -34,6 +35,7 @@ class char:
 		temp = {}
 		
 		dia     = False
+		ai      = False
 		curdir  = ''
 		curmove = ''
 		folder  = os.path.split(file)
@@ -154,6 +156,10 @@ class char:
 					self.dialogue[curdianame][tab_count][select][1].append(line[1:])
 					
 					curoption[tab_count] += 1
+					
+				elif line == 'ai:':
+					ai = True
+					self.ai = []
 
 				else: # properties and values
 
@@ -162,6 +168,13 @@ class char:
 						curdianame = vals[0]
 						self.dialogue[curdianame] = []
 						curoption = []
+						
+					elif ai:
+						cords = line.split(',', 1)
+						if len(self.ai) == 0:
+							self.x = int(cords[0])
+							self.y = int(cords[1])
+						self.ai.append({'x': int(cords[0]), 'y': int(cords[1])})
 						
 					else:
 					
@@ -339,6 +352,17 @@ class char:
 		
 		return False
 		
+	def move(self, **args):
+		if 'map' in args:
+			map = args['map']
+		else:
+			map = False
+		
+		if self.move_to(x = self.ai[0]['x'], y = self.ai[0]['y'], map = map):
+			self.ai.append(self.ai[0])
+			self.ai.pop(0)
+			
+	
 	def move_to(self, **args):
 
 		if 'x' in args:

@@ -18,6 +18,9 @@ if debug:
 map = map()
 if debug:
 	map.debug = True
+	
+npcs = []
+npcs.append(char(os.path.join('npc', 'test_npc')))
 
 up = False
 down = False
@@ -26,6 +29,8 @@ right = False
 gameW = 640
 gameH = 480
 font = pygame.font.Font(None, 20)
+dx = 0
+dy = 0
 
 while True:
 
@@ -44,13 +49,13 @@ while True:
 			dx = -4
 	
 		hero.hittest(dx = dx, dy = dy, map = map)
-		#hero.hittest(dx = dx, dy = dy, map = map, screen = screen, gameW = gameW, gameH = gameH)
-	
-	#map.draw_map(screen, 0, 0)
-	#hero.draw_char(screen, gameW = gameW, gameH = gameH)
-	#uncomment these lines and comment out the lines below to switch between scrolling background and solid
+
 	map.draw_map(screen, hero.x, hero.y)
 	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
+	
+	for npc in npcs:
+		npc.move(map = map)
+		npc.draw_char(screen, x = ((npc.x - hero.x) + (gameW / 2)), y = ((npc.y - hero.y) + (gameH / 2)))
 	
 	if debug:
 		screen.blit(font.render('Hero.x: '+str(hero.x)+', Hero.y: '+str(hero.y), True, (255, 255, 255)), (15, 15))

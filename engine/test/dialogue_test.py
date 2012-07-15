@@ -13,6 +13,7 @@ hero = char(os.path.join('hero', 'main', 'main'), os.path.join('..', '..', ''))
 npcs = []
 npcs.append(char(os.path.join('npc', 'test_npc'), os.path.join('..', '..', '')))
 npcs[0].x = 30
+npcs[0].y = 0
 npcs[0].name = 'John Doe'
 
 up = False
