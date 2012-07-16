@@ -253,16 +253,32 @@ class char:
 			move = args['move']
 		else:
 			move = True
-		
+			
+		if 'objects' in args:
+			objects = args['objects']
+		else:
+			objects = {}
+			
 		if 'map' in args:
 			map = args['map']
+		elif 'map' in objects:
+			map = objects['map']
 		else:
 			map = False
 			
 		if 'npcs' in args:
 			npcs = args['npcs']
+		elif 'npcs' in objects:
+			npcs = objects['npcs']
 		else:
 			npcs = False
+			
+		if 'hero' in args:
+			hero = args['hero']
+		elif 'hero' in objects:
+			hero = objects['hero']
+		else:
+			hero = False
 		
 		if dx < 0:
 			x_negative = True
@@ -337,10 +353,15 @@ class char:
 								
 				if npcs:
 					
-					for npc in npcs:    
-						if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height()) >= (pos_y + 1) and npc.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1) and (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width()) >= (pos_x + 1) and npc.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
-							return True
+					for npc in npcs:
+						if npc != self:
+							if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height()) >= (pos_y + 1) and npc.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1) and (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width()) >= (pos_x + 1) and npc.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
+								return True
 							
+				if hero and hero != self:
+					if (hero.y + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_height()) >= (pos_y + 1) and hero.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1) and (hero.x + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_width()) >= (pos_x + 1) and hero.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
+						return True
+								
 				ay += 1
 				
 			ax += 1
@@ -353,12 +374,12 @@ class char:
 		return False
 		
 	def move(self, **args):
-		if 'map' in args:
-			map = args['map']
+		if 'objects' in args:
+			objects = args['objects']
 		else:
-			map = False
+			objects = {}
 		
-		if self.move_to(x = self.ai[0]['x'], y = self.ai[0]['y'], map = map):
+		if self.move_to(x = self.ai[0]['x'], y = self.ai[0]['y'], objects = objects):
 			self.ai.append(self.ai[0])
 			self.ai.pop(0)
 			
@@ -375,10 +396,10 @@ class char:
 		else:
 			y = self.y
 			
-		if 'map' in args:
-			map = args['map']
+		if 'objects' in args:
+			objects = args['objects']
 		else:
-			map = False
+			objects = {}
 			
 		dx = x - self.x
 		dy = y - self.y
@@ -392,54 +413,54 @@ class char:
 			
 			if self.x < x - self.speed:
 				#print('e')
-				if not self.hittest(dx = 1, map = map, move = False):
+				if not self.hittest(dx = 1, objects = objects, move = False):
 					self.dir = 'e'
-					self.hittest(dx = self.speed, map = map)
-				elif not self.hittest(dy = 1, map = map, move = False):
+					self.hittest(dx = self.speed, objects = objects)
+				elif not self.hittest(dy = 1, objects = objects, move = False):
 					self.dir = 's'
-					self.hittest(dy = self.speed, map = map)
-				elif not self.hittest(dy = -1, map = map, move = False):
+					self.hittest(dy = self.speed, objects = objects)
+				elif not self.hittest(dy = -1, objects = objects, move = False):
 					self.dir = 'n'
-					self.hittest(dy = -self.speed, map = map)
+					self.hittest(dy = -self.speed, objects = objects)
 				else:
 					self.moving = False
 			elif self.x > x + self.speed:
 				#print('w')
-				if not self.hittest(dx = -1, map = map, move = False):
+				if not self.hittest(dx = -1, objects = objects, move = False):
 					self.dir = 'w'
-					self.hittest(dx = -self.speed, map = map)
-				elif not self.hittest(dy = 1, map = map, move = False):
+					self.hittest(dx = -self.speed, objects = objects)
+				elif not self.hittest(dy = 1, objects = objects, move = False):
 					self.dir = 's'
-					self.hittest(dy = self.speed, map = map)
-				elif not self.hittest(dy = -1, map = map, move = False):
+					self.hittest(dy = self.speed, objects = objects)
+				elif not self.hittest(dy = -1, objects = objects, move = False):
 					self.dir = 'n'
-					self.hittest(dy = -self.speed, map = map)
+					self.hittest(dy = -self.speed, objects = objects)
 				else:
 					self.moving = False
 			elif self.y < y - self.speed:
 				#print('s')
-				if not self.hittest(dy = 1, map = map, move = False):
+				if not self.hittest(dy = 1, objects = objects, move = False):
 					self.dir = 's'
-					self.hittest(dy = self.speed, map = map)
-				elif not self.hittest(dx = 1, map = map, move = False):
+					self.hittest(dy = self.speed, objects = objects)
+				elif not self.hittest(dx = 1, objects = objects, move = False):
 					self.dir = 'e'
-					self.hittest(dx = self.speed, map = map)
-				elif not self.hittest(dx = -1, map = map, move = False):
+					self.hittest(dx = self.speed, objects = objects)
+				elif not self.hittest(dx = -1, objects = objects, move = False):
 					self.dir = 'w'
-					self.hittest(dx = -self.speed, map = map)
+					self.hittest(dx = -self.speed, objects = objects)
 				else:
 					self.moving = False
 			elif self.y > y + self.speed:
 				#print('n')
-				if not self.hittest(dy = -1, map = map, move = False):
+				if not self.hittest(dy = -1, objects = objects, move = False):
 					self.dir = 'n'
-					self.hittest(dy = -self.speed, map = map)
-				elif not self.hittest(dx = 1, map = map, move = False):
+					self.hittest(dy = -self.speed, objects = objects)
+				elif not self.hittest(dx = 1, objects = objects, move = False):
 					self.dir = 'e'
-					self.hittest(dx = self.speed, map = map)
-				elif not self.hittest(dx = -1, map = map, move = False):
+					self.hittest(dx = self.speed, objects = objects)
+				elif not self.hittest(dx = -1, objects = objects, move = False):
 					self.dir = 'w'
-					self.hittest(dx = -self.speed, map = map)
+					self.hittest(dx = -self.speed, objects = objects)
 				else:
 					self.moving = False
 				

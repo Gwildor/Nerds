@@ -15,12 +15,13 @@ screen = pygame.display.get_surface()
 hero = char()
 if debug:
 	hero.debug = True
-map = map()
-if debug:
-	map.debug = True
 	
-npcs = []
-npcs.append(char(os.path.join('npc', 'test_npc')))
+objects = {'npcs': [], 'map': map(), 'hero': hero}
+
+if debug:
+	objects['map'].debug = True
+
+objects['npcs'].append(char(os.path.join('npc', 'test_npc')))
 
 up = False
 down = False
@@ -48,13 +49,13 @@ while True:
 		if hero.dir == 'w':
 			dx = -4
 	
-		hero.hittest(dx = dx, dy = dy, map = map)
+		hero.hittest(dx = dx, dy = dy, objects = objects)
 
-	map.draw_map(screen, hero.x, hero.y)
+	objects['map'].draw_map(screen, hero.x, hero.y)
 	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
 	
-	for npc in npcs:
-		npc.move(map = map)
+	for npc in objects['npcs']:
+		npc.move(objects = objects)
 		npc.draw_char(screen, x = ((npc.x - hero.x) + (gameW / 2)), y = ((npc.y - hero.y) + (gameH / 2)))
 	
 	if debug:

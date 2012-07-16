@@ -27,7 +27,7 @@ More will follow.
 * Enjoy!
 
 ##Known issues
-_None known._
+* Hittest between (n)pc's is buggy.
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.
