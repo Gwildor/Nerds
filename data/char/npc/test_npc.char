@@ -15,34 +15,28 @@ s:
 w:
 	*
 		pos_x: 42
-		width: 12
 	*
-		pos_x: 54
-		width: 12
+		pos_x: 56
 	+
-		pos_x: 66
-		width: 12
+		pos_x: 70
 	*
 ~
 n:
 	*
-		pos_x: 78
+		pos_x: 84
 	*
-		pos_x: 92
+		pos_x: 98
 	+
-		pos_x: 106
+		pos_x: 112
 	*
 ~
 e:
 	*
-		pos_x: 120
-		width: 12
+		pos_x: 126
 	*
-		pos_x: 132
-		width: 12
+		pos_x: 140
 	+
-		pos_x: 144
-		width: 12
+		pos_x: 154
 	*
 ~
 ai:
