@@ -27,7 +27,7 @@ More will follow.
 * Enjoy!
 
 ##Known issues
-* Hittest between (n)pc's is buggy.
+* Pathfinding is not properly working when npc is going up or down.
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.
