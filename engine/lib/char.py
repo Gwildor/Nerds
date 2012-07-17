@@ -280,42 +280,27 @@ class char:
 		else:
 			hero = False
 		
-		if dx < 0:
-			x_negative = True
-			dx *= -1
-		else:
-			x_negative = False
-			
-		if dy < 0:
-			y_negative = True
-			dy *= -1
-		else:
-			y_negative = False
-		
 		ori_x = self.x
 		ori_y = self.y
-		pos_x = ori_x
-		pos_y = ori_y
 		
 		ax = 0
-		while ax <= dx:
+		gx = pow(pow(dx, 2), 0.5) # turn both negative and positive numbers into positive number
+		gy = pow(pow(dy, 2), 0.5)
+		while ax <= gx:
 			#print('x: '+str(ax))
 			
 			ay = 0
-			while ay <= dy:
+			while ay <= gy:
 				#print('y: '+str(ay))
 				#print('x,y: '+str(ax)+','+str(ay)+' - pos_x,y: '+str(pos_x)+','+str(pos_y)+' - ori_x,y: '+str(ori_x)+','+str(ori_y))
 				
-				if move:
-					self.x = pos_x
-					self.y = pos_y
-				
-				if x_negative:
+
+				if dx < 0:
 					pos_x = ori_x - ax
 				else:
 					pos_x = ori_x + ax
 					
-				if y_negative:
+				if dy < 0:
 					pos_y = ori_y - ay
 				else:
 					pos_y = ori_y + ay
@@ -355,21 +340,20 @@ class char:
 					
 					for npc in npcs:
 						if npc != self:
-							if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height()) >= (pos_y + 1) and npc.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1) and (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width()) >= (pos_x + 1) and npc.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
+							if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height() - 1) >= pos_y and npc.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width() - 1) >= pos_x and npc.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
 								return True
 							
 				if hero and hero != self:
-					if (hero.y + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_height()) >= (pos_y + 1) and hero.y <= ((pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height()) - 1) and (hero.x + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_width()) >= (pos_x + 1) and hero.x <= ((pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()) - 1):
+					if (hero.y + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_height() - 1) >= pos_y and hero.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (hero.x + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_width() - 1) >= pos_x and hero.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
 						return True
+						
+				if move:
+					self.x = pos_x
+					self.y = pos_y
 								
 				ay += 1
 				
 			ax += 1
-			
-		#print('...')
-		if move:
-			self.x = pos_x
-			self.y = pos_y
 		
 		return False
 		
