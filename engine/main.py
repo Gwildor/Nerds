@@ -54,7 +54,7 @@ while True:
 	objects['map'].draw_map(screen, hero.x, hero.y)
 	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
 	
-	for npc in objects['npcs']:	
+	for npc in objects['npcs']:
 		npc.move(objects = objects)
 		npc.draw_char(screen, x = ((npc.x - hero.x) + (gameW / 2)), y = ((npc.y - hero.y) + (gameH / 2)))
 	

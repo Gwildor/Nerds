@@ -3,6 +3,9 @@ _The docs of this project are still very incomplete, simply because it's more fu
 #Nerds
 Nerds is a__n__ engin__e__ fo__r__ tile-base__d__ game__s__. It is intended to be easy in use, allowing all major configuration of your project to be done by simply editing text files. This process is easily accessible but is known to be extremely boring, so beware!
 
+##Version
+The latest release is version __0.1__, released on __18 July 2012__.
+
 ##Features
 These few features are currently implemented:
 
@@ -20,14 +23,14 @@ More will follow.
 
 * Open the terminal.
 
-* Move to this folder.
+* Move to the "engine" folder within this folder.
 
-* Execute `python engine/main.py`
+* Execute `python main.py`
 
 * Enjoy!
 
 ##Known issues
-* Pathfinding is not properly working when npc is going up or down.
+* Movement when NPC walks into obstacles looks weird.
 
 ##Configuration
 Most configuration for now is done by editing various text files located in the `data` folder and its subfolders.

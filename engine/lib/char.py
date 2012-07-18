@@ -387,7 +387,7 @@ class char:
 			
 		if x - self.speed <= self.x and y - self.speed <= self.y and x + self.speed >= self.x and y + self.speed >= self.y:
 			self.moving = False
-			print('hi')
+			#print('hi')
 			return True
 		else:
 			self.moving = True
@@ -420,17 +420,17 @@ class char:
 					dirs.append('w')
 				if self.olddir == 'w':
 					dirs.append('e')
-			print(dirs)
+			#print(dirs)
 					
 			
 			for index, dir in enumerate(dirs):
 				
 				if dir == 'e':
-					print('e')
+					#print('e')
 					if index == 0:
-						print('e2')
+						#print('e2')
 						if self.x < x + self.speed:
-							print('e3')
+							#print('e3')
 							if not self.hittest(dx = 1, objects = objects, move = False):
 								self.dir = 'e'
 								self.hittest(dx = self.speed, objects = objects)
@@ -446,7 +446,7 @@ class char:
 							elif index == 3:
 								self.moving = False
 						else:
-							print('e4')
+							#print('e4')
 							if self.y > y + self.speed:
 								self.dir = 'n'
 								self.hittest(dy = -self.speed, objects = objects)
