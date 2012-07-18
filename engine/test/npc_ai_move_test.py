@@ -10,6 +10,9 @@ pygame.display.set_caption('NPC AI moving testing')
 screen = pygame.display.get_surface()
 
 npc = char(os.path.join('npc', 'test_npc'), os.path.join('..', '..', ''))
+npc.x = 0
+npc.y = 0
+npc.dir = 'e'
 map = map(False)
 
 rect = pygame.Surface((32, 32))
@@ -34,8 +37,8 @@ while True:
 
 	screen.fill((0, 0, 0))
 	map.draw_map(screen, 0, 0)
-	
-	if npc.move_to(x = targetX, y = targetY, map = map):
+
+	if npc.move_to(x = targetX, y = targetY, objects = {'map': map}):
 		if targetX * targetY == 10000: # both -100 or both 100 -> nw or se corner
 			targetX *= -1
 		else: # sw or ne corner

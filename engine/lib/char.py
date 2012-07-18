@@ -20,7 +20,7 @@ class char:
 	dialogue = {}
 	ai = []
 	file = ''
-	state = ''
+	state = 's'
 	
 	def __init__(self, file = os.path.join('hero', 'main', 'main'), prefix = os.path.join('..', '')):
 		if file:
@@ -235,7 +235,8 @@ class char:
 			
 		screen.blit(self.images[self.frames[self.file][self.dir][self.state][self.frame]], (x, y))
 		
-		self.olddir = self.dir
+		if self.dir != self.olddir:
+			self.olddir = self.dir
 		self.ticks += 1
 
 	def hittest(self, **args):
@@ -306,7 +307,6 @@ class char:
 					pos_y = ori_y + ay
 					
 				if map:
-					
 					for tile in map.tiles:
 						if tile['walkable']:
 							if 'door' in tile:
@@ -385,68 +385,228 @@ class char:
 		else:
 			objects = {}
 			
-		dx = x - self.x
-		dy = y - self.y
-		
 		if x - self.speed <= self.x and y - self.speed <= self.y and x + self.speed >= self.x and y + self.speed >= self.y:
-		#if dx < self.speed and 
 			self.moving = False
+			print('hi')
 			return True
 		else:
 			self.moving = True
 			
-			if self.x < x - self.speed:
-				#print('e')
-				if not self.hittest(dx = 1, objects = objects, move = False):
-					self.dir = 'e'
-					self.hittest(dx = self.speed, objects = objects)
-				elif not self.hittest(dy = 1, objects = objects, move = False):
-					self.dir = 's'
-					self.hittest(dy = self.speed, objects = objects)
-				elif not self.hittest(dy = -1, objects = objects, move = False):
-					self.dir = 'n'
-					self.hittest(dy = -self.speed, objects = objects)
-				else:
-					self.moving = False
-			elif self.x > x + self.speed:
-				#print('w')
-				if not self.hittest(dx = -1, objects = objects, move = False):
-					self.dir = 'w'
-					self.hittest(dx = -self.speed, objects = objects)
-				elif not self.hittest(dy = 1, objects = objects, move = False):
-					self.dir = 's'
-					self.hittest(dy = self.speed, objects = objects)
-				elif not self.hittest(dy = -1, objects = objects, move = False):
-					self.dir = 'n'
-					self.hittest(dy = -self.speed, objects = objects)
-				else:
-					self.moving = False
-			elif self.y < y - self.speed:
-				#print('s')
-				if not self.hittest(dy = 1, objects = objects, move = False):
-					self.dir = 's'
-					self.hittest(dy = self.speed, objects = objects)
-				elif not self.hittest(dx = 1, objects = objects, move = False):
-					self.dir = 'e'
-					self.hittest(dx = self.speed, objects = objects)
-				elif not self.hittest(dx = -1, objects = objects, move = False):
-					self.dir = 'w'
-					self.hittest(dx = -self.speed, objects = objects)
-				else:
-					self.moving = False
-			elif self.y > y + self.speed:
-				#print('n')
-				if not self.hittest(dy = -1, objects = objects, move = False):
-					self.dir = 'n'
-					self.hittest(dy = -self.speed, objects = objects)
-				elif not self.hittest(dx = 1, objects = objects, move = False):
-					self.dir = 'e'
-					self.hittest(dx = self.speed, objects = objects)
-				elif not self.hittest(dx = -1, objects = objects, move = False):
-					self.dir = 'w'
-					self.hittest(dx = -self.speed, objects = objects)
-				else:
-					self.moving = False
+			if self.olddir == self.dir:
+				if self.dir == 'n':
+					dirs = ['n', 'e', 's', 'w']
+				if self.dir == 's':
+					dirs = ['s', 'e', 'n', 'w']
+				if self.dir == 'e':
+					dirs = ['e', 'n', 'w', 's']
+				if self.dir == 'w':
+					dirs = ['w', 'n', 'e', 's']
+			else:
+				dirs = [self.dir, self.olddir]
+				if self.dir == 'n':
+					dirs.append('s')
+				if self.dir == 's':
+					dirs.append('n')
+				if self.dir == 'e':
+					dirs.append('w')
+				if self.dir == 'w':
+					dirs.append('e')
+					
+				if self.olddir == 'n':
+					dirs.append('s')
+				if self.olddir == 's':
+					dirs.append('n')
+				if self.olddir == 'e':
+					dirs.append('w')
+				if self.olddir == 'w':
+					dirs.append('e')
+			print(dirs)
+					
+			
+			for index, dir in enumerate(dirs):
+				
+				if dir == 'e':
+					print('e')
+					if index == 0:
+						print('e2')
+						if self.x < x + self.speed:
+							print('e3')
+							if not self.hittest(dx = 1, objects = objects, move = False):
+								self.dir = 'e'
+								self.hittest(dx = self.speed, objects = objects)
+								break
+							elif not self.hittest(dy = 1, objects = objects, move = False):
+								self.dir = 's'
+								self.hittest(dy = self.speed, objects = objects)
+								break
+							elif not self.hittest(dy = -1, objects = objects, move = False):
+								self.dir = 'n'
+								self.hittest(dy = -self.speed, objects = objects)
+								break
+							elif index == 3:
+								self.moving = False
+						else:
+							print('e4')
+							if self.y > y + self.speed:
+								self.dir = 'n'
+								self.hittest(dy = -self.speed, objects = objects)
+								break
+							else:
+								self.dir = 's'
+								self.hittest(dy = self.speed, objects = objects)
+								break
+					else:
+						if dirs[(index - 1)] == 'w' and not self.hittest(dx = -1, objects = objects, move = False):
+							self.dir = 'w'
+							self.hittest(dx = -self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 's' and not self.hittest(dy = 1, objects = objects, move = False):
+							self.dir = 's'
+							self.hittest(dy = self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 'n' and not self.hittest(dy = -1, objects = objects, move = False):
+							self.dir = 'n'
+							self.hittest(dy = -self.speed, objects = objects)
+							break
+						else:
+							self.dir = 'e'
+							self.hittest(dx = self.speed, objects = objects)
+							break
+						
+				if dir == 'w':
+					#print('w')
+					if index == 0:
+						if self.x > x + self.speed:
+							if not self.hittest(dx = -1, objects = objects, move = False):
+								self.dir = 'w'
+								self.hittest(dx = -self.speed, objects = objects)
+								break
+							elif not self.hittest(dy = 1, objects = objects, move = False):
+								self.dir = 's'
+								self.hittest(dy = self.speed, objects = objects)
+								break
+							elif not self.hittest(dy = -1, objects = objects, move = False):
+								self.dir = 'n'
+								self.hittest(dy = -self.speed, objects = objects)
+								break
+							elif index == 3:
+								self.moving = False
+						else:
+							if self.y > y + self.speed:
+								self.dir = 'n'
+								self.hittest(dy = -self.speed, objects = objects)
+								break
+							else:
+								self.dir = 's'
+								self.hittest(dy = self.speed, objects = objects)
+								break
+					else:
+						if dirs[(index - 1)] == 'e' and not self.hittest(dx = 1, objects = objects, move = False):
+							self.dir = 'e'
+							self.hittest(dx = self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 's' and not self.hittest(dy = 1, objects = objects, move = False):
+							self.dir = 's'
+							self.hittest(dy = self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 'n' and not self.hittest(dy = -1, objects = objects, move = False):
+							self.dir = 'n'
+							self.hittest(dy = -self.speed, objects = objects)
+							break
+						else:
+							self.dir = 'w'
+							self.hittest(dx = -self.speed, objects = objects)
+							break
+						
+				if dir == 's':
+					#print('s')
+					if index == 0:
+						if self.y < y - self.speed:
+							if not self.hittest(dy = 1, objects = objects, move = False):
+								self.dir = 's'
+								self.hittest(dy = self.speed, objects = objects)
+								break
+							elif not self.hittest(dx = 1, objects = objects, move = False):
+								self.dir = 'e'
+								self.hittest(dx = self.speed, objects = objects)
+								break
+							elif not self.hittest(dx = -1, objects = objects, move = False):
+								self.dir = 'w'
+								self.hittest(dx = -self.speed, objects = objects)
+								break
+							elif index == 3:
+								self.moving = False
+						else:
+							if self.x < x - self.speed:
+								self.dir = 'e'
+								self.hittest(dx = self.speed, objects = objects)
+								break
+							else:
+								self.dir = 'w'
+								self.hittest(dx = -self.speed, objects = objects)
+								break
+					else:
+						if dirs[(index - 1)] == 'e' and not self.hittest(dx = 1, objects = objects, move = False):
+							self.dir = 'e'
+							self.hittest(dx = self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 'w' and not self.hittest(dx = -1, objects = objects, move = False):
+							self.dir = 'w'
+							self.hittest(dx = -self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 'n' and not self.hittest(dy = -1, objects = objects, move = False):
+							self.dir = 'n'
+							self.hittest(dy = -self.speed, objects = objects)
+							break
+						else:
+							self.dir = 's'
+							self.hittest(dy = self.speed, objects = objects)
+							break
+						
+				if dir == 'n':
+					#print('n')
+					if index == 0:
+						if self.y > y + self.speed:
+							if not self.hittest(dy = -1, objects = objects, move = False):
+								self.dir = 'n'
+								self.hittest(dy = -self.speed, objects = objects)
+								break
+							elif not self.hittest(dx = 1, objects = objects, move = False):
+								self.dir = 'e'
+								self.hittest(dx = self.speed, objects = objects)
+								break
+							elif not self.hittest(dx = -1, objects = objects, move = False):
+								self.dir = 'w'
+								self.hittest(dx = -self.speed, objects = objects)
+								break
+							elif index == 3:
+								self.moving = False
+						else:
+							if self.x < x - self.speed:
+								self.dir = 'e'
+								self.hittest(dx = self.speed, objects = objects)
+								break
+							else:
+								self.dir = 'w'
+								self.hittest(dx = -self.speed, objects = objects)
+								break
+					else:
+						if dirs[(index - 1)] == 'e' and not self.hittest(dx = 1, objects = objects, move = False):
+							self.dir = 'e'
+							self.hittest(dx = self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 'w' and not self.hittest(dx = -1, objects = objects, move = False):
+							self.dir = 'w'
+							self.hittest(dx = -self.speed, objects = objects)
+							break
+						elif dirs[(index - 1)] == 's' and not self.hittest(dy = 1, objects = objects, move = False):
+							self.dir = 's'
+							self.hittest(dy = self.speed, objects = objects)
+							break
+						else:
+							self.dir = 'n'
+							self.hittest(dy = -self.speed, objects = objects)
+							break
 				
 			return False
 			
