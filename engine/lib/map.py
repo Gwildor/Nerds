@@ -3,6 +3,8 @@ from pygame.locals import *
 
 class map:
 	file = ''
+	loaded = []
+	npc_files = []
 	tiles = []
 	general = {}
 	images = {}
@@ -19,10 +21,18 @@ class map:
 		#print(name)
 		self.tiles = []
 		self.general = {}
-		self.file = prefix+os.path.join('data', 'maps', '')+name+'.map'
+		self.npc_files = []
+		self.file = name
+		
 		tile_mode = False
-		f = open(self.file, 'r') # open map
+		f = open(prefix+os.path.join('data', 'maps', '')+name+'.map', 'r') # open map
 		k = 0
+		
+		if self.file in self.loaded:
+			loaded = True
+		else:
+			loaded = False
+			self.loaded.append(self.file)
 		
 		for line in f.readlines(): # loop through file
 			if '#' in line: # comment found
@@ -43,6 +53,14 @@ class map:
 							self.general['start_pos_x'] = int(cords[0])
 							self.general['start_pos_y'] = int(cords[1])
 							del self.general['start_cords']
+							
+						if 'npc' in self.general:
+							if not loaded:
+								npcs = self.general['npc'].split(',')
+								for npc in npcs:
+									npc = npc.strip()
+									self.npc_files.append(os.path.join('npc', '')+npc)
+							del self.general['npc']
 							
 						tile_mode = True
 					else:

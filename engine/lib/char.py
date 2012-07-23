@@ -313,7 +313,9 @@ class char:
 							if 'door' in tile:
 								if map.tile_within_square(tile, {'x': pos_x, 'y': pos_y}, {'x': (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width()), 'y': (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height())}, 1):
 									parts = tile['door'].split(' ')
-									map.load_map(parts[0])
+									if hero == self:
+										map.load_map(parts[0])
+									self.map = parts[0]
 									if len(parts) == 2:
 										if parts[1] != '.':
 											cords = parts[1].split(',')
@@ -340,7 +342,7 @@ class char:
 				if npcs:
 					
 					for npc in npcs:
-						if npc != self:
+						if npc != self and npc.map == self.map:
 							if (npc.y + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_height() - 1) >= pos_y and npc.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (npc.x + npc.images[npc.frames[npc.file][npc.dir][npc.state][npc.frame]].get_width() - 1) >= pos_x and npc.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
 								return True
 							

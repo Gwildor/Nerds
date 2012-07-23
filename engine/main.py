@@ -21,10 +21,11 @@ objects = {'npcs': [], 'map': map(), 'hero': hero}
 if debug:
 	objects['map'].debug = True
 
-objects['npcs'].append(char(os.path.join('npc', 'test_npc')))
+#objects['npcs'].append(char(os.path.join('npc', 'test_npc')))
 
-for npc in objects['npcs']:
-	npc.map = objects['map'].file
+#for npc in objects['npcs']:
+#	npc.map = objects['map'].file
+hero.map = objects['map'].file
 
 up = False
 down = False
@@ -55,6 +56,12 @@ while True:
 		hero.hittest(dx = dx, dy = dy, objects = objects)
 
 	objects['map'].draw_map(screen, hero.x, hero.y)
+	if len(objects['map'].npc_files) > 0:
+		for file in objects['map'].npc_files:
+			objects['npcs'].append(char(file))
+			objects['npcs'][-1].map = objects['map'].file
+		objects['map'].npc_files = []
+	
 	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
 	
 	for npc in objects['npcs']:
