@@ -23,6 +23,9 @@ if debug:
 
 objects['npcs'].append(char(os.path.join('npc', 'test_npc')))
 
+for npc in objects['npcs']:
+	npc.map = objects['map'].file
+
 up = False
 down = False
 left = False
@@ -55,8 +58,9 @@ while True:
 	hero.draw_char(screen, x = (gameW / 2), y = (gameH / 2))
 	
 	for npc in objects['npcs']:
-		npc.move(objects = objects)
-		npc.draw_char(screen, x = ((npc.x - hero.x) + (gameW / 2)), y = ((npc.y - hero.y) + (gameH / 2)))
+		if npc.map == objects['map'].file:
+			npc.move(objects = objects)
+			npc.draw_char(screen, x = ((npc.x - hero.x) + (gameW / 2)), y = ((npc.y - hero.y) + (gameH / 2)))
 	
 	if debug:
 		screen.blit(font.render('Hero.x: '+str(hero.x)+', Hero.y: '+str(hero.y), True, (255, 255, 255)), (15, 15))

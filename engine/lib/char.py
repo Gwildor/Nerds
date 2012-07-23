@@ -21,6 +21,7 @@ class char:
 	ai = []
 	file = ''
 	state = 's'
+	map = ''
 	
 	def __init__(self, file = os.path.join('hero', 'main', 'main'), prefix = os.path.join('..', '')):
 		if file:

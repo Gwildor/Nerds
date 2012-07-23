@@ -2,6 +2,7 @@ import pygame, sys, os
 from pygame.locals import *
 
 class map:
+	file = ''
 	tiles = []
 	general = {}
 	images = {}
@@ -18,8 +19,9 @@ class map:
 		#print(name)
 		self.tiles = []
 		self.general = {}
+		self.file = prefix+os.path.join('data', 'maps', '')+name+'.map'
 		tile_mode = False
-		f = open(prefix+os.path.join('data', 'maps', '')+name+'.map', 'r') # open map
+		f = open(self.file, 'r') # open map
 		k = 0
 		
 		for line in f.readlines(): # loop through file
