@@ -36,24 +36,36 @@ gameH = 480
 font = pygame.font.Font(None, 20)
 dx = 0
 dy = 0
+keys = []
 
 while True:
 
 	screen.fill((0, 0, 0))
 
-	if hero.moving:
-		dx = 0
-		dy = 0
-		if hero.dir == 'n':
+	hero.moving = False
+	dx = 0
+	dy = 0
+	for key in keys:
+		if key == 273 or key == 274 or key == 275 or key == 276:
+			hero.moving = True
+		if key == 273: # up
+			hero.dir = 'n'
 			dy = -4
-		if hero.dir == 's':
+			dx = 0
+		if key == 274: # down
+			hero.dir = 's'
 			dy = 4
-		if hero.dir == 'e':
+			dx = 0
+		if key == 275: # right
+			hero.dir = 'e'
 			dx = 4
-		if hero.dir == 'w':
+			dy = 0
+		if key == 276: # left
+			hero.dir = 'w'
 			dx = -4
-	
-		hero.hittest(dx = dx, dy = dy, objects = objects)
+			dy = 0
+			
+	hero.hittest(dx = dx, dy = dy, objects = objects)
 
 	objects['map'].draw_map(screen, hero.x, hero.y)
 	if len(objects['map'].npc_files) > 0:
@@ -80,17 +92,10 @@ while True:
 			sys.exit(0)
 		elif event.type == KEYDOWN:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
-				hero.moving = True
-			if event.key == 273: # up
-				hero.dir = 'n'
-			if event.key == 274: # down
-				hero.dir = 's'
-			if event.key == 275: # right
-				hero.dir = 'e'
-			if event.key == 276: # left
-				hero.dir = 'w'
+				keys.append(event.key)
+			
 		elif event.type == KEYUP:
-			if (event.key == 273 and hero.dir == 'n') or (event.key == 274 and hero.dir == 's') or (event.key == 275 and hero.dir == 'e') or (event.key == 276 and hero.dir == 'w'):
-				hero.moving = False
+			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
+				keys.remove(event.key)
 	
 	time.sleep((1.0 / 50))

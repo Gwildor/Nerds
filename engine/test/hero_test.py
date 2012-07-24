@@ -18,6 +18,7 @@ right = False
 no_key_yet = True
 gameW = 640
 gameH = 480
+keys = []
 
 while True:
 	
@@ -29,15 +30,28 @@ while True:
 
 		screen.fill((0, 0, 0))
 
-		if hero.moving:
-			if hero.dir == 'n':
-				hero.y -= 2
-			if hero.dir == 's':
-				hero.y += 2
-			if hero.dir == 'e':
-				hero.x += 2
-			if hero.dir == 'w':
-				hero.x -= 2
+		hero.moving = False
+		dx = hero.x
+		dy = hero.y
+		for key in keys:
+			if key == 273 or key == 274 or key == 275 or key == 276:
+				hero.moving = True
+			if key == 273: # up
+				hero.dir = 'n'
+				hero.y = dy - 2
+				hero.x = dx
+			if key == 274: # down
+				hero.dir = 's'
+				hero.y = dy + 2
+				hero.x = dx
+			if key == 275: # right
+				hero.dir = 'e'
+				hero.x = dx + 2
+				hero.y = dy
+			if key == 276: # left
+				hero.dir = 'w'
+				hero.x = dx - 2
+				hero.y = dy
 				
 		hero.draw_char(screen, gameW = gameW, gameH = gameH)
 		
@@ -50,17 +64,10 @@ while True:
 		elif event.type == KEYDOWN:
 			no_key_yet = False
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
-				hero.moving = True
-			if event.key == 273: # up
-				hero.dir = 'n'
-			if event.key == 274: # down
-				hero.dir = 's'
-			if event.key == 275: # right
-				hero.dir = 'e'
-			if event.key == 276: # left
-				hero.dir = 'w'
+				keys.append(event.key)
+			
 		elif event.type == KEYUP:
-			if (event.key == 273 and hero.dir == 'n') or (event.key == 274 and hero.dir == 's') or (event.key == 275 and hero.dir == 'e') or (event.key == 276 and hero.dir == 'w'):
-				hero.moving = False
+			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
+				keys.remove(event.key)
 	
 	time.sleep((1.0 / 50))
