@@ -281,6 +281,13 @@ class char:
 			hero = objects['hero']
 		else:
 			hero = False
+			
+		if 'items' in args:
+			items = args['items']
+		elif 'items' in objects:
+			items = objects['items']
+		else:
+			items = False
 		
 		ori_x = self.x
 		ori_y = self.y
@@ -349,6 +356,12 @@ class char:
 				if hero and hero != self:
 					if (hero.y + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_height() - 1) >= pos_y and hero.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (hero.x + hero.images[hero.frames[hero.file][hero.dir][hero.state][hero.frame]].get_width() - 1) >= pos_x and hero.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
 						return True
+						
+				if items:
+					for item in items:
+						if not item.instant and item.map == self.map:
+							if (item.y + item.h - 1) >= pos_y and item.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (item.x + item.w - 1) >= pos_x and item.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
+								return True
 						
 				if move:
 					self.x = pos_x

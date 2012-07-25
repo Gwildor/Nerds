@@ -2,14 +2,25 @@ import pygame, sys, os, time
 sys.path.append(os.path.join('..', 'lib', ''))
 from pygame.locals import *
 from char import *
+from item import *
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
-pygame.display.set_caption('Hero testing')
+pygame.display.set_caption('Item testing')
 screen = pygame.display.get_surface()
 
 hero = char(os.path.join('hero', 'main', 'main'), os.path.join('..', '..', ''))
-#hero = char(os.path.join('npc', 'test_npc'), os.path.join('..', '..', ''))
+item = item(False)
+item.x = 25
+item.y = 20
+item.summary = 'Potion (+50hp)'
+item.msg = True
+item.src = 'potion.png'
+item.img = pygame.image.load(os.path.join('..', '..', 'data', 'items', '')+item.src)
+item.img.convert_alpha()
+item.h = item.img.get_height()
+item.w = item.img.get_width()
+
 
 up = False
 down = False
@@ -31,29 +42,32 @@ while True:
 		screen.fill((0, 0, 0))
 
 		hero.moving = False
-		dx = hero.x
-		dy = hero.y
+		dx = 0
+		dy = 0
 		for key in keys:
 			if key == 273 or key == 274 or key == 275 or key == 276:
 				hero.moving = True
 			if key == 273: # up
 				hero.dir = 'n'
-				hero.y = dy - 2
-				hero.x = dx
+				dy = -2
+				dx = 0
 			if key == 274: # down
 				hero.dir = 's'
-				hero.y = dy + 2
-				hero.x = dx
+				dy = 2
+				dx = 0
 			if key == 275: # right
 				hero.dir = 'e'
-				hero.x = dx + 2
-				hero.y = dy
+				dx = 2
+				dy = 0
 			if key == 276: # left
 				hero.dir = 'w'
-				hero.x = dx - 2
-				hero.y = dy
+				dx = -2
+				dy = 0
 				
+		hero.hittest(dx = dx, dy = dy, items = [item])
 		hero.draw_char(screen, gameW = gameW, gameH = gameH)
+		
+		screen.blit(item.img, (item.x + gameW / 2, item.y + gameH / 2))
 		
 		pygame.display.flip()
 		
