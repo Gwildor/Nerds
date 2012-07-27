@@ -10,17 +10,10 @@ pygame.display.set_caption('Item testing')
 screen = pygame.display.get_surface()
 
 hero = char(os.path.join('hero', 'main', 'main'), os.path.join('..', '..', ''))
-item = item(False)
+
+item = item('potion', os.path.join('..', '..', ''))
 item.x = 25
 item.y = 20
-item.summary = 'Potion (+50hp)'
-item.msg = True
-item.src = 'potion.png'
-item.img = pygame.image.load(os.path.join('..', '..', 'data', 'items', '')+item.src)
-item.img.convert_alpha()
-item.h = item.img.get_height()
-item.w = item.img.get_width()
-
 
 up = False
 down = False
@@ -67,7 +60,8 @@ while True:
 		hero.hittest(dx = dx, dy = dy, items = [item])
 		hero.draw_char(screen, gameW = gameW, gameH = gameH)
 		
-		screen.blit(item.img, (item.x + gameW / 2, item.y + gameH / 2))
+		if not item.owner:
+			screen.blit(item.img, (item.x + gameW / 2, item.y + gameH / 2))
 		
 		pygame.display.flip()
 		

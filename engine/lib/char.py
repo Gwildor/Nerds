@@ -19,6 +19,7 @@ class char:
 	framecount = {}
 	dialogue = {}
 	ai = []
+	bag = []
 	file = ''
 	state = 's'
 	map = ''
@@ -359,9 +360,13 @@ class char:
 						
 				if items:
 					for item in items:
-						if not item.instant and item.map == self.map:
+						if not item.owner and item.map == self.map:
 							if (item.y + item.h - 1) >= pos_y and item.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (item.x + item.w - 1) >= pos_x and item.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
-								return True
+								if item.instant:
+									item.owner = self
+									self.bag.append(item)
+								else:
+									return True
 						
 				if move:
 					self.x = pos_x
