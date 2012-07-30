@@ -2,7 +2,7 @@ import pygame, os, re
 from pygame.locals import *
 
 class char:
-	name = 'hi'
+	name = 'John Doe'
 	x = 0
 	y = 0
 	speed = 2
@@ -384,9 +384,10 @@ class char:
 		else:
 			objects = {}
 		
-		if self.move_to(x = self.ai[0]['x'], y = self.ai[0]['y'], objects = objects):
-			self.ai.append(self.ai[0])
-			self.ai.pop(0)
+		if not self.talking:
+			if self.move_to(x = self.ai[0]['x'], y = self.ai[0]['y'], objects = objects):
+				self.ai.append(self.ai[0])
+				self.ai.pop(0)
 			
 	
 	def move_to(self, **args):

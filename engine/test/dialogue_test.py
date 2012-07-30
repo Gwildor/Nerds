@@ -96,7 +96,7 @@ while True:
 
 			if dialogue['phrase'] == []:
 				dialogues.remove(dialogue)
-			elif pow( pow((hero.x-npcs[0].x), 2) + pow((hero.y-npcs[0].y), 2), 0.5) > 30 or dialogue_action == 'remove':
+			elif pow( pow((hero.x - dialogue['speaker'].x), 2) + pow((hero.y - dialogue['speaker'].y), 2), 0.5) > 30 or dialogue_action == 'remove':
 				dialogue['speaker'].toggle_dialogue(speaker = hero)
 				dialogues.remove(dialogue)
 				dialogue_action = ''
