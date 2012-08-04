@@ -635,45 +635,44 @@ class char:
 	def interact(self, **args):
 		# Interaction id's:
 		# 1: dialogue
+		# 2: item
 		
-		
-		talk = False
-		
+
+		if 'objects' in args:
+			objects = args['objects']
+		else:
+			objects = {}
+			
 		if 'npcs' in args:
 			npcs = args['npcs']
+		elif 'npcs' in objects:
+			npcs = objects['npcs']
 		else:
 			npcs = False
+			
+		if 'items' in args:
+			items = args['items']
+		elif 'items' in objects:
+			items = objects['items']
+		else:
+			items = False
 
 		if npcs:
 			for npc in npcs:
-				if self.dir == 'n':
-					if self.hittest(dy = -1, npcs = [npc], move = False):
-						npc.dir = 's'
-						talk = True
-						break
-				elif self.dir == 's':
-					if self.hittest(dy = 1, npcs = [npc], move = False):
-						npc.dir = 'n'
-						talk = True
-						break
-				elif self.dir == 'w':
-					if self.hittest(dx = -1, npcs = [npc], move = False):
-						npc.dir = 'e'
-						talk = True
-						break
-				elif self.dir == 'e':
-					if self.hittest(dx = 1, npcs = [npc], move = False):
-						npc.dir = 'w'
-						talk = True
-						break
+				if (self.dir == 'n' and self.hittest(dy = -1, npcs = [npc], move = False)) or (self.dir == 's' and self.hittest(dy = 1, npcs = [npc], move = False)) or (self.dir == 'w' and self.hittest(dx = -1, npcs = [npc], move = False)) or (self.dir == 'e' and self.hittest(dx = 1, npcs = [npc], move = False)):
+					return npc.toggle_dialogue(speaker = self)
 					
-		if talk:
-			talk = False
-			return npc.toggle_dialogue(speaker = self)
-		#elif:
-		#elif:
-		else: # no interactions what so ever
-			return [False]
+						
+		if items:
+			for item in items:
+				if (self.dir == 'n' and self.hittest(dy = -1, items = [item], move = False)) or (self.dir == 's' and self.hittest(dy = 1, items = [item], move = False)) or (self.dir == 'w' and self.hittest(dx = -1, items = [item], move = False)) or (self.dir == 'e' and self.hittest(dx = 1, items = [item], move = False)):
+					item.owner = self
+					self.bag.append(item)
+					return [True, 2, item]
+		
+		
+		# no interaction what so ever		
+		return [False]
 			
 	def toggle_dialogue(self, **args):
 
@@ -684,6 +683,17 @@ class char:
 			args['speaker'].talking = False
 		
 		if not self.talking:
+			
+			# face each other
+			if args['speaker'].dir == 'n':
+				self.dir = 's'
+			elif args['speaker'].dir == 's':
+				self.dir = 'n'
+			elif args['speaker'].dir == 'e':
+				self.dir = 'w'
+			elif args['speaker'].dir == 'w':
+				self.dir = 'e'
+				
 			self.moving = False
 			self.talking = True
 			return [True, 1, self, [0, 0]]

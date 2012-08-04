@@ -23,6 +23,7 @@ no_key_yet = True
 gameW = 640
 gameH = 480
 keys = []
+notifications = []
 
 while True:
 	
@@ -73,6 +74,11 @@ while True:
 			no_key_yet = False
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
 				keys.append(event.key)
+			if event.key == K_RETURN or event.key == K_SPACE or event.key == K_KP_ENTER:
+				interaction = hero.interact(items = [item])
+				if interaction[0]:
+					if interaction[1] == 2 and interaction[2].msg:
+						notifications.append({'type': 'pick_up_item', 'objects': [interaction[2]]})
 			
 		elif event.type == KEYUP:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
