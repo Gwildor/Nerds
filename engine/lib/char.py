@@ -363,8 +363,7 @@ class char:
 						if not item.owner and item.map == self.map:
 							if (item.y + item.h - 1) >= pos_y and item.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (item.x + item.w - 1) >= pos_x and item.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
 								if item.pickup_on_touch:
-									item.owner = self
-									self.bag.append(item)
+									self.pickup_item(item)
 								else:
 									return True
 						
@@ -666,8 +665,7 @@ class char:
 		if items:
 			for item in items:
 				if (self.dir == 'n' and self.hittest(dy = -1, items = [item], move = False)) or (self.dir == 's' and self.hittest(dy = 1, items = [item], move = False)) or (self.dir == 'w' and self.hittest(dx = -1, items = [item], move = False)) or (self.dir == 'e' and self.hittest(dx = 1, items = [item], move = False)):
-					item.owner = self
-					self.bag.append(item)
+					self.pickup_item(item)
 					return [True, 2, item]
 		
 		
@@ -700,3 +698,9 @@ class char:
 		else:
 			self.talking = False
 			return [True, 1, self, []]
+
+	def pickup_item(self, item):
+		item.owner = self
+		self.bag.append(item)
+		if item.instant:
+			pass

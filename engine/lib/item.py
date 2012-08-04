@@ -15,7 +15,7 @@ class item:
 	burden = 0
 	src = False
 	img = False
-	msg = False
+	msg = True
 	summary = ''
 	instant = False
 	pickup_on_touch = False
