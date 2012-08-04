@@ -22,13 +22,15 @@ right = False
 no_key_yet = True
 gameW = 640
 gameH = 480
+font = pygame.font.Font(None, 20)
 keys = []
 notifications = []
+
+#notifications.append({'type': 'text', 'text': 'Test!'}) # test notification
 
 while True:
 	
 	if no_key_yet:
-		font = pygame.font.Font(None, 20)
 		screen.blit(font.render('Press any key to continue', True, (255, 255, 255)), (50, 50))
 		
 	else:
@@ -63,6 +65,19 @@ while True:
 		
 		if not item.owner:
 			screen.blit(item.img, (item.x + gameW / 2, item.y + gameH / 2))
+			
+		for index, msg in enumerate(notifications):
+			
+			if msg['type'] == 'text':
+				screen.blit(font.render(msg['text'], True, (255, 255, 255)), (5, 5 + index * 15))
+			
+			if msg['type'] == 'pick_up_item':
+				
+				# hero has walked away
+				if pow( pow((hero.x - msg['objects'][0].x), 2) + pow((hero.y - msg['objects'][0].y), 2), 0.5) > 60:
+					notifications.remove(msg)
+				else:
+					screen.blit(font.render('You picked up a '+msg['objects'][0].summary+'! Value: '+str(msg['objects'][0].value), True, (255, 255, 255)), (5, 5 + index * 15))
 		
 		pygame.display.flip()
 		
