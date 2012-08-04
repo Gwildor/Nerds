@@ -362,7 +362,7 @@ class char:
 					for item in items:
 						if not item.owner and item.map == self.map:
 							if (item.y + item.h - 1) >= pos_y and item.y <= (pos_y + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_height() - 1) and (item.x + item.w - 1) >= pos_x and item.x <= (pos_x + self.images[self.frames[self.file][self.dir][self.state][self.frame]].get_width() - 1):
-								if item.instant:
+								if item.pickup_on_touch:
 									item.owner = self
 									self.bag.append(item)
 								else:

@@ -18,6 +18,7 @@ class item:
 	msg = False
 	summary = ''
 	instant = False
+	pickup_on_touch = False
 
 	def __init__(self, file, prefix = os.path.join('..', '')):
 		if file:
@@ -47,7 +48,7 @@ class item:
 					vals[1] = int(vals[1])
 				elif vals[0] in ['burden']:
 					vals[1] = float(vals[1])
-				elif vals[0] in ['instant', 'msg']:
+				elif vals[0] in ['instant', 'msg', 'pickup_on_touch']:
 					if vals[1] == 'true':
 						vals[1] = True
 					else:
@@ -62,6 +63,8 @@ class item:
 					self.burden = vals[1]
 				if vals[0] == 'instant':
 					self.instant = vals[1]
+				if vals[0] == 'pickup_on_touch':
+					self.pickup_on_touch = vals[1]
 				if vals[0] == 'msg':
 					self.msg = vals[1]
 				if vals[0] == 'summary':
