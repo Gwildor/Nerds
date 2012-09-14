@@ -67,18 +67,30 @@ while True:
 			screen.blit(item.img, (item.x + gameW / 2, item.y + gameH / 2))
 			
 		for index, msg in enumerate(notifications):
+			if 'time_elapsed' in msg:
+				if ('remove_after' in msg and msg['time_elapsed'] > msg['remove_after']) or ('remove_after' not in msg and msg['time_elapsed'] > 5.0):
+					notifications.remove(msg)
+					continue
+				else:
+					msg['time_elapsed'] += 1.0 / 50
+			else:
+				msg['time_elapsed'] = 1.0 / 50
+
+
 			
 			if msg['type'] == 'text':
 				screen.blit(font.render(msg['text'], True, (255, 255, 255)), (5, 5 + index * 15))
 			
 			if msg['type'] == 'pick_up_item':
-				
+				screen.blit(font.render('You picked up a '+msg['objects'][0].summary+'! Value: '+str(msg['objects'][0].value), True, (255, 255, 255)), (5, 5 + index * 15))
+
 				# hero has walked away
 				if pow( pow((hero.x - msg['objects'][0].x), 2) + pow((hero.y - msg['objects'][0].y), 2), 0.5) > 60:
 					notifications.remove(msg)
-				else:
-					screen.blit(font.render('You picked up a '+msg['objects'][0].summary+'! Value: '+str(msg['objects'][0].value), True, (255, 255, 255)), (5, 5 + index * 15))
-		
+					continue
+
+			#print msg['time_elapsed']
+
 		pygame.display.flip()
 		
 	for event in pygame.event.get():
@@ -93,7 +105,7 @@ while True:
 				interaction = hero.interact(items = [item])
 				if interaction[0]:
 					if interaction[1] == 2 and interaction[2].msg:
-						notifications.append({'type': 'pick_up_item', 'objects': [interaction[2]]})
+						notifications.append({'type': 'pick_up_item', 'remove_after': 10.0, 'objects': [interaction[2]]})
 			
 		elif event.type == KEYUP:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
