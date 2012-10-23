@@ -19,7 +19,7 @@ up = False
 down = False
 left = False
 right = False
-inventory = {'enabled': False, 'category': 1, 'cursor': 1}
+inventory = {'enabled': False, 'category': 0, 'cursor': 0}
 no_key_yet = True
 gameW = 640
 gameH = 480
@@ -101,7 +101,7 @@ while True:
 
 		if inventory['enabled']:
 			# Testing code. Automatically adds items
-			if not old_items_time or old_items_time != int(time.time()):
+			if hero.bag != [] and (not old_items_time or old_items_time != int(time.time())):
 				hero.bag.append(hero.bag[0])
 				old_items_time = int(time.time())
 			pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 + 10), (gameW - 20), (gameH / 3 - 20)), 2)
@@ -109,6 +109,8 @@ while True:
 			screen.blit(font.render('Inventory', True, (255, 255, 255)), (15, (gameH / 3 * 2 - 15)))
 			for index, item in enumerate(hero.bag):
 				screen.blit(item.img, ((index % 10) * 16 + 16, ((index / 10) * 16) + (gameH / 3 * 2 + 10) + 4))
+
+			pygame.draw.rect(screen, (255, 255, 255), ((inventory['cursor'] % 10) * 16 + 13, ((inventory['cursor'] / 10) * 16) + (gameH / 3 * 2 + 11), 16, 16), 2)
 
 		pygame.display.flip()
 		
@@ -130,6 +132,17 @@ while True:
 				inventory['enabled'] = True
 			elif (event.key == K_i or event.key == K_ESCAPE) and inventory['enabled']:
 				inventory['enabled'] = False
+
+			if event.key == K_KP8 and inventory['enabled'] and inventory['cursor'] >= 10:
+				inventory['cursor'] -= 10
+			if event.key == K_KP2 and inventory['enabled'] and inventory['cursor'] < (len(hero.bag) - 10):
+				inventory['cursor'] += 10
+
+			if event.key == K_KP4 and inventory['enabled'] and inventory['cursor'] > 0:
+				inventory['cursor'] -= 1
+			if event.key == K_KP6 and inventory['enabled'] and inventory['cursor'] < (len(hero.bag) - 1):
+				inventory['cursor'] += 1
+			
 			
 		elif event.type == KEYUP:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
