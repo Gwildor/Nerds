@@ -34,6 +34,7 @@ while True:
 		screen.blit(font.render('Controls:', True, (255, 255, 255)), (50, 80)) 
 		screen.blit(font.render('- Arrow keys to move', True, (255, 255, 255)), (50, 110))
 		screen.blit(font.render('- Space or enter to interact', True, (255, 255, 255)), (50, 130))
+		screen.blit(font.render('- numpad 8 and 2 to select dialogue option', True, (255, 255, 255)), (50, 150))
 		
 	else:
 
