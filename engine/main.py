@@ -34,8 +34,13 @@ dy = 0
 keys = []
 dialogues = []
 dialogue_action = ''
+frames_this_second = 0
+fps = 0
+fps_last_update = int(time.time())
+last_cycle_time = 0.0
 
 while True:
+	cycle_start = time.time()
 
 	screen.fill((0, 0, 0))
 
@@ -159,6 +164,14 @@ while True:
 	#
 	
 	if debug:
+		if fps_last_update != int(time.time()):
+			fps_last_update = int(time.time())
+			fps = frames_this_second
+			frames_this_second = 0;
+
+		screen.blit(font.render('FPS: '+str(fps), True, (255, 255, 255)), ((gameW - 60), 15))
+		screen.blit(font.render('Last cyle time: '+str(round(last_cycle_time, 3)), True, (255, 255, 255)), ((gameW - 140), 30))
+
 		screen.blit(font.render('Hero.x: '+str(hero.x)+', Hero.y: '+str(hero.y), True, (255, 255, 255)), (15, 15))
 	
 	pygame.display.flip()
@@ -189,4 +202,7 @@ while True:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
 				keys.remove(event.key)
 	
+	frames_this_second += 1
+	cycle_end = time.time()
+	last_cycle_time = cycle_end - cycle_start
 	time.sleep((1.0 / 50))
