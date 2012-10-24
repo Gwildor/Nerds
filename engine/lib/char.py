@@ -5,7 +5,7 @@ class char:
 	name = 'John Doe'
 	x = 0
 	y = 0
-	speed = 2
+	speed = 1.75
 	dir = 's'
 	olddir = 's'
 	ticks = 0

@@ -38,6 +38,7 @@ frames_this_second = 0
 fps = 0
 fps_last_update = int(time.time())
 last_cycle_time = 0.0
+sleep_time = 1.0 / 50
 
 while True:
 	cycle_start = time.time()
@@ -52,19 +53,19 @@ while True:
 			hero.moving = True
 		if key == 273: # up
 			hero.dir = 'n'
-			dy = -4
+			dy = -2
 			dx = 0
 		if key == 274: # down
 			hero.dir = 's'
-			dy = 4
+			dy = 2
 			dx = 0
 		if key == 275: # right
 			hero.dir = 'e'
-			dx = 4
+			dx = 2
 			dy = 0
 		if key == 276: # left
 			hero.dir = 'w'
-			dx = -4
+			dx = -2
 			dy = 0
 			
 	hero.hittest(dx = dx, dy = dy, objects = objects)
@@ -205,4 +206,5 @@ while True:
 	frames_this_second += 1
 	cycle_end = time.time()
 	last_cycle_time = cycle_end - cycle_start
-	time.sleep((1.0 / 50))
+	if last_cycle_time < sleep_time:
+		time.sleep((sleep_time - last_cycle_time))
