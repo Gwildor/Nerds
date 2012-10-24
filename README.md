@@ -1,7 +1,7 @@
 _The docs of this project are still very incomplete, simply because it's more fun to code than to write a guide. Below is an incomplete main README, which also misses probably all the information you are looking for._
 
 #Nerds
-Nerds is a__n__ engin__e__ fo__r__ tile-base__d__ game__s__. It is intended to be easy in use, allowing all major configuration of your project to be done by simply editing text files. This process is easily accessible but is known to be extremely boring, so beware!
+Nerds is aN enginE foR tile-baseD gameS. It is intended to be easy in use, allowing all major configuration of your project to be done by simply editing text files. This process is easily accessible but is known to be extremely boring, so beware!
 
 ##Version
 The latest release is version __0.1__, released on __18 July 2012__.
