@@ -191,5 +191,5 @@ class map:
 				#print(tile)
 				if 'src' in tile:
 					screen.blit(self.images[tile['src']], ((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)))
-				if self.debug:
+				if self.debug and False:
 					pygame.draw.rect(screen, (255, 0, 0), (((tile['pos_x'] + (gameW / 2) - x), (tile['pos_y'] + (gameH / 2) - y)), (tile['width'], tile['height'])), 2)
