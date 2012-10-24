@@ -109,6 +109,11 @@ while True:
 			screen.blit(font.render('Inventory', True, (255, 255, 255)), (15, (gameH / 3 * 2 - 15)))
 			for index, item in enumerate(hero.bag):
 				screen.blit(item.img, ((index % 10) * 16 + 16, ((index / 10) * 16) + (gameH / 3 * 2 + 10) + 4))
+				if index == inventory['cursor']:
+					screen.blit(font.render('Summary: ' + item.summary, True, (255, 255, 255)), (320, gameH / 3 * 2 + 14))
+					screen.blit(font.render('Power: ' + str(item.power), True, (255, 255, 255)), (320, gameH / 3 * 2 + 34))
+					screen.blit(font.render('Value: ' + str(item.value), True, (255, 255, 255)), (320, gameH / 3 * 2 + 54))
+					screen.blit(font.render('Weight: ' + str(item.burden), True, (255, 255, 255)), (320, gameH / 3 * 2 + 74))
 
 			pygame.draw.rect(screen, (255, 255, 255), ((inventory['cursor'] % 10) * 16 + 13, ((inventory['cursor'] / 10) * 16) + (gameH / 3 * 2 + 11), 16, 16), 2)
 
