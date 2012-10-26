@@ -1,8 +1,14 @@
-import pygame, sys, os, time
-sys.path.append(os.path.join('..', 'lib', ''))
-from pygame.locals import *
-from char import *
-from map import *
+import os
+import pygame
+import sys
+import time
+
+# Python doesn't seem to allow clean imports
+# from sibling folders.
+sys.path.append('..')
+from lib.char import char
+from lib.map import map
+
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
@@ -38,19 +44,19 @@ while True:
 	screen.fill((0, 0, 0))
 	map.draw_map(screen, 0, 0)
 
-	if npc.move_to(x = targetX, y = targetY, objects = {'map': map}):
-		if targetX * targetY == 10000: # both -100 or both 100 -> nw or se corner
+	if npc.move_to(x=targetX, y=targetY, objects={'map': map}):
+		if targetX * targetY == 10000:  # both -100 or both 100 -> nw or se corner
 			targetX *= -1
-		else: # sw or ne corner
+		else:  # sw or ne corner
 			targetY *= -1
 
-	npc.draw_char(screen, gameW = gameW, gameH = gameH)
+	npc.draw_char(screen, gameW=gameW, gameH=gameH)
 
 	pygame.display.flip()
-		
+
 	for event in pygame.event.get():
 		#print(event)
-		if event.type == QUIT:
+		if event.type == pygame.QUIT:
 			sys.exit(0)
-	
+
 	time.sleep((1.0 / 50))

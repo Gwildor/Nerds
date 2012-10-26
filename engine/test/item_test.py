@@ -1,8 +1,14 @@
-import pygame, sys, os, time
-sys.path.append(os.path.join('..', 'lib', ''))
-from pygame.locals import *
-from char import *
-from item import *
+import os
+import pygame
+import sys
+import time
+
+# Python doesn't seem to allow clean imports
+# from sibling folders.
+sys.path.append('..')
+from lib.char import char
+from lib.item import item
+
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
@@ -28,13 +34,13 @@ keys = []
 notifications = []
 old_items_time = False
 
-#notifications.append({'type': 'text', 'text': 'Test!'}) # test notification
+#notifications.append({'type': 'text', 'text': 'Test!'})  # test notification
 
 while True:
 
 	if no_key_yet:
 		screen.blit(font.render('Press any key to continue', True, (255, 255, 255)), (50, 50))
-		screen.blit(font.render('Controls:', True, (255, 255, 255)), (50, 80)) 
+		screen.blit(font.render('Controls:', True, (255, 255, 255)), (50, 80))
 		screen.blit(font.render('- Arrow keys to move', True, (255, 255, 255)), (50, 110))
 		screen.blit(font.render('- Space or enter to interact', True, (255, 255, 255)), (50, 130))
 		screen.blit(font.render('- i to open inventory', True, (255, 255, 255)), (50, 150))
@@ -51,25 +57,25 @@ while True:
 		for key in keys:
 			if key == 273 or key == 274 or key == 275 or key == 276:
 				hero.moving = True
-			if key == 273: # up
+			if key == 273:  # up
 				hero.dir = 'n'
 				dy = -2
 				dx = 0
-			if key == 274: # down
+			if key == 274:  # down
 				hero.dir = 's'
 				dy = 2
 				dx = 0
-			if key == 275: # right
+			if key == 275:  # right
 				hero.dir = 'e'
 				dx = 2
 				dy = 0
-			if key == 276: # left
+			if key == 276:  # left
 				hero.dir = 'w'
 				dx = -2
 				dy = 0
 
-		hero.hittest(dx = dx, dy = dy, items = [item])
-		hero.draw_char(screen, gameW = gameW, gameH = gameH)
+		hero.hittest(dx=dx, dy=dy, items=[item])
+		hero.draw_char(screen, gameW=gameW, gameH=gameH)
 
 		if not item.owner:
 			screen.blit(item.img, (item.x + gameW / 2, item.y + gameH / 2))
@@ -84,16 +90,14 @@ while True:
 			else:
 				msg['time_elapsed'] = 1.0 / 50
 
-
-			
 			if msg['type'] == 'text':
 				screen.blit(font.render(msg['text'], True, (255, 255, 255)), (5, 5 + index * 15))
-			
+
 			if msg['type'] == 'pick_up_item':
-				screen.blit(font.render('You picked up a '+msg['objects'][0].summary+'! Value: '+str(msg['objects'][0].value), True, (255, 255, 255)), (5, 5 + index * 15))
+				screen.blit(font.render('You picked up a ' + msg['objects'][0].summary + '! Value: ' + str(msg['objects'][0].value), True, (255, 255, 255)), (5, 5 + index * 15))
 
 				# hero has walked away
-				if pow( pow((hero.x - msg['objects'][0].x), 2) + pow((hero.y - msg['objects'][0].y), 2), 0.5) > 60:
+				if pow(pow((hero.x - msg['objects'][0].x), 2) + pow((hero.y - msg['objects'][0].y), 2), 0.5) > 60:
 					notifications.remove(msg)
 					continue
 
@@ -118,39 +122,38 @@ while True:
 			pygame.draw.rect(screen, (255, 255, 255), ((inventory['cursor'] % 10) * 16 + 13, ((inventory['cursor'] / 10) * 16) + (gameH / 3 * 2 + 11), 16, 16), 2)
 
 		pygame.display.flip()
-		
+
 	for event in pygame.event.get():
 		#print(event)
-		if event.type == QUIT:
+		if event.type == pygame.QUIT:
 			sys.exit(0)
-		elif event.type == KEYDOWN:
+		elif event.type == pygame.KEYDOWN:
 			no_key_yet = False
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
 				keys.append(event.key)
-			if event.key == K_RETURN or event.key == K_SPACE or event.key == K_KP_ENTER:
-				interaction = hero.interact(items = [item])
+			if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE or event.key == pygame.K_KP_ENTER:
+				interaction = hero.interact(items=[item])
 				if interaction[0]:
 					if interaction[1] == 2 and interaction[2].msg:
 						notifications.append({'type': 'pick_up_item', 'remove_after': 10.0, 'objects': [interaction[2]]})
 
-			if event.key == K_i and not inventory['enabled']:
+			if event.key == pygame.K_i and not inventory['enabled']:
 				inventory['enabled'] = True
-			elif (event.key == K_i or event.key == K_ESCAPE) and inventory['enabled']:
+			elif (event.key == pygame.K_i or event.key == pygame.K_ESCAPE) and inventory['enabled']:
 				inventory['enabled'] = False
 
-			if event.key == K_KP8 and inventory['enabled'] and inventory['cursor'] >= 10:
+			if event.key == pygame.K_KP8 and inventory['enabled'] and inventory['cursor'] >= 10:
 				inventory['cursor'] -= 10
-			if event.key == K_KP2 and inventory['enabled'] and inventory['cursor'] < (len(hero.bag) - 10):
+			if event.key == pygame.K_KP2 and inventory['enabled'] and inventory['cursor'] < (len(hero.bag) - 10):
 				inventory['cursor'] += 10
 
-			if event.key == K_KP4 and inventory['enabled'] and inventory['cursor'] > 0:
+			if event.key == pygame.K_KP4 and inventory['enabled'] and inventory['cursor'] > 0:
 				inventory['cursor'] -= 1
-			if event.key == K_KP6 and inventory['enabled'] and inventory['cursor'] < (len(hero.bag) - 1):
+			if event.key == pygame.K_KP6 and inventory['enabled'] and inventory['cursor'] < (len(hero.bag) - 1):
 				inventory['cursor'] += 1
-			
-			
-		elif event.type == KEYUP:
+
+		elif event.type == pygame.KEYUP:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
 				keys.remove(event.key)
-	
+
 	time.sleep((1.0 / 50))

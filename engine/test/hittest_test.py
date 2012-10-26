@@ -1,8 +1,14 @@
-import pygame, sys, os, time
-sys.path.append(os.path.join('..', 'lib', ''))
-from pygame.locals import *
-from char import *
-from map import *
+import os
+import pygame
+import sys
+import time
+
+# Python doesn't seem to allow clean imports
+# from sibling folders.
+sys.path.append('..')
+from lib.char import char
+from lib.map import map
+
 
 pygame.init()
 window = pygame.display.set_mode((640, 480))
@@ -44,7 +50,7 @@ while True:
 
 	screen.fill((0, 0, 0))
 	map.draw_map(screen, 0, 0)
-	
+
 	if hero.moving:
 		dx = 0
 		dy = 0
@@ -56,30 +62,30 @@ while True:
 			dx = 4
 		if hero.dir == 'w':
 			dx = -4
-	
-		hero.hittest(dx = dx, dy = dy, map = map)
+
+		hero.hittest(dx=dx, dy=dy, map=map)
 
 	screen.blit(hero.images[hero.frames[hero.file][hero.dir]['s'][0]], ((hero.x + (gameW / 2)), (hero.y + (gameH / 2))))
-	
+
 	pygame.display.flip()
-		
+
 	for event in pygame.event.get():
 		#print(event)
-		if event.type == QUIT:
+		if event.type == pygame.QUIT:
 			sys.exit(0)
-		elif event.type == KEYDOWN:
+		elif event.type == pygame.KEYDOWN:
 			if event.key == 273 or event.key == 274 or event.key == 275 or event.key == 276:
 				hero.moving = True
-			if event.key == 273: # up
+			if event.key == 273:  # up
 				hero.dir = 'n'
-			if event.key == 274: # down
+			if event.key == 274:  # down
 				hero.dir = 's'
-			if event.key == 275: # right
+			if event.key == 275:  # right
 				hero.dir = 'e'
-			if event.key == 276: # left
+			if event.key == 276:  # left
 				hero.dir = 'w'
-		elif event.type == KEYUP:
+		elif event.type == pygame.KEYUP:
 			if (event.key == 273 and hero.dir == 'n') or (event.key == 274 and hero.dir == 's') or (event.key == 275 and hero.dir == 'e') or (event.key == 276 and hero.dir == 'w'):
 				hero.moving = False
-	
+
 	time.sleep((1.0 / 50))
