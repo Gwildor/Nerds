@@ -1,8 +1,8 @@
-power: 50
+power: 50 health
 value: 100
 burden: 0.1
 src: potion.png
 summary: Potion (+50hp)
 msg: true
 pickup_on_touch: false
-instant: false
+instant: true

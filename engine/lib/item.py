@@ -14,6 +14,7 @@ class item:
 	owner = False
 	value = 0
 	power = 0
+	power_type = ''
 	burden = 0
 	src = False
 	img = False
@@ -21,6 +22,7 @@ class item:
 	summary = ''
 	instant = False
 	pickup_on_touch = False
+	duration = 0
 
 	def __init__(self, file, prefix=os.path.join('..', '')):
 		if file:
@@ -45,7 +47,7 @@ class item:
 					vals[0] = vals[0].strip()
 					vals[1] = vals[1].strip()
 
-					if vals[0] in ['power', 'value']:
+					if vals[0] in ['value', 'duration']:
 						vals[1] = int(vals[1])
 					elif vals[0] in ['burden']:
 						vals[1] = float(vals[1])
@@ -56,7 +58,14 @@ class item:
 							vals[1] = False
 
 					if vals[0] == 'power':
-						self.power = vals[1]
+						p_vals = vals[1].split(' ', 1)
+						if '.' in p_vals[0]:
+							p_vals[0] = float(p_vals[0])
+						else:
+							p_vals[0] = int(p_vals[0])
+
+						self.power = p_vals[0]
+						self.power_type = p_vals[1]
 					if vals[0] == 'value':
 						self.value = vals[1]
 					if vals[0] == 'burden':
@@ -69,6 +78,8 @@ class item:
 						self.msg = vals[1]
 					if vals[0] == 'summary':
 						self.summary = vals[1]
+					if vals[0] == 'duration':
+						self.duration = vals[1]
 
 					if vals[0] == 'src':
 						self.src = vals[1]
@@ -76,3 +87,10 @@ class item:
 						self.img.convert_alpha()
 						self.h = self.img.get_height()
 						self.w = self.img.get_width()
+
+	def use(self, **args):
+
+		target = args.get('target', self.owner)
+
+		if self.power_type == 'health':
+			target.health += self.power

@@ -9,6 +9,7 @@ class char:
 	x = 0
 	y = 0
 	speed = 1.75
+	health = 0
 	dir = 's'
 	olddir = 's'
 	ticks = 0
@@ -695,4 +696,4 @@ class char:
 		item.owner = self
 		self.bag.append(item)
 		if item.instant:
-			pass
+			item.use()
