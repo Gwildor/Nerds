@@ -1,5 +1,6 @@
 import io
 import os
+import pprint
 import pygame
 import re
 
@@ -22,6 +23,7 @@ class char:
 	frames = {}
 	framecount = {}
 	dialogue = {}
+	dialogue_stages = {}
 	ai = []
 	bag = []
 	file = ''
@@ -130,11 +132,11 @@ class char:
 						self.framecount[file][curdir] = {'s': 0, 'm': 0}
 
 					elif line[:1] == '+' and dia:
-						if tab_count == len(self.dialogue[curdianame]):
-							self.dialogue[curdianame].append([])
+						if tab_count == len(self.dialogue[curdianame][curdiastage]):
+							self.dialogue[curdianame][curdiastage].append([])
 							curoption.append(0)
 
-						self.dialogue[curdianame][tab_count].append([])
+						self.dialogue[curdianame][curdiastage][tab_count].append([])
 
 						if tab_count == 0:
 							select = 0
@@ -143,15 +145,18 @@ class char:
 							if select == -1:
 								select = 0
 
-						self.dialogue[curdianame][tab_count][select].append(line[1:])
-						self.dialogue[curdianame][tab_count][select].append([])
-						self.dialogue[curdianame][tab_count][select].append(curoption[tab_count])
+						self.dialogue[curdianame][curdiastage][tab_count][select].append(line[1:])
+						self.dialogue[curdianame][curdiastage][tab_count][select].append([])
+						self.dialogue[curdianame][curdiastage][tab_count][select].append(curoption[tab_count])
+						self.dialogue[curdianame][curdiastage][tab_count][select].append(curdiasetstage)
+
+						curdiasetstage = False
 
 					elif line[:1] == '-' and dia:
 						#print('---')
 						#print(tab_count)
 						#print(curoption)
-						#print(self.dialogue[curdianame][tab_count])
+						#print(self.dialogue[curdianame][curdiastage][tab_count])
 						#print('---')
 
 						if tab_count == 0:
@@ -159,9 +164,12 @@ class char:
 						else:
 							select = (curoption[(tab_count - 1)] - 1)
 
-						self.dialogue[curdianame][tab_count][select][1].append(line[1:])
+						self.dialogue[curdianame][curdiastage][tab_count][select][1].append(line[1:])
 
 						curoption[tab_count] += 1
+
+					elif line[:1] == '!' and dia:
+						curdiasetstage = int(line[1:])
 
 					elif line == 'ai:':
 						ai = True
@@ -172,7 +180,21 @@ class char:
 						if dia:
 							vals = line.split(':', 1)
 							curdianame = vals[0]
-							self.dialogue[curdianame] = []
+							curdiasetstage = False
+							if vals[1] == '':
+								curdiastage = 1
+							else:
+								curdiastage = int(vals[1])
+
+							if curdianame not in self.dialogue:
+								self.dialogue[curdianame] = {}
+
+							if curdiastage not in self.dialogue[curdianame]:
+								self.dialogue[curdianame][curdiastage] = []
+
+							if curdianame not in self.dialogue_stages:
+								self.dialogue_stages[curdianame] = curdiastage
+
 							curoption = []
 
 						elif ai:
@@ -201,6 +223,8 @@ class char:
 								self.general[vals[0]] = vals[1]
 							else:
 								temp[vals[0]] = vals[1]
+
+		# pprint.PrettyPrinter(indent=4).pprint(self.dialogue)
 
 	def draw_char(self, screen, **args):
 		if 'x' in args:

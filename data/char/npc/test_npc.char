@@ -58,6 +58,7 @@ ai:
 			-Sure.
 				+Go hide. I will look for you I guess.
 				-You just want me to be gone.
+					!2
 					+You got me, sorry.
 			-Not really.
 				+Oh ok.
@@ -68,6 +69,7 @@ ai:
 				-Sure.
 					+Go hide. I will look for you I guess.
 					-You just want me to be gone.
+						!2
 						+You got me, sorry.
 				-Not really.
 					+Oh ok.
@@ -85,4 +87,16 @@ ai:
 		+Awh.
 	-No.
 		+Good!
+:2
++Now I'm bored as well. Do you still want to play hide and seek?
+-Sure.
+	!3
+	+Cool! I'll run and hide, and then you can try to find me!
+-No.
+	!4
+	+Screw you man!
+:3
++You need to let me run away first so I can hide!
+:4
++I don't want to play anymore.
 ~

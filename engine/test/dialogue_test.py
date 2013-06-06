@@ -70,11 +70,13 @@ while True:
 
 		for dialogue in dialogues:
 
+			dialogue_tree = dialogue['speaker'].dialogue[''][dialogue['stage']]
+
 			if 'min_option' not in dialogue or dialogue['min_option'] == -1:
-				dialogue['min_option'] = dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]
+				dialogue['min_option'] = dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][2]
 
 			if 'option_count' not in dialogue or dialogue['option_count'] == -1:
-				dialogue['option_count'] = len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1])
+				dialogue['option_count'] = len(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1])
 
 			if dialogue['phrase'] != [] and dialogue_action != '':
 
@@ -85,9 +87,9 @@ while True:
 					try:
 						dialogue['phrase'][0] += 1
 						dialogue['phrase'][1] = dialogue['selected']
-						dialogue['selected'] = dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][2]
+						dialogue['selected'] = dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][2]
 						dialogue['min_option'] = dialogue['selected']
-						dialogue['option_count'] = len(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1])
+						dialogue['option_count'] = len(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1])
 					except IndexError:
 						dialogue_action = 'remove'
 
@@ -107,16 +109,20 @@ while True:
 				dialogue_action = ''
 			else:
 
+				if dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][3]:
+					# Next dialogue will be another one, update stage
+					dialogue['speaker'].dialogue_stages[''] = dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][3]
+
 				pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 + 10), (gameW - 20), (gameH / 3 - 20)), 2)
 				pygame.draw.rect(screen, (255, 255, 255), (10, (gameH / 3 * 2 - 20), 80, 31), 2)
-				screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][0], True, (255, 255, 255)), (15, (gameH / 3 * 2 + 15)))
+				screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][0], True, (255, 255, 255)), (15, (gameH / 3 * 2 + 15)))
 				screen.blit(font.render(dialogue['speaker'].name, True, (255, 255, 255)), (15, (gameH / 3 * 2 - 15)))
 
 				if (dialogue['option_count'] > 0):
 
 					if dialogue['option_count'] <= 3 or (dialogue['selected'] - dialogue['min_option']) <= 1:
 						pygame.draw.rect(screen, (255, 255, 0), (10, (405 + ((dialogue['selected'] - dialogue['min_option']) * 20)), (gameW - 20), 25), 2)
-						for index, answer in enumerate(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1]):
+						for index, answer in enumerate(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1]):
 							screen.blit(font.render(answer, True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10 + (index * 20))))
 							if index == 2:
 								break
@@ -124,14 +130,14 @@ while True:
 
 						if (dialogue['selected'] + 1) == dialogue['option_count']:
 							pygame.draw.rect(screen, (255, 255, 0), (10, 445, (gameW - 20), 25), 2)
-							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 2)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10)))
-							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 30)))
-							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][dialogue['selected']], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 50)))
+							screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 2)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10)))
+							screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 30)))
+							screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1][dialogue['selected']], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 50)))
 						else:
 							pygame.draw.rect(screen, (255, 255, 0), (10, 425, (gameW - 20), 25), 2)
-							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10)))
-							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][dialogue['selected']], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 30)))
-							screen.blit(font.render(dialogue['speaker'].dialogue[''][dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] + 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 50)))
+							screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] - 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 10)))
+							screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1][dialogue['selected']], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 30)))
+							screen.blit(font.render(dialogue_tree[dialogue['phrase'][0]][dialogue['phrase'][1]][1][(dialogue['selected'] + 1)], True, (255, 255, 255)), (15, ((gameH / 6 * 5) + 50)))
 
 		pygame.display.flip()
 
@@ -164,7 +170,12 @@ while True:
 						interaction = hero.interact(npcs=npcs)
 						if interaction[0]:
 							if interaction[1] == 1:
-								dialogues.append({'speaker': interaction[2], 'phrase': interaction[3], 'selected': 0})
+								dialogues.append({
+									'speaker': interaction[2],
+									'phrase': interaction[3],
+									'selected': 0,
+									'stage': interaction[2].dialogue_stages.get('', 1)
+								})
 
 			no_key_yet = False
 		elif event.type == pygame.KEYUP:
